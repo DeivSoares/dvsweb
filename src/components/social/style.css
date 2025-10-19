@@ -1,0 +1,10 @@
+.social-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.social-links a {
+  color: rgb(2 235 216);
+  text-decoration: none;
+  transition: color 0.3s;
+}

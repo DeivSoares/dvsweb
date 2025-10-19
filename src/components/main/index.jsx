@@ -1,5 +1,7 @@
 import "./style.css";
 import Logo from "../../assets/icons/DvsLogo.png";
+import Social from '../social';
+import Button from '../button';
 
 function Main() {
   // Carrega automaticamente os ícones da pasta src/assets/icons
@@ -55,6 +57,8 @@ function Main() {
 
         <div className="intro-image">
           <img src="https://avatars.githubusercontent.com/u/99440916?s=400&u=fc47de98e95d7b36f5624c90788e721658c4e653&v=4" alt="" />
+            <Social />
+            <Button />
         </div>
       </section>
 

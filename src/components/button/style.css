@@ -1,0 +1,11 @@
+.btn{
+    background-color: rgb(2 235 216);
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.btn a{
+    color: #000000;
+    text-decoration: none;
+}
