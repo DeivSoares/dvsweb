@@ -45,7 +45,7 @@ Meu foco é transformar ideias em experiências digitais fluidas e funcionais, e
 ## 📫 Entre em contato  
 
 📩 **E-mail:** *deivisonsoares1610@outlook.com*  
-🔗 **LinkedIn:** [linkedin.com/in/deivsoares](https://www.linkedin.com/in/deivsoares-dev/) *(ou teu link atualizado)*  
+🔗 **LinkedIn:** [linkedin.com/in/deivsoares](https://www.linkedin.com/in/deivsoares-dev/)  
 🐙 **GitHub:** [github.com/DeivSoares](https://github.com/DeivSoares)  
 
 ---
