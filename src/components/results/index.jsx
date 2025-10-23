@@ -12,13 +12,13 @@ function Results() {
         <h3>Data e Hora</h3>
       </div>
       <div className="content-search-results">
-        <ul className="" id="0">
-            <li>Tchan</li>
-            <li>Kah</li>
-            <li>Coordenada</li>
-            <li>WEAPON_SPECIAL_CARBINE_MK2</li>
-            <li>HASDA144</li>
-            <li>23/10 às 12:00</li>
+        <ul className="content-results" id="0">
+            <li><h3>Tchan</h3></li>
+            <li><h3>Kah</h3></li>
+            <li><h3>Coordenada</h3></li>
+            <li><h3>WEAPON_SPECIAL_CARBINE_MK2</h3></li>
+            <li><h3>HASDA144</h3></li>
+            <li><h3>23/10 às 12:00</h3></li>
         </ul>
       </div>
     </div>

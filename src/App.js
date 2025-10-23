@@ -9,7 +9,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar /> {/* Descomentar pra continuar codando */}
       <Routes>
         <Route path="" element={<Main />} />
         <Route path="/sobre" element={<Teste />} />
