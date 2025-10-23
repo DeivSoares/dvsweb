@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="" element={<Main />} />
+        <Route path="https://deivsoares.github.io/dvsweb/" element={<Main />} />
         <Route path="/sobre" element={<Teste />} />
       </Routes>
     </Router>
