@@ -1,7 +1,14 @@
-import './style.css';
+import SearchBox from "../components/searchbox";
+import Results from "../components/results";
+import "../pages/style.css";
 
 function Flow() {
-  return (<h1>Teste</h1>);
+  return (
+    <main className="flw">
+      <SearchBox />
+      <Results />
+    </main>
+  );
 }
 
 export default Flow;
