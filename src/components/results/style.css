@@ -16,7 +16,3 @@ ul.content-results {
   align-items: center;
   gap: 5rem;
 }
-
-ul.content-results li{
-    border: 1px solid white;
-}
