@@ -1,6 +1,6 @@
-import SearchBox from "../components/searchbox";
-import Results from "../components/results";
-import "../pages/style.css";
+import SearchBox from "../../components/searchbox";
+import Results from "../../components/results";
+import "./style.css";
 
 function Flow() {
   return (
