@@ -1,0 +1,84 @@
+main.flw div.search-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+main.flw div.search-box img{
+    width: 5%;
+}
+
+main.flw input[type="text"] {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #ffffff33;
+}
+
+main.flw input[type="text"]:hover {
+  background-color: rgba(0, 248, 153, 0.411);
+  color: black;
+  border: 1px solid white;
+  transition: 0.7s;
+}
+
+main.flw input[type="number"] {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #ffffff33;
+}
+
+main.flw input[type="number"]:hover {
+  background-color: rgba(0, 248, 153, 0.411);
+  color: black;
+  border: 1px solid white;
+  transition: 0.7s;
+}
+
+main.flw select#logs {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #ffffff33;
+  color: white;
+}
+
+main.flw select#logs option {
+  text-align: center;
+  background-color: #ffffff33;
+  color: black;
+  padding: 5px;
+  animation: 1s fadeIn;
+}
+
+main.flw input[type="button"] {
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #ffffff33;
+  color: white;
+}
+
+main.flw input[type="button"]:hover {
+  background-color: rgb(0, 248, 153);
+  color: black;
+  border: 1px solid white;
+  transition: 0.7s;
+  cursor: pointer;
+}
+
+main.flw input[type="button"]:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
