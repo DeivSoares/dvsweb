@@ -3,24 +3,36 @@ import "./style.css";
 function Results() {
   return (
     <div>
-      <div className="title-search-results">
-        <h3>Assassino</h3>
-        <h3>Vítima</h3>
-        <h3>Coordenada</h3>
-        <h3>Causa da Morte</h3>
-        <h3>Código da Morte</h3>
-        <h3>Data e Hora</h3>
-      </div>
-      <div className="content-search-results">
-        <ul className="content-results" id="0">
-            <li><h3>Tchan</h3></li>
-            <li><h3>Kah</h3></li>
-            <li><h3>Coordenada</h3></li>
-            <li><h3>WEAPON_SPECIAL_CARBINE_MK2</h3></li>
-            <li><h3>HASDA144</h3></li>
-            <li><h3>23/10 às 12:00</h3></li>
-        </ul>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Assassino</th>
+            <th>Vítima</th>
+            <th>Coordenada</th>
+            <th>Causa da Morte</th>
+            <th>Código da Morte</th>
+            <th>Data e Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="results-row">
+            <td>Tchan</td>
+            <td>Kah</td>
+            <td>Coordenada</td>
+            <td>WEAPON_SPECIAL_CARBINE_MK2</td>
+            <td>HASDA144</td>
+            <td>23/10 às 12:00</td>
+          </tr>
+          <tr className="results-row">
+            <td>Tchan</td>
+            <td>Kah</td>
+            <td>Coordenada</td>
+            <td>WEAPON_SPECIAL_CARBINE_MK2</td>
+            <td>HASDA144</td>
+            <td>23/10 às 12:00</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

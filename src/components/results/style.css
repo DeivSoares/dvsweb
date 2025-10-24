@@ -1,18 +1,23 @@
-div.title-search-results,
-div.content-search-results {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
+table {
+  display: none;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-ul.content-results {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+thead {
+  background-color: #01332b;
+}
+
+td:hover{
+  background-color: rgb(0, 168, 98);
+  transition: 0.7s;
+  transform: scale(1.05);
+  font-weight: bold;
+  cursor: pointer;
 }

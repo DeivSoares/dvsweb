@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       {/* Descomentar pra continuar codando */}
-      {/*<Navbar />*/}
+      <Navbar />
       <Routes>
         <Route path="" element={<Main />} />
         <Route path="/sobre" element={<Teste />} />
