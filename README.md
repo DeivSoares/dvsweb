@@ -25,14 +25,13 @@ Meu foco é transformar ideias em experiências digitais fluidas e funcionais, e
 
 | Tecnologia | Logo |
 |-------------|------|
-| **HTML5** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Logo" width="32"/>
- |
-| **CSS3** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" width="32"/> |
-| **JavaScript (ES6+)** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg" alt="Logo" width="32"/> |
-| **React.js** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="Logo" width="32"/> |
-| **Node** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="Logo" width="32"/> |
-| **C#** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="Logo" width="32"/> |
-| **Git & GitHub** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Logo" width="32"/> <img src="https://github.githubassets.com/favicons/favicon-dark.svg" alt="Logo" width="32"/> |
+| **HTML5** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Logo" width="32"/>|
+| **CSS3** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" width="32"/>|
+| **JavaScript (ES6+)** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg" alt="Logo" width="32"/>|
+| **React.js** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="Logo" width="32"/>|
+| **Node** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="Logo" width="32"/>|
+| **C#** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="Logo" width="32"/>|
+| **Git & GitHub** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Logo" width="32"/> <img src="https://github.githubassets.com/favicons/favicon-dark.svg" alt="Logo" width="32"/>|
 
 ---
 
