@@ -25,7 +25,8 @@ Meu foco é transformar ideias em experiências digitais fluidas e funcionais, e
 
 | Tecnologia | Logo |
 |-------------|------|
-| **HTML5** | 🟧 |
+| **HTML5** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Logo" width="100"/>
+ |
 | **CSS3** | 🟦 |
 | **JavaScript (ES6+)** | 🟨 |
 | **React.js** | ⚛️ |
