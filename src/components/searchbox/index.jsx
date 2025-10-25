@@ -1,6 +1,6 @@
 import "./style.css";
 
-function SearchBox() {
+function SearchBox({ tipo, onChange }) {
   return (
     <div className="search-box">
       <img
@@ -9,24 +9,24 @@ function SearchBox() {
       />
       <input type="text" name="pesquisa" id="pesquisa" placeholder="Insira o nome ou ID do Player"/>
       <input type="number" name="discord" id="discord" placeholder="Discord ID do Player"/>
-      <select id="logs">
+      <select id="logs" value={tipo} onChange={onChange}>
         <option value="Selecione uma Log">Selecione uma Log</option>
-        <option value="Kill">Voltou pra Ação</option>
-        <option value="VDM">Vdm</option>
-        <option value="Kill">Kill</option>
-        <option value="GG">GG</option>
-        <option value="GG no Airdrop">GG no Airdrop</option>
-        <option value="Adrenalina">Adrenalina</option>
-        <option value="Desfibrilador">Desfibrilador</option>
-        <option value="Anuncios">Anuncios</option>
-        <option value="Saque">Saque</option>
-        <option value="Enviou">Enviou</option>
-        <option value="Lixo">Lixo</option>
-        <option value="Cobrança">Cobrança</option>
-        <option value="Booster">Booster</option>
-        <option value="Cam">Cam</option>
-        <option value="Lojinha">Lojinha</option>
-        <option value="Quadro">Quadro</option>
+        <option value="voltou">Voltou pra Ação</option>
+        <option value="vdm">Vdm</option>
+        <option value="kill">Kill</option>
+        <option value="gg">GG</option>
+        <option value="ggairdrop">GG no Airdrop</option>
+        <option value="adrenalina">Adrenalina</option>
+        <option value="desfibrilador">Desfibrilador</option>
+        <option value="anuncios">Anuncios</option>
+        <option value="saque">Saque</option>
+        <option value="enviou">Enviou</option>
+        <option value="lixo">Lixo</option>
+        <option value="cobranca">Cobrança</option>
+        <option value="booster">Booster</option>
+        <option value="cam">Cam</option>
+        <option value="lojinha">Lojinha</option>
+        <option value="quadro">Quadro</option>
       </select>
       <input type="button" value="Pesquisar" onClick={buttonClick} />
     </div>

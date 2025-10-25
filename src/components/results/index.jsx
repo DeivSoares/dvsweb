@@ -1,38 +1,38 @@
 import "./style.css";
 
-function Results() {
+function Results({ headers, rows = [] }) {
+    // debug rápido
+  console.log("Headers recebidos em Results:", headers);
+
+
   return (
     <div>
       <table>
-        <thead>
+      <thead>
+        <tr>
+          {headers && headers.length > 0 ? (
+            headers.map((head, index) => <th key={index}>{head}</th>)
+          ) : (
+            <th colSpan={6}>Nenhum cabeçalho definido</th>
+          )}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.length > 0 ? (
+          rows.map((r, i) => (
+            <tr className="results-row" key={i}>
+              {r.map((c, j) => (
+                <td key={j}>{c}</td>
+              ))}
+            </tr>
+          ))
+        ) : (
           <tr>
-            <th>Assassino</th>
-            <th>Vítima</th>
-            <th>Coordenada</th>
-            <th>Causa da Morte</th>
-            <th>Código da Morte</th>
-            <th>Data e Hora</th>
+            <td colSpan={headers.length || 6}>Sem dados</td>
           </tr>
-        </thead>
-        <tbody>
-          <tr className="results-row">
-            <td>Tchan</td>
-            <td>Kah</td>
-            <td>Coordenada</td>
-            <td>WEAPON_SPECIAL_CARBINE_MK2</td>
-            <td>HASDA144</td>
-            <td>23/10 às 12:00</td>
-          </tr>
-          <tr className="results-row">
-            <td>Tchan</td>
-            <td>Kah</td>
-            <td>Coordenada</td>
-            <td>WEAPON_SPECIAL_CARBINE_MK2</td>
-            <td>HASDA144</td>
-            <td>23/10 às 12:00</td>
-          </tr>
-        </tbody>
-      </table>
+        )}
+      </tbody>
+    </table>
     </div>
   );
 }
