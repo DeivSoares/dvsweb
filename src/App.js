@@ -1,4 +1,5 @@
 import "./App.css";
+// import Analytics from "./Analytics";
 import Main from "./components/main";
 import Navbar from "./components/navbar";
 import Teste from "./pages/Flow/Teste";
@@ -8,6 +9,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
+      {/* <Analytics /> */}
       {/* Descomentar pra continuar codando */}
       <Navbar />
       <Routes>
