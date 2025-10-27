@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/dvsweb/static/css/main.893a333e.css",
-    "main.js": "/dvsweb/static/js/main.406574cf.js",
+    "main.css": "/dvsweb/static/css/main.72b89fcd.css",
+    "main.js": "/dvsweb/static/js/main.22655f27.js",
     "static/js/453.8ba4dbe5.chunk.js": "/dvsweb/static/js/453.8ba4dbe5.chunk.js",
     "static/media/DvsLogo.png": "/dvsweb/static/media/DvsLogo.7ec9c80a3b238379da2d.png",
     "static/media/Git.png": "/dvsweb/static/media/Git.0466507c4b9f6644df88.png",
@@ -12,12 +12,12 @@
     "static/media/HTML.png": "/dvsweb/static/media/HTML.ff3cf75e3b7cbb4ea77c.png",
     "static/media/GitHub.png": "/dvsweb/static/media/GitHub.eccaac2d375580ce9b41.png",
     "index.html": "/dvsweb/index.html",
-    "main.893a333e.css.map": "/dvsweb/static/css/main.893a333e.css.map",
-    "main.406574cf.js.map": "/dvsweb/static/js/main.406574cf.js.map",
+    "main.72b89fcd.css.map": "/dvsweb/static/css/main.72b89fcd.css.map",
+    "main.22655f27.js.map": "/dvsweb/static/js/main.22655f27.js.map",
     "453.8ba4dbe5.chunk.js.map": "/dvsweb/static/js/453.8ba4dbe5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.893a333e.css",
-    "static/js/main.406574cf.js"
+    "static/css/main.72b89fcd.css",
+    "static/js/main.22655f27.js"
   ]
 }
