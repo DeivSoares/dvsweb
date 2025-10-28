@@ -1,28 +1,23 @@
 import "./style.css";
 
-function Results({ headers, rows = [] }) {
-    // debug rápido
-  console.log("Headers recebidos em Results:", headers);
-
-
+function Results({ headers = [], rows = [] }) {
   return (
-    <div>
-      <table>
+    <table>
       <thead>
         <tr>
-          {headers && headers.length > 0 ? (
-            headers.map((head, index) => <th key={index}>{head}</th>)
+          {headers.length > 0 ? (
+            headers.map((headerTitle, index) => <th key={index}>{headerTitle}</th>)
           ) : (
-            <th colSpan={6}>Nenhum cabeçalho definido</th>
+            <th colSpan="6">Nenhum cabeçalho definido</th>
           )}
         </tr>
       </thead>
       <tbody>
         {rows.length > 0 ? (
-          rows.map((r, i) => (
-            <tr className="results-row" key={i}>
-              {r.map((c, j) => (
-                <td key={j}>{c}</td>
+          rows.map((rowData, rowIndex) => (
+            <tr key={rowIndex}>
+              {rowData.map((cellData, cellIndex) => (
+                <td key={cellIndex}>{cellData}</td>
               ))}
             </tr>
           ))
@@ -33,7 +28,7 @@ function Results({ headers, rows = [] }) {
         )}
       </tbody>
     </table>
-    </div>
   );
 }
+
 export default Results;
