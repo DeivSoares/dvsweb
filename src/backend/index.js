@@ -20,11 +20,22 @@ db.connect(err => {
   console.log('Conectado ao MySQL!');
 });
 
-// Endpoint dinâmico: tabela = value do select
+// Endpoint para listar todas as tabelas
+app.get("/tabelas", (req, res) => {
+  const query = `SHOW TABLES`; // Lista todas as tabelas do banco "teste"
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).json(err);
+
+    // results = [{ 'Tables_in_teste': 'mortes' }, {...}]
+    const tabelas = results.map(row => Object.values(row)[0]);
+    res.json(tabelas);
+  });
+});
+
+// Endpoint dinâmico para buscar dados de uma tabela específica
 app.get("/logs/:tabela", (req, res) => {
   const tabela = req.params.tabela;
 
-  // Segurança: só permite letras, números e underscores
   if (!/^[a-zA-Z0-9_]+$/.test(tabela)) {
     return res.status(400).json({ error: "Tabela inválida" });
   }
