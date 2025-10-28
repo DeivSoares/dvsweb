@@ -11,9 +11,10 @@ function SearchBox({ tipo, onChange }) {
       <input type="number" name="discord" id="discord" placeholder="Discord ID do Player"/>
       <select id="logs" value={tipo} onChange={onChange}>
         <option value="Selecione uma Log">Selecione uma Log</option>
+        <option value="staff">Staffs Ativos</option>
         <option value="voltou">Voltou pra Ação</option>
         <option value="vdm">Vdm</option>
-        <option value="kill">Kill</option>
+        <option value="morte">Kill</option>
         <option value="gg">GG</option>
         <option value="ggairdrop">GG no Airdrop</option>
         <option value="adrenalina">Adrenalina</option>
@@ -47,11 +48,11 @@ function buttonClick() {
     logs: 'Você precisa selecionar uma opção de log.'
   };
 
-  if (!pesquisa) return alert(mensagensErro.pesquisa);
-  if (!discord) return alert(mensagensErro.discord);
-  if (logs === 'Selecione uma Log') return alert(mensagensErro.logs);
+  // if (!pesquisa) return alert(mensagensErro.pesquisa);
+  // if (!discord) return alert(mensagensErro.discord);
+  // if (logs === 'Selecione uma Log') return alert(mensagensErro.logs);
 
-  alert('Pesquisa realizada com sucesso!');
+  // alert('Pesquisa realizada com sucesso!');
 
   const tabelaVisivel = table.style.display !== "none";
   tabelaVisivel ? hideTable() : showTable();
