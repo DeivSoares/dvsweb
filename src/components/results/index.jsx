@@ -1,29 +1,31 @@
 import "./style.css";
 
-function Results({ headers = [], rows = [] }) {
+function Results({ headers, rows }) {
+  if (!headers.length) return <p>Nenhum cabeçalho definido.</p>;
+
   return (
     <table>
       <thead>
         <tr>
-          {headers.length > 0 ? (
-            headers.map((headerTitle, index) => <th key={index}>{headerTitle}</th>)
-          ) : (
-            <th colSpan="6">Nenhum cabeçalho definido</th>
-          )}
+          {headers.map((head, index) => (
+            <th key={index}>{head}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
         {rows.length > 0 ? (
-          rows.map((rowData, rowIndex) => (
+          rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {rowData.map((cellData, cellIndex) => (
-                <td key={cellIndex}>{cellData}</td>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
               ))}
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan={headers.length || 6}>Sem dados</td>
+            <td colSpan={headers.length} style={{ textAlign: "center" }}>
+              Nenhum dado encontrado
+            </td>
           </tr>
         )}
       </tbody>
