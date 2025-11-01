@@ -7,7 +7,7 @@ function Sql() {
 
   useEffect(() => {
     // Faz a chamada GET para o backend
-    axios.get('http://localhost:3001/usuarios')
+    axios.get('https://localhost:3001/usuarios')
       .then(res => setUsuarios(res.data))
       .catch(err => console.log(err));
   }, []);
