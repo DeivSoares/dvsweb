@@ -12,7 +12,7 @@ function Teste() {
 
   // Buscar todas as tabelas
   useEffect(() => {
-    axios.get("http://localhost:3001/tabelas")
+    axios.get("https://localhost:3001/tabelas")
       .then(res => {
         console.log("Tabelas recebidas:", res.data);
         setTabelas(res.data);
@@ -24,7 +24,7 @@ function Teste() {
   useEffect(() => {
     if (!tipo) return;
     setErro("");
-    axios.get(`http://localhost:3001/logs/${tipo}`)
+    axios.get(`https://localhost:3001/logs/${tipo}`)
       .then(res => setDados(res.data))
       .catch(err => {
         if (err.response?.data?.error) setErro(err.response.data.error);
