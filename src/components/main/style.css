@@ -41,12 +41,12 @@ section.intro-section div.intro-background {
   color: var(--texto-branco);
 }
 
-.intro-content h1,
+/* .intro-content h1,
 .intro-content h2 {
   text-align: center;
   color: var(--texto-branco);
   -webkit-text-stroke: 0.5px #000000;
-}
+} */
 
 .intro-content p {
   margin-top: 2rem;
