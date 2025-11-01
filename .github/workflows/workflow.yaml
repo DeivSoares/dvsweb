@@ -12,6 +12,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '22.x'
+    - name: Configurar identidade Git
+      run: |
+        git config --global user.name "DeivSoares"
+        git config --global user.email "deivisonsoares1610@outlook.com"
     - name: run install, build and test
       run: |
         npm install
