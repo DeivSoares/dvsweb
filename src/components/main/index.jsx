@@ -41,24 +41,20 @@ function Main() {
           <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
             <img src={Logo} alt="" style={{ width: "5rem" }} />
             Deivison Soares
-            </h1>
+          </h1>
 
           <h2>Transformo sua ideia em realidade</h2>
           <p>
-            Me chamo Deivison Soares, tenho 26 anos e sou apaixonado por
-            tecnologia desde que me entendo por gente. <br></br>
-            Formado em <span>Desenvolvimento de Sistemas</span>{" "}e especializado em <span>Desenvolvimento Web</span>.
-            Hoje atuo criando interfaces intuitivas e responsivas que proporcionam experiências excepcionais
-            aos usuários, oferecendo total suporte. <br></br>
-            Se você também acredita que a tecnologia pode transformar ideias em
-            realidade, estamos na mesma sintonia.
+            A DVS Web é uma empresa especializada no desenvolvimento de sites modernos, funcionais e personalizados, focada em transformar ideias em presença digital de qualidade.
+            <br></br>
+            Mais do que criar páginas, entregamos soluções digitais alinhadas com a visão de cada cliente, prezando sempre pela clareza, eficiência e qualidade na execução.
           </p>
         </div>
 
         <div className="intro-image">
           <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCZHXLOCokPA/profile-displayphoto-crop_800_800/B4DZzmPK9CIwAI-/0/1773389263089?e=1775692800&v=beta&t=vCMAJL99eYlcB_XITfDHsTXQcE_ZF7SEJelooMexeb8" alt="Imagem de Perfil Deivison Soares" />
-            <Social />
-            <Button />
+          <Social />
+          <Button />
         </div>
       </section>
 
@@ -69,7 +65,7 @@ function Main() {
             <div key={index} className="stack-item">
               <div className="stack-icon">
                 {typeof stack.icon === "string" &&
-                stack.icon.startsWith("/") ? (
+                  stack.icon.startsWith("/") ? (
                   <img src={stack.icon} alt={`${stack.name} icon`} />
                 ) : (
                   <span>{stack.icon}</span>
