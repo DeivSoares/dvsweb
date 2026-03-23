@@ -56,7 +56,7 @@ function Main() {
         </div>
 
         <div className="intro-image">
-          <img src="https://avatars.githubusercontent.com/u/99440916?s=400&u=fc47de98e95d7b36f5624c90788e721658c4e653&v=4" alt="" />
+          <img src="https://media.licdn.com/dms/image/v2/D4D35AQEhL598s_gfbA/profile-framedphoto-shrink_200_200/B4DZzmPLcsG4AY-/0/1773389265027?e=1774836000&v=beta&t=D6whBpT0zQS9g-Agm45m1iQOip0JjLYAZccpmbtriAs" alt="" />
             <Social />
             <Button />
         </div>
