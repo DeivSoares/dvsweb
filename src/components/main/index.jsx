@@ -56,7 +56,7 @@ function Main() {
         </div>
 
         <div className="intro-image">
-          <img src="https://media.licdn.com/dms/image/v2/D4D35AQEhL598s_gfbA/profile-framedphoto-shrink_200_200/B4DZzmPLcsG4AY-/0/1773389265027?e=1774836000&v=beta&t=D6whBpT0zQS9g-Agm45m1iQOip0JjLYAZccpmbtriAs" alt="" />
+          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCZHXLOCokPA/profile-displayphoto-crop_800_800/B4DZzmPK9CIwAI-/0/1773389263089?e=1775692800&v=beta&t=vCMAJL99eYlcB_XITfDHsTXQcE_ZF7SEJelooMexeb8" alt="" />
             <Social />
             <Button />
         </div>
