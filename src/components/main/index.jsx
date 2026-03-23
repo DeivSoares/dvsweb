@@ -56,7 +56,7 @@ function Main() {
         </div>
 
         <div className="intro-image">
-          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCZHXLOCokPA/profile-displayphoto-crop_800_800/B4DZzmPK9CIwAI-/0/1773389263089?e=1775692800&v=beta&t=vCMAJL99eYlcB_XITfDHsTXQcE_ZF7SEJelooMexeb8" alt="" />
+          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCZHXLOCokPA/profile-displayphoto-crop_800_800/B4DZzmPK9CIwAI-/0/1773389263089?e=1775692800&v=beta&t=vCMAJL99eYlcB_XITfDHsTXQcE_ZF7SEJelooMexeb8" alt="Imagem de Perfil Deivison Soares" />
             <Social />
             <Button />
         </div>
