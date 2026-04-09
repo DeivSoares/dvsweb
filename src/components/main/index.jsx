@@ -1,5 +1,6 @@
 import "./style.css";
 import Logo from "../../assets/icons/DvsLogo.png";
+import Perfil from "../../assets/icons/perfil.png";
 import Social from '../social';
 import Button from '../button';
 
@@ -52,7 +53,7 @@ function Main() {
         </div>
 
         <div className="intro-image">
-          <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCZHXLOCokPA/profile-displayphoto-scale_400_400/B4DZzmPK9CIwAg-/0/1773389263171?e=1777507200&v=beta&t=wkABLhbvOQpPFMGqTdzNASvBVR2dSUyOuh9Em2MJRjE" alt="Imagem de Perfil Deivison Soares" />
+          <img src={Perfil} alt="Imagem de Perfil Deivison Soares"/>
           <Social />
           <Button />
         </div>
