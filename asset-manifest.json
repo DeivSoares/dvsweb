@@ -1,9 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.4205b3ac.css",
-    "main.js": "/static/js/main.daf1fd97.js",
+    "main.js": "/static/js/main.db4cca50.js",
     "static/js/453.8ba4dbe5.chunk.js": "/static/js/453.8ba4dbe5.chunk.js",
     "static/media/DvsLogo.png": "/static/media/DvsLogo.7ec9c80a3b238379da2d.png",
+    "static/media/perfil.png": "/static/media/perfil.adc3eff4bc9a05df8f6e.png",
+    "static/media/perfil2.png": "/static/media/perfil2.f66171cff1192f03f57d.png",
     "static/media/Git.png": "/static/media/Git.0466507c4b9f6644df88.png",
     "static/media/React.png": "/static/media/React.9869f03e994d2863bf55.png",
     "static/media/CSharp.png": "/static/media/CSharp.15f7b7fa596f29c44592.png",
@@ -13,11 +15,11 @@
     "static/media/GitHub.png": "/static/media/GitHub.eccaac2d375580ce9b41.png",
     "index.html": "/index.html",
     "main.4205b3ac.css.map": "/static/css/main.4205b3ac.css.map",
-    "main.daf1fd97.js.map": "/static/js/main.daf1fd97.js.map",
+    "main.db4cca50.js.map": "/static/js/main.db4cca50.js.map",
     "453.8ba4dbe5.chunk.js.map": "/static/js/453.8ba4dbe5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4205b3ac.css",
-    "static/js/main.daf1fd97.js"
+    "static/js/main.db4cca50.js"
   ]
 }
