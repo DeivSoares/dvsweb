@@ -1,5 +1,5 @@
 .btn{
-    background-color: rgb(2 235 216);
+    background-color: var(--txt-blue-logo);
     padding: 0.8rem 1.2rem;
     border-radius: 8px;
     font-weight: bold;

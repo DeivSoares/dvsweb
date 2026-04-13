@@ -6,6 +6,7 @@
   list-style: none;
   text-decoration: none;
 }
+
 ::-webkit-scrollbar {
   width: 0.8rem;
 }
@@ -15,6 +16,7 @@
   border: 1px solid rgba(0, 0, 0, 0.137);
   border-radius: 0.8rem;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--fundo);
 }
@@ -29,6 +31,12 @@
   --main-bg: rgba(127, 225, 255, 0.418);
   --border: 1px solid #032552e0;
   --border-img: 2px solid #00b7ffe0;
+
+
+  --bg-gray: rgba(255, 255, 255, 0.1);
+  --blue-logo: #89B3D9;
+  --blue-strong-logo: #3B668C;
+  --gray-logo: #BDBEBF;
   font-size: 62.5%;
 }
 
@@ -45,4 +53,15 @@ body {
   background-image: url(https://static.vecteezy.com/ti/vetor-gratis/p2/2173088-textura-abstrato-escuro-azul-fundo-e-arranhado-vetor.jpg);
   background-color: rgb(0 0 0 / 90%);
   background-blend-mode: darken;
+}
+
+body::after {
+  content: "";
+  min-height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0.05926120448179273) 50%, rgba(0, 0, 0, 1) 90%);
+  z-index: -1;
 }
