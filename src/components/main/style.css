@@ -364,11 +364,18 @@ section.intro-section div.intro-background {
     min-height: auto;
     height: 100%;
   }
-
+  
+.intro-content{
+  font-size: 2rem;
+}
   .intro-content,
   .intro-image {
     flex: none;
     width: 100%;
+  }
+
+  .intro-image{
+    gap: 1.4rem;
   }
 
   .intro-image img {
