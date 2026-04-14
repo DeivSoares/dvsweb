@@ -15,7 +15,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="" element={<Main />} />
-        <Route path="/sobre" element={<Teste />} />
+        {/* <Route path="/sobre" element={<Teste />} /> */}
+        <Route path="" element={<Main />} />
         <Route path="/contato" element={<Sql />} />
       </Routes>
     </Router>
