@@ -4,7 +4,7 @@
 }
 
 .social-links a {
-  color: var(--txt-blue-logo);
+  color: var(--blue-logo);
   text-decoration: none;
   transition: color 0.3s;
 }

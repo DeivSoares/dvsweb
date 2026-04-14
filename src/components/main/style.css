@@ -362,6 +362,7 @@ section.intro-section div.intro-background {
     padding: 1rem;
     gap: 1rem;
     min-height: auto;
+    height: 100%;
   }
 
   .intro-content,
