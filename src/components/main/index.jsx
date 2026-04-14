@@ -34,6 +34,7 @@ function Main() {
     { name: "Git", icon: loadIcon("Git") },
     { name: "GitHub", icon: loadIcon("GitHub") },
     { name: "C#", icon: loadIcon("CSharp") },
+    { name: "Discord API", icon: loadIcon("Discord") },
   ];
 
   return (

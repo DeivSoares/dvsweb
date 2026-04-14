@@ -6,10 +6,10 @@ const ProjetosData = [
         link: "#",
     },
     {
-        title: "Elemental Wiki",
-        description: "Esse é um projeto interno que desenvolvi para o Elemental Priston Tale! O Elemental Wiki é uma plataforma de conhecimento colaborativa, projetada para reunir informações, guias e recursos relacionados ao jogo. O objetivo é criar um espaço onde os jogadores possam compartilhar dicas, estratégias e detalhes sobre o universo do Elemental Priston Tale, promovendo a interação e o engajamento da comunidade.",
-        image: "https://deivsoares.github.io/Portfolio/src/images/Elemental%20Wiki.png",
-        link: "#",
+        title: "PlayPT Wiki",
+        description: "Esse é um projeto interno que desenvolvi para o PlayPT Priston Tale! O PlayPT Wiki é uma plataforma de conhecimento colaborativa, projetada para reunir informações, guias e recursos relacionados ao jogo. O objetivo é criar um espaço onde os jogadores possam compartilhar dicas, estratégias e detalhes sobre o universo do Priston Tale, promovendo a interação e o engajamento da comunidade.",
+        image: "https://cdn.discordapp.com/attachments/1481509884259340417/1493604401053569265/playpt.com.br_wiki_.png?ex=69df92ff&is=69de417f&hm=b24d8f1dab9c748c14a21b01789c1eea3bcf9fdb4305417ee2f4d71a6098a4f2&",
+        link: "https://playpt.com.br/wiki/",
     },
     {
         title: "Decodificador de Texto",
@@ -40,6 +40,12 @@ const ProjetosData = [
         description: "Projeto desenvolvido durante o evento NLW eSports da RocketSeat; O NLW eSports é um projeto de desenvolvimento web focado em criar uma plataforma para entusiastas de esportes eletrônicos. O site apresenta informações estilo perfil de usuário, jogos favoritos, canais e streamers favoritos e redes sociais, oferecendo uma experiência interativa e envolvente. Ideal para aprender sobre desenvolvimento front-end e integração de APIs relacionadas a jogos.",
         image: "https://deivsoares.github.io/Portfolio/src/images/preview2.png",
         link: "#",
+    },
+    {
+        title: "Sistema de Ticket Discord",
+        description: "Projeto desenvolvido para uso interno; O Sistema de Ticket Discord é uma aplicação que integra com a API do Discord para criar um sistema de suporte ao cliente. Ele permite que os usuários abram tickets de suporte diretamente no Discord, facilitando a comunicação entre clientes e equipe de suporte. Ideal para web lojas, cidades de RP d FiveM, RedM, guildas e entre outros.",
+        image: "https://cdn.discordapp.com/attachments/1434009377479856302/1493602915892330506/image.png?ex=69df919c&is=69de401c&hm=69afcd17227984a6d7d5ac72ee723ad08e9676380b7d81d8d19f18db97375544&",
+        link: "https://discord.gg/7Bax8Dpw4w",
     },
 ]
 
