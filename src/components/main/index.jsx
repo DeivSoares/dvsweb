@@ -95,6 +95,10 @@ function Main() {
 
         </div>
       </section>
+
+      <footer>
+        <p>&copy; 2026 DVS Web. Todos os direitos reservados.</p>
+      </footer>
     </main>
   );
 }

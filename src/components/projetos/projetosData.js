@@ -1,3 +1,5 @@
+import tkt from '../../assets/icons/sistematkt.png';
+
 const ProjetosData = [
     {
         title: "Psicoterapia Ativa",
@@ -8,7 +10,7 @@ const ProjetosData = [
     {
         title: "PlayPT Wiki",
         description: "Esse é um projeto interno que desenvolvi para o PlayPT Priston Tale! O PlayPT Wiki é uma plataforma de conhecimento colaborativa, projetada para reunir informações, guias e recursos relacionados ao jogo. O objetivo é criar um espaço onde os jogadores possam compartilhar dicas, estratégias e detalhes sobre o universo do Priston Tale, promovendo a interação e o engajamento da comunidade.",
-        image: "https://cdn.discordapp.com/attachments/1481509884259340417/1493604401053569265/playpt.com.br_wiki_.png?ex=69df92ff&is=69de417f&hm=b24d8f1dab9c748c14a21b01789c1eea3bcf9fdb4305417ee2f4d71a6098a4f2&",
+        image: "https://media.discordapp.net/attachments/1488603870878892073/1488604069147971624/image.png?ex=69e1d153&is=69e07fd3&hm=7a14e296ab2ced6cda65a0bbe3718c1e750dd97fbacd08477f577ef9c511b526&=&format=webp&quality=lossless&width=1390&height=689",
         link: "https://playpt.com.br/wiki/",
     },
     {
@@ -43,8 +45,8 @@ const ProjetosData = [
     },
     {
         title: "Sistema de Ticket Discord",
-        description: "Projeto desenvolvido para uso interno; O Sistema de Ticket Discord é uma aplicação que integra com a API do Discord para criar um sistema de suporte ao cliente. Ele permite que os usuários abram tickets de suporte diretamente no Discord, facilitando a comunicação entre clientes e equipe de suporte. Ideal para web lojas, cidades de RP d FiveM, RedM, guildas e entre outros.",
-        image: "https://cdn.discordapp.com/attachments/1434009377479856302/1493602915892330506/image.png?ex=69df919c&is=69de401c&hm=69afcd17227984a6d7d5ac72ee723ad08e9676380b7d81d8d19f18db97375544&",
+        description: "Projeto desenvolvido para uso interno; O Sistema de Ticket Discord é uma aplicação que integra com a API do Discord para criar um sistema de suporte ao cliente. Ele permite que os usuários abram tickets de suporte diretamente no Discord, facilitando a comunicação entre clientes e equipe de suporte. Ideal para web lojas, cidades de RP de FiveM, RedM, guildas e entre outros.",
+        image: tkt,
         link: "https://discord.gg/7Bax8Dpw4w",
     },
 ]

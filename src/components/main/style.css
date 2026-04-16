@@ -460,3 +460,10 @@ section.intro-section div.intro-background {
   width: 100%;
   border-radius: 2rem;
 }
+
+
+footer{
+  color: white;
+  text-align: center;
+  padding-bottom: 2.5rem;
+}
