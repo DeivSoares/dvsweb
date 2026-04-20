@@ -1,10 +1,11 @@
 import tkt from '../../assets/icons/sistematkt.png';
+import psicoterapia from '../../assets/icons/psicoterapia.png';
 
 const ProjetosData = [
     {
         title: "Psicoterapia Ativa",
         description: "Desenvolvi o site Psicoterapia Ativa para oferecer uma interface intuitiva e moderna, focada em promover os serviços de psicoterapia. O site apresenta uma navegação fácil, design responsivo e conteúdo informativo, visando proporcionar uma experiência agradável aos visitantes e destacar a importância da saúde mental.",
-        image: "https://deivsoares.github.io/Portfolio/src/images/Psicoterapia%20Ativa.jpeg",
+        image: psicoterapia ,
         link: "#",
     },
     {

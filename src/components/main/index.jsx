@@ -4,6 +4,7 @@ import Perfil from "../../assets/icons/perfil.png";
 import Social from '../social';
 import Button from '../button';
 import ProjetosData from '../projetos/projetosData';
+import Carousel from "../carousel";
 
 function Main() {
   // Carrega automaticamente os ícones da pasta src/assets/icons
@@ -61,20 +62,20 @@ function Main() {
           <Button />
         </div>
 
-        
-      <section className="stacks-section">
-        <h3>Minhas Stacks</h3>
-        <div className="stacks-grid">
-          {stacks.map((stack, index) => (
-            <div key={index} className="stack-item">
-              <div className="stack-icon">
-                {typeof stack.icon === "string" && stack.icon.startsWith("/") ? (<img src={stack.icon} alt={`${stack.name} icon`} />) : (<span>{stack.icon}</span>)}
+
+        <section className="stacks-section">
+          <h3>Minhas Stacks</h3>
+          <div className="stacks-grid">
+            {stacks.map((stack, index) => (
+              <div key={index} className="stack-item">
+                <div className="stack-icon">
+                  {typeof stack.icon === "string" && stack.icon.startsWith("/") ? (<img src={stack.icon} alt={`${stack.name} icon`} />) : (<span>{stack.icon}</span>)}
+                </div>
+                <span className="stack-name">{stack.name}</span>
               </div>
-              <span className="stack-name">{stack.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
 
       </section>
@@ -82,7 +83,8 @@ function Main() {
 
       <section className="projects">
         <h3>Meus Projetos</h3>
-        <div className="projects-grid">
+        <Carousel />
+        {/* <div className="projects-grid">
           {ProjetosData.map((projeto, index) => (
             <div key={index} className="project-item">
               <h4>{projeto.title}</h4>
@@ -93,7 +95,7 @@ function Main() {
             </div>
           ))}
 
-        </div>
+        </div> */}
       </section>
 
       <footer>
