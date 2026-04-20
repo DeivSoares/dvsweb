@@ -82,7 +82,7 @@ function Main() {
 
 
       <section className="projects">
-        <h3>Meus Projetos</h3>
+        <h3>Empresas que confiaram na DvS Web</h3>
         <Carousel />
         {/* <div className="projects-grid">
           {ProjetosData.map((projeto, index) => (
