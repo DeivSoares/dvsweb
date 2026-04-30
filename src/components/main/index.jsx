@@ -84,18 +84,6 @@ function Main() {
       <section className="projects">
         <h3>Empresas que confiaram na DvS Web</h3>
         <Carousel />
-        {/* <div className="projects-grid">
-          {ProjetosData.map((projeto, index) => (
-            <div key={index} className="project-item">
-              <h4>{projeto.title}</h4>
-              <p>{projeto.description}</p>
-              <a href={projeto.link} target="_blank" rel="noopener noreferrer">
-                <img src={projeto.image} alt={projeto.title} />
-              </a>
-            </div>
-          ))}
-
-        </div> */}
       </section>
 
       <footer>

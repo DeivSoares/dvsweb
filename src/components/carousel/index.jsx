@@ -37,8 +37,8 @@ function Carousel() {
     }, [isPaused]);
 
     return (
-        <div className="carousel" onMouseEnter={() => setIsPaused(true)} 
-        onMouseLeave={() => setIsPaused(false)}>
+        <div className="carousel" onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}>
             <button className="prev" onClick={prevSlide}>‹</button>
 
             <div
@@ -48,11 +48,9 @@ function Carousel() {
                 {ProjetosData.map((projeto, index) => (
                     <div key={index} className="carousel-card">
                         <img src={projeto.image} alt={projeto.title} />
-                        <h4>{projeto.title}</h4>
-                        <p>{projeto.description}</p>
-                        <a href={projeto.link} target="_blank" rel="noreferrer">
-                            Ver projeto
-                        </a>
+                        {/* <h4>{projeto.title}</h4> */}
+                        {/* <p>{projeto.description}</p> 
+                         <a href={projeto.link} target="_blank" rel="noreferrer">Ver projeto</a> */}
                     </div>
                 ))}
             </div>

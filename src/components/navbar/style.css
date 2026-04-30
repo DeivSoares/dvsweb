@@ -1,12 +1,21 @@
 nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+nav {
   height: 6rem;
   text-align: center;
   font-family: "Anta", sans-serif;
   font-weight: 400;
   font-style: normal;
 
-  background-color: var(--blue-strong-logo);
-  border-bottom: gray 1px solid;
+  /* background-color: var(--blue-strong-logo); */
+  /* border-bottom: rgba(128, 128, 128, 0.055) 1px solid; */
 }
 
 nav ul {

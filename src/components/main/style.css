@@ -24,7 +24,7 @@ main {
   padding: 2rem;
   gap: 2rem;
   border-radius: 2rem 2rem 0 0;
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px); */
   height: 100vh;
 }
 
