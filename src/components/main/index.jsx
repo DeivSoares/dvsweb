@@ -44,8 +44,8 @@ function Main() {
         <div className="intro-background"></div>
         <div className="intro-content">
           <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
-            <img src={Logo} alt="" style={{ width: "5rem" }} />
-            Deivison Soares
+            {/* <img src={Logo} alt="" style={{ width: "5rem" }} /> */}
+            DVS WEB
           </h1>
 
           <h2>Transformando ideias em experiências digitais</h2>
