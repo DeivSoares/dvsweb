@@ -82,7 +82,7 @@ function Main() {
 
 
       <section className="projects">
-        <h3>Empresas que confiaram na DvS Web</h3>
+        <h3>Empresas que confiaram na DVS WEB</h3>
         <Carousel />
       </section>
 
