@@ -1,10 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.c80dc957.css",
-    "main.js": "/static/js/main.c4a9c379.js",
+    "main.css": "/static/css/main.8c909ce8.css",
+    "main.js": "/static/js/main.8360978e.js",
     "static/js/453.8ba4dbe5.chunk.js": "/static/js/453.8ba4dbe5.chunk.js",
     "static/media/playpt.png": "/static/media/playpt.3bbec10411569f39cd7c.png",
     "static/media/elementalpt.png": "/static/media/elementalpt.f8deec4593240548cd5d.png",
+    "static/media/psicoterapia2.png": "/static/media/psicoterapia2.b1d91ddc0427d28ab22d.png",
     "static/media/DvsLogo.png": "/static/media/DvsLogo.7ec9c80a3b238379da2d.png",
     "static/media/sistematkt.png": "/static/media/sistematkt.635f6eb45da94bad704e.png",
     "static/media/perfil2.png": "/static/media/perfil2.67f59372c7fae7f5a6b9.png",
@@ -20,12 +21,12 @@
     "static/media/HTML.png": "/static/media/HTML.ff3cf75e3b7cbb4ea77c.png",
     "static/media/GitHub.png": "/static/media/GitHub.eccaac2d375580ce9b41.png",
     "index.html": "/index.html",
-    "main.c80dc957.css.map": "/static/css/main.c80dc957.css.map",
-    "main.c4a9c379.js.map": "/static/js/main.c4a9c379.js.map",
+    "main.8c909ce8.css.map": "/static/css/main.8c909ce8.css.map",
+    "main.8360978e.js.map": "/static/js/main.8360978e.js.map",
     "453.8ba4dbe5.chunk.js.map": "/static/js/453.8ba4dbe5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c80dc957.css",
-    "static/js/main.c4a9c379.js"
+    "static/css/main.8c909ce8.css",
+    "static/js/main.8360978e.js"
   ]
 }
