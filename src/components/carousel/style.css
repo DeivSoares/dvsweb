@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   max-width: 900px;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .carousel-track {
@@ -13,12 +13,13 @@
 
 .carousel-card {
   min-width: 100%;
-  padding: 20px;
+  /* padding: 20px; */
   text-align: center;
 }
 
 .carousel-card img {
-  width: 10%;
+  width: 30%;
+  /* width: 10%; */
   max-height: 300px;
   object-fit: cover;
   border-radius: 10px;

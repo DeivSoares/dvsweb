@@ -86,8 +86,15 @@ function Main() {
         <Carousel />
       </section>
 
+      <section className="contact">
+        <h2>Contato</h2>
+        <h3>Vamos <span>Desenvolver</span> Seu Projeto?</h3>
+        <p>Se você tem uma ideia rodando aí na cabeça, chegou a hora de fazer acontecer. Me chama, conta o que você quer construir e vamos juntos transformar isso em algo real, funcional e que dá resultado.</p>
+        <Social />
+      </section>
+
       <footer>
-        <p>&copy; 2026 DVS Web. Todos os direitos reservados.</p>
+        <p>&copy; 2023-2026 DVS WEB. Todos os direitos reservados.</p>
       </footer>
     </main>
   );

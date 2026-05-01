@@ -351,6 +351,20 @@ section.intro-section div.intro-background {
   text-align: center;
 }
 
+.projects {
+  display: flex;
+  width: 100%;
+  min-height: 50rem;
+  margin: auto;
+  padding: 2rem;
+  color: white;
+  vertical-align: middle;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
 /* Responsividade para mobile */
 @media (max-width: 768px) {
   main {
@@ -364,17 +378,18 @@ section.intro-section div.intro-background {
     min-height: auto;
     height: 100%;
   }
-  
-.intro-content{
-  font-size: 2rem;
-}
+
+  .intro-content {
+    font-size: 2rem;
+  }
+
   .intro-content,
   .intro-image {
     flex: none;
     width: 100%;
   }
 
-  .intro-image{
+  .intro-image {
     gap: 1.4rem;
   }
 
@@ -462,7 +477,34 @@ section.intro-section div.intro-background {
 }
 
 
-footer{
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 40%;
+  margin: auto;
+  text-align: center;
+  /* border: 1px solid red; */
+  margin-bottom: 2rem;
+  color: var(--blue-logo);
+  font-size: 2.1rem;
+
+  font-weight: 400;
+  font-style: normal;
+}
+
+.contact h3 span {
+  font-family: "Anta", sans-serif;
+  color: var(--blue-strong-logo);
+}
+
+.contact .social-links {
+  text-align: center;
+}
+
+
+footer {
   color: white;
   text-align: center;
   padding-bottom: 2.5rem;

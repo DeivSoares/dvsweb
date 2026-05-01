@@ -39,7 +39,7 @@ function Carousel() {
     return (
         <div className="carousel" onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}>
-            <button className="prev" onClick={prevSlide}>‹</button>
+            {/* <button className="prev" onClick={prevSlide}>‹</button> */}
 
             <div
                 className="carousel-track"
@@ -55,7 +55,7 @@ function Carousel() {
                 ))}
             </div>
 
-            <button className="next" onClick={nextSlide}>›</button>
+            {/* <button className="next" onClick={nextSlide}>›</button> */}
         </div>
     );
 }

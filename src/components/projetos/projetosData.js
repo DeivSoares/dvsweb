@@ -1,5 +1,5 @@
 import dvs from '../../assets/icons/DvsLogo.png';
-import psicoterapia from '../../assets/icons/psicoterapia.png';
+import psicoterapia from '../../assets/icons/psicoterapia2.png';
 import elementalpt from '../../assets/icons/elementalpt.png';
 import playpt from '../../assets/icons/playpt.png';
 
