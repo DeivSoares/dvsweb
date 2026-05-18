@@ -12,15 +12,6 @@ const app = express();
 
 app.use(express.json());
 
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:3000",
-//       "https://dvsweb.com.br",
-//       "https://subheader-clock-shadily.ngrok-free.dev",
-//     ],
-//   })
-// );
 app.use(
   cors({
     origin: "*",
