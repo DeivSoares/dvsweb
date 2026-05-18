@@ -1,23 +1,25 @@
 import "./App.css";
-// import Analytics from "./Analytics";
 import Main from "./components/main";
-import Navbar from "./components/navbar";
-import Teste from "./pages/Flow/Teste";
 import Sql from "./components/MySQL";
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Dashboard from "./pages/Painel/Dashboard";
+import Clientes from "./pages/Painel/Clientes";
+import Bots from "./pages/Painel/Bots";
+
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      {/* <Analytics /> */}
-      {/* Descomentar pra continuar codando */}
-      {/* <Navbar /> */}
       <Routes>
-        <Route path="" element={<Main />} />
-        {/* <Route path="/sobre" element={<Teste />} /> */}
+        {/* SITE */}
         <Route path="" element={<Main />} />
         <Route path="/contato" element={<Sql />} />
+
+        {/* PAINEL */}
+        <Route path="/painel" element={<Dashboard />} />
+        <Route path="/painel/clientes" element={<Clientes />} />
+        <Route path="/painel/bots" element={<Bots />} />
       </Routes>
     </Router>
   );

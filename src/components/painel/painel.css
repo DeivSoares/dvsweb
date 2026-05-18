@@ -1,0 +1,148 @@
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  min-height: 100vh;
+
+  background: linear-gradient(180deg, #070b14 0%, #0b1220 100%);
+
+  border-right: 1px solid #1f2b42;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 25px 18px;
+
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  margin-bottom: 45px;
+}
+
+.sidebar-logo h1 {
+  margin: 0;
+  font-size: 42px;
+  color: #8fb7ea;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.sidebar-logo span {
+  color: #72809b;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+
+  color: #d6e2ff;
+
+  background: #111827;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  transition: 0.2s ease;
+
+  border: 1px solid transparent;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.sidebar-nav a:hover {
+  background: #182338;
+  border-color: #8fb7ea;
+
+  transform: translateX(4px);
+}
+
+.sidebar-nav a.active {
+  background: linear-gradient(135deg, #6e9bd0, #8fb7ea);
+
+  color: #05070d;
+
+  font-weight: 700;
+
+  box-shadow: 0 0 20px rgba(143, 183, 234, 0.25);
+}
+
+.sidebar-footer {
+  padding-top: 25px;
+
+  border-top: 1px solid #1b2638;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar-avatar {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #05070d;
+
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.sidebar-avatar img {
+  width: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6e9bd0, #8fb7ea);
+}
+
+.sidebar-user strong {
+  color: white;
+  display: block;
+}
+
+.sidebar-user p {
+  margin: 0;
+  color: #72809b;
+  font-size: 13px;
+}
+
+.sidebar-logo {
+  margin-bottom: 45px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-logo img {
+  width: 140px;
+
+  margin-bottom: 15px;
+
+  filter: drop-shadow(0 0 10px rgba(143, 183, 234, 0.15));
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+}
