@@ -16,29 +16,40 @@ export default function Dashboard() {
     servidores: 0,
   });
 
-  const [atividades, setAtividades] =
-    useState([]);
+  const [atividades, setAtividades] = useState([]);
 
   useEffect(() => {
     async function carregarDashboard() {
       try {
-        const response =
-          await api.get("/dashboard");
+        const response = await api.get("/dashboard");
 
         setDados(response.data);
 
-        const atividadesResponse =
-          await api.get("/atividades");
+        const atividadesResponse = await api.get("/atividades");
 
-        setAtividades(
-          atividadesResponse.data
-        );
+        setAtividades(atividadesResponse.data);
       } catch (err) {
         console.log(err);
       }
     }
 
     carregarDashboard();
+  }, []);
+
+  useEffect(() => {
+    async function carregar() {
+      try {
+        console.log("CHAMANDO API...");
+
+        const res = await api.get("/dashboard/test");
+
+        console.log("RESPOSTA:", res.data);
+      } catch (err) {
+        console.log("ERRO API:", err);
+      }
+    }
+
+    carregar();
   }, []);
 
   return (
@@ -49,25 +60,13 @@ export default function Dashboard() {
         <Header />
 
         <section className="dashboard-cards">
-          <Card
-            title="Clientes"
-            value={dados.clientes}
-          />
+          <Card title="Clientes" value={dados.clientes} />
 
-          <Card
-            title="Licenças"
-            value={dados.licencas}
-          />
+          <Card title="Licenças" value={dados.licencas} />
 
-          <Card
-            title="Bots Vendidos"
-            value={dados.bots}
-          />
+          <Card title="Bots Vendidos" value={dados.bots} />
 
-          <Card
-            title="Servidores"
-            value={dados.servidores}
-          />
+          <Card title="Servidores" value={dados.servidores} />
         </section>
 
         <section className="dashboard-content">
@@ -76,30 +75,18 @@ export default function Dashboard() {
 
             {atividades.length === 0 && (
               <div className="atividade-item">
-                <span>
-                  Nenhuma atividade
-                  registrada
-                </span>
+                <span>Nenhuma atividade registrada</span>
 
                 <small>Agora</small>
               </div>
             )}
 
             {atividades.map((atividade) => (
-              <div
-                className="atividade-item"
-                key={atividade.id}
-              >
-                <span>
-                  {atividade.mensagem}
-                </span>
+              <div className="atividade-item" key={atividade.id}>
+                <span>{atividade.mensagem}</span>
 
                 <small>
-                  {new Date(
-                    atividade.data
-                  ).toLocaleString(
-                    "pt-BR"
-                  )}
+                  {new Date(atividade.data).toLocaleString("pt-BR")}
                 </small>
               </div>
             ))}
@@ -108,17 +95,11 @@ export default function Dashboard() {
           <div className="painel-box">
             <h2>Status Sistema</h2>
 
-            <div className="status-item online">
-              API Online
-            </div>
+            <div className="status-item online">API Online</div>
 
-            <div className="status-item online">
-              Firebase Conectado
-            </div>
+            <div className="status-item online">Firebase Conectado</div>
 
-            <div className="status-item online">
-              Painel Operacional
-            </div>
+            <div className="status-item online">Painel Operacional</div>
           </div>
         </section>
       </main>

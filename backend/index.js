@@ -60,6 +60,17 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/dashboard/test", (req, res) => {
+  res.json({ ok: true });
+});
+
+app.get("/ping", (req, res) => {
+  res.json({
+    message: "API OK",
+    time: new Date(),
+  });
+});
+
 app.use("/dashboard", dashboardRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/bots", botsRoutes);
