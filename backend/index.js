@@ -4,19 +4,24 @@ const express = require("express");
 const cors = require("cors");
 
 const dashboardRoutes = require("./routes/dashboard");
+
 const clientesRoutes = require("./routes/clientes");
+
 const botsRoutes = require("./routes/bots");
+
 const atividadesRoutes = require("./routes/atividades");
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "*",
-  }),
-);
+app.get("/", (req, res) => {
+  res.json({
+    online: true,
+  });
+});
 
 app.use("/dashboard", dashboardRoutes);
 app.use("/clientes", clientesRoutes);
