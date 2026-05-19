@@ -20,17 +20,17 @@ export default function Sidebar() {
             Dashboard
           </a>
 
-          <a href="#/painel/clientes">
-            Clientes
-          </a>
+          <a href="#/painel/clientes">Clientes</a>
 
           {/* <a href="#/painel/licencas">
             Licenças
           </a> */}
 
-          <a href="#/painel/bots">
-            Bots
-          </a>
+          <a href="#/painel/bots">Bots</a>
+
+          <li>
+            <a href="/#/financeiro">Financeiro</a>
+          </li>
 
           {/* <a href="#/painel/logs">
             Logs

@@ -108,9 +108,12 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    const cliente = await db.collection("clientes").doc(id).get();
+    const nome = cliente.data().nome;
+
     await db.collection("clientes").doc(id).delete();
 
-    await registrarAtividade("Cliente excluído");
+    await registrarAtividade(`Cliente excluído: ${nome}`);
 
     res.json({ sucesso: true });
   } catch (err) {

@@ -1,43 +1,42 @@
 const express = require("express");
-
 const { db } = require("../firebase");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const clientesSnapshot =
-      await db
-        .collection("clientes")
-        .get();
+    const clientesSnapshot = await db.collection("clientes").get();
 
-    const clientes =
-      clientesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const clientes = clientesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-    const totalClientes =
-      clientes.length;
-
-    const totalLicencas =
-      clientes.length;
-
-    const totalServidores =
-      clientes.length;
+    let totalClientes = clientes.length;
 
     let totalBots = 0;
 
+    let receitaEntrada = 0; // valorPago
+    let receitaMensal = 0; // valorMensal
+
     clientes.forEach((cliente) => {
-      totalBots +=
-        cliente.bots?.length || 0;
+      totalBots += cliente.bots?.length || 0;
+
+      receitaEntrada += Number(cliente.valorPago || 0);
+      receitaMensal += Number(cliente.valorMensal || 0);
     });
+
+    const receitaTotalEstimada = receitaEntrada + receitaMensal;
 
     res.json({
       clientes: totalClientes,
-      licencas: totalLicencas,
-      servidores: totalServidores,
       bots: totalBots,
+
+      financeiro: {
+        entrada: receitaEntrada,
+        mensal: receitaMensal,
+        total: receitaTotalEstimada,
+      },
     });
   } catch (err) {
     console.log(err);
