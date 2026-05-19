@@ -81,7 +81,7 @@
 }
 
 .painel-table th {
-  text-align: left;
+  text-align: center;
   padding: 18px;
   color: #8fb7ea;
 }
@@ -89,6 +89,14 @@
 .painel-table td {
   padding: 18px;
   border-top: 1px solid #1f2b42;
+}
+
+.painel-table tbody{
+  text-align: center;
+}
+
+.painel-table tbody tr:hover {
+  background: #1a2233;
 }
 
 .status-badge {
