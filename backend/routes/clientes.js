@@ -1,9 +1,6 @@
 const express = require("express");
-
 const { db } = require("../firebase");
 const { registrarAtividade } = require("../utils/atividade");
-const upload = require("../middleware/upload");
-const { bucket } = require("../firebase");
 
 const router = express.Router();
 
@@ -27,37 +24,20 @@ router.get("/", async (req, res) => {
 });
 
 // =====================
-// CRIAR CLIENTE (COM UPLOAD)
+// CRIAR CLIENTE (SEM UPLOAD)
 // =====================
-router.post("/", upload.single("comprovante"), async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { nome, discord, whatsapp, valorPago, valorMensal, renovacao, bots } =
-      req.body;
-
-    let comprovanteUrl = "";
-
-    if (req.file) {
-      const file = bucket.file(
-        `comprovantes/${Date.now()}_${req.file.originalname}`,
-      );
-
-      await file.save(req.file.buffer, {
-        contentType: req.file.mimetype,
-      });
-
-      await file.makePublic();
-
-      comprovanteUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
-    }
-
-    // 🔥 FIX PRINCIPAL: parse do JSON vindo do FormData
-    let botsParsed = [];
-
-    try {
-      botsParsed = JSON.parse(bots || "[]");
-    } catch {
-      botsParsed = [];
-    }
+    const {
+      nome,
+      discord,
+      whatsapp,
+      valorPago,
+      valorMensal,
+      renovacao,
+      bots,
+      comprovanteUrl,
+    } = req.body;
 
     const novoCliente = {
       nome,
@@ -66,8 +46,8 @@ router.post("/", upload.single("comprovante"), async (req, res) => {
       valorPago: Number(valorPago || 0),
       valorMensal: Number(valorMensal || 0),
       renovacao,
-      bots: botsParsed,
-      comprovanteUrl,
+      bots: bots || [],
+      comprovanteUrl: comprovanteUrl || "",
       ativo: true,
       criadoEm: Date.now(),
     };
@@ -84,27 +64,33 @@ router.post("/", upload.single("comprovante"), async (req, res) => {
 });
 
 // =====================
-// EDITAR CLIENTE
+// EDITAR
 // =====================
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { nome, discord, whatsapp, valorPago, valorMensal, renovacao, bots } =
-      req.body;
+    const {
+      nome,
+      discord,
+      whatsapp,
+      valorPago,
+      valorMensal,
+      renovacao,
+      bots,
+      comprovanteUrl,
+    } = req.body;
 
-    await db
-      .collection("clientes")
-      .doc(id)
-      .update({
-        nome,
-        discord,
-        whatsapp,
-        valorPago: Number(valorPago || 0),
-        valorMensal: Number(valorMensal || 0),
-        renovacao,
-        bots: bots || [],
-      });
+    await db.collection("clientes").doc(id).update({
+      nome,
+      discord,
+      whatsapp,
+      valorPago: Number(valorPago || 0),
+      valorMensal: Number(valorMensal || 0),
+      renovacao,
+      bots,
+      comprovanteUrl,
+    });
 
     await registrarAtividade(`Cliente atualizado: ${nome}`);
 
@@ -116,18 +102,15 @@ router.put("/:id", async (req, res) => {
 });
 
 // =====================
-// DELETAR CLIENTE
+// DELETE
 // =====================
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const doc = await db.collection("clientes").doc(id).get();
-    const cliente = doc.data();
-
     await db.collection("clientes").doc(id).delete();
 
-    await registrarAtividade(`Cliente excluído: ${cliente?.nome || id}`);
+    await registrarAtividade("Cliente excluído");
 
     res.json({ sucesso: true });
   } catch (err) {

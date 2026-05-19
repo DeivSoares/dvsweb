@@ -24,7 +24,7 @@ export default function Clientes() {
   const [valorMensal, setValorMensal] = useState("");
   const [renovacao, setRenovacao] = useState("");
 
-  const [comprovante, setComprovante] = useState(null);
+  const [comprovanteUrl, setComprovanteUrl] = useState("");
 
   const [botSelecionado, setBotSelecionado] = useState([]);
 
@@ -39,7 +39,13 @@ export default function Clientes() {
 
       console.log("CLIENTES:", res.data);
 
-      setClientes(Array.isArray(res.data) ? res.data : []);
+      if (!Array.isArray(res.data)) {
+        console.log("Resposta inválida:", res.data);
+        setClientes([]);
+        return;
+      }
+
+      setClientes(res.data);
     } catch (err) {
       console.log("ERRO CLIENTES:", err);
       setClientes([]);
@@ -81,7 +87,7 @@ export default function Clientes() {
     setValorMensal("");
     setRenovacao("");
     setBotSelecionado([]);
-    setComprovante(null);
+    setComprovanteUrl("");
     setEditId(null);
   }
 
@@ -89,22 +95,16 @@ export default function Clientes() {
   // CREATE
   // =====================
   async function criarCliente() {
-    const formData = new FormData();
-
-    formData.append("nome", nome);
-    formData.append("discord", discord);
-    formData.append("whatsapp", whatsapp);
-    formData.append("valorPago", valorPago);
-    formData.append("valorMensal", valorMensal);
-    formData.append("renovacao", renovacao);
-
-    formData.append("bots", JSON.stringify(botSelecionado));
-
-    if (comprovante) {
-      formData.append("comprovante", comprovante);
-    }
-
-    await api.post("/clientes", formData);
+    await api.post("/clientes", {
+      nome,
+      discord,
+      whatsapp,
+      valorPago,
+      valorMensal,
+      renovacao,
+      bots: botSelecionado,
+      comprovanteUrl,
+    });
 
     limpar();
     setModal(false);
@@ -123,6 +123,7 @@ export default function Clientes() {
       valorMensal,
       renovacao,
       bots: botSelecionado,
+      comprovanteUrl, // 🔥 FALTAVA ISSO
     });
 
     limpar();
@@ -243,13 +244,11 @@ export default function Clientes() {
                   <td>{c.bots?.length || 0}</td>
 
                   <td>
-                    <button onClick={() => abrirVisualizar(c)}>
-                      Visualizar
-                    </button>
+                    <button className="primary-btn" onClick={() => abrirVisualizar(c)}>Visualizar</button>
 
-                    <button onClick={() => abrirEditar(c)}>Editar</button>
+                    <button className="edit-btn" onClick={() => abrirEditar(c)}>Editar</button>
 
-                    <button onClick={() => excluirCliente(c.id)}>
+                    <button className="delete-btn" onClick={() => excluirCliente(c.id)}>
                       Excluir
                     </button>
                   </td>
@@ -279,7 +278,9 @@ export default function Clientes() {
               />
             )}
 
-            <button onClick={() => setModalView(false)}>Fechar</button>
+            <button className="close-btn" onClick={() => setModalView(false)}>
+              Fechar
+            </button>
           </div>
         </div>
       )}
@@ -321,12 +322,11 @@ export default function Clientes() {
               onChange={(e) => setRenovacao(e.target.value)}
             />
 
-            {!editando && (
-              <input
-                type="file"
-                onChange={(e) => setComprovante(e.target.files[0])}
-              />
-            )}
+            <input
+              value={comprovanteUrl}
+              onChange={(e) => setComprovanteUrl(e.target.value)}
+              placeholder="Link do comprovante (imagem)"
+            />
 
             <div className="multi-bots">
               {bots.map((b) => (
@@ -347,7 +347,7 @@ export default function Clientes() {
               Salvar
             </button>
 
-            <button onClick={() => setModal(false)}>Fechar</button>
+            <button className="close-btn" onClick={() => setModal(false)}>Fechar</button>
           </div>
         </div>
       )}
