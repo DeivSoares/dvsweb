@@ -91,6 +91,7 @@ export default function Clientes() {
         discord,
         whatsapp,
         valorPago,
+        valorMensal,
         renovacao,
         bots: botSelecionado,
       });
@@ -222,6 +223,7 @@ export default function Clientes() {
                 <th>Whatsapp</th>
 
                 <th>Valor Pago</th>
+                <th>Valor da Mensalidade</th>
 
                 <th>Renovação</th>
 
@@ -241,6 +243,8 @@ export default function Clientes() {
                   <td>{cliente.whatsapp}</td>
 
                   <td>R$ {cliente.valorPago}</td>
+
+                  <td>R$ {cliente.valorMensal}</td>
 
                   <td>
                     <span
