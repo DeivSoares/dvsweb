@@ -53,9 +53,7 @@ export default function Clientes() {
   // =====================
   function toggleBot(id) {
     setBotSelecionado((prev) =>
-      prev.includes(id)
-        ? prev.filter((b) => b !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id],
     );
   }
 
@@ -124,7 +122,9 @@ export default function Clientes() {
   // DELETE
   // =====================
   async function excluirCliente(id) {
-    if (!confirm("Deseja excluir?")) return;
+    const confirmar = window.confirm("Deseja excluir?");
+
+    if (!confirmar) return;
 
     await api.delete(`/clientes/${id}`);
     carregarClientes();
@@ -224,9 +224,7 @@ export default function Clientes() {
                   <td>R$ {c.valorMensal}</td>
 
                   <td>
-                    <span>
-                      {calcularDiasRestantes(c.renovacao)}
-                    </span>
+                    <span>{calcularDiasRestantes(c.renovacao)}</span>
                   </td>
 
                   <td>{c.bots?.length || 0}</td>
@@ -236,9 +234,7 @@ export default function Clientes() {
                       Visualizar
                     </button>
 
-                    <button onClick={() => abrirEditar(c)}>
-                      Editar
-                    </button>
+                    <button onClick={() => abrirEditar(c)}>Editar</button>
 
                     <button onClick={() => excluirCliente(c.id)}>
                       Excluir
@@ -270,9 +266,7 @@ export default function Clientes() {
               />
             )}
 
-            <button onClick={() => setModalView(false)}>
-              Fechar
-            </button>
+            <button onClick={() => setModalView(false)}>Fechar</button>
           </div>
         </div>
       )}
@@ -283,12 +277,36 @@ export default function Clientes() {
           <div className="modal-box">
             <h2>{editando ? "Editar Cliente" : "Novo Cliente"}</h2>
 
-            <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" />
-            <input value={discord} onChange={(e) => setDiscord(e.target.value)} placeholder="Discord" />
-            <input value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} placeholder="WhatsApp" />
-            <input value={valorPago} onChange={(e) => setValorPago(e.target.value)} placeholder="Valor Pago" />
-            <input value={valorMensal} onChange={(e) => setValorMensal(e.target.value)} placeholder="Mensal" />
-            <input type="date" value={renovacao} onChange={(e) => setRenovacao(e.target.value)} />
+            <input
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              placeholder="Nome"
+            />
+            <input
+              value={discord}
+              onChange={(e) => setDiscord(e.target.value)}
+              placeholder="Discord"
+            />
+            <input
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              placeholder="WhatsApp"
+            />
+            <input
+              value={valorPago}
+              onChange={(e) => setValorPago(e.target.value)}
+              placeholder="Valor Pago"
+            />
+            <input
+              value={valorMensal}
+              onChange={(e) => setValorMensal(e.target.value)}
+              placeholder="Mensal"
+            />
+            <input
+              type="date"
+              value={renovacao}
+              onChange={(e) => setRenovacao(e.target.value)}
+            />
 
             {!editando && (
               <input
@@ -316,9 +334,7 @@ export default function Clientes() {
               Salvar
             </button>
 
-            <button onClick={() => setModal(false)}>
-              Fechar
-            </button>
+            <button onClick={() => setModal(false)}>Fechar</button>
           </div>
         </div>
       )}
