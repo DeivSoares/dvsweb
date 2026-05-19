@@ -5,6 +5,7 @@ import Sql from "./components/MySQL";
 import Dashboard from "./pages/Painel/Dashboard";
 import Clientes from "./pages/Painel/Clientes";
 import Bots from "./pages/Painel/Bots";
+import Financeiro from "./pages/Painel/Financeiro";
 
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/painel" element={<Dashboard />} />
         <Route path="/painel/clientes" element={<Clientes />} />
         <Route path="/painel/bots" element={<Bots />} />
+        <Route path="/painel/financeiro" element={<Financeiro />} />
       </Routes>
     </Router>
   );

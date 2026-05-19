@@ -4,22 +4,18 @@ import Sidebar from "../../components/painel/Sidebar";
 import Header from "../../components/painel/Header";
 
 export default function Financeiro() {
-  const [gasto, setGasto] = useState(0);
-  const [receita, setReceita] = useState(0);
-  const [lucro, setLucro] = useState(0);
-
-  const [novoGasto, setNovoGasto] = useState("");
+  const [dados, setDados] = useState(null);
+  const [gasto, setGasto] = useState("");
 
   async function carregar() {
     const res = await api.get("/dashboard");
-
-    setReceita(res.data.receita);
-    setLucro(res.data.lucro);
+    setDados(res.data);
+    setGasto(res.data.gastoMensal || 0);
   }
 
   async function salvarGasto() {
-    await api.put("/financeiro", {
-      gastoMensal: novoGasto,
+    await api.put("/dashboard/financeiro", {
+      gastoMensal: gasto,
     });
 
     carregar();
@@ -38,25 +34,33 @@ export default function Financeiro() {
 
         <h2>Financeiro</h2>
 
-        <div className="painel-box">
-          <p>Receita: R$ {receita}</p>
-          <p>Gasto mensal: R$ {gasto}</p>
-          <p>Lucro: R$ {lucro}</p>
-        </div>
+        {!dados ? (
+          <p>Carregando...</p>
+        ) : (
+          <>
+            <div className="painel-box">
+              <p>Receita mensal: R$ {dados.receitaMensal}</p>
+              <p>Gasto mensal: R$ {dados.gastoMensal}</p>
+              <p>
+                Lucro: <strong>R$ {dados.lucro}</strong>
+              </p>
+            </div>
 
-        <div className="painel-box">
-          <h3>Definir gasto mensal</h3>
+            <div className="painel-box">
+              <h3>Definir gasto mensal</h3>
 
-          <input
-            value={novoGasto}
-            onChange={(e) => setNovoGasto(e.target.value)}
-            placeholder="Ex: 500"
-          />
+              <input
+                value={gasto}
+                onChange={(e) => setGasto(e.target.value)}
+                placeholder="Ex: 2000"
+              />
 
-          <button onClick={salvarGasto} className="primary-btn">
-            Salvar
-          </button>
-        </div>
+              <button className="primary-btn" onClick={salvarGasto}>
+                Salvar
+              </button>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
