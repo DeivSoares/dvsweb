@@ -28,6 +28,8 @@ export default function Clientes() {
 
   const [renovacao, setRenovacao] = useState("");
 
+  const [valorMensal, setValorMensal] = useState("");
+
   const [botSelecionado, setBotSelecionado] = useState([]);
 
   async function carregarClientes() {
@@ -67,6 +69,7 @@ export default function Clientes() {
         discord,
         whatsapp,
         valorPago,
+        valorMensal,
         renovacao,
         bots: botSelecionado,
       });
@@ -140,15 +143,11 @@ export default function Clientes() {
 
   function limparFormulario() {
     setNome("");
-
     setDiscord("");
-
     setWhatsapp("");
-
     setValorPago("");
-
+    setValorMensal("");
     setRenovacao("");
-
     setBotSelecionado([]);
   }
 
@@ -312,6 +311,13 @@ export default function Clientes() {
               placeholder="Valor Pago"
               value={valorPago}
               onChange={(e) => setValorPago(e.target.value)}
+            />
+
+            <input
+              type="text"
+              placeholder="Valor da Mensalidade"
+              value={valorMensal}
+              onChange={(e) => setValorMensal(e.target.value)}
             />
 
             <input

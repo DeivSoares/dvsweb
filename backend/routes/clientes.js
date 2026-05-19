@@ -2,8 +2,13 @@ const express = require("express");
 
 const { db } = require("../firebase");
 const { registrarAtividade } = require("../utils/atividade");
+
 const router = express.Router();
 
+
+// =====================
+// LISTAR CLIENTES
+// =====================
 router.get("/", async (req, res) => {
   try {
     const snapshot = await db.collection("clientes").get();
@@ -23,6 +28,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// =====================
+// CRIAR CLIENTE
+// =====================
 router.post("/", async (req, res) => {
   try {
     const {
@@ -30,7 +39,9 @@ router.post("/", async (req, res) => {
       discord,
       whatsapp,
       valorPago,
+      valorMensal,
       renovacao,
+      botId,
       bots,
     } = req.body;
 
@@ -38,10 +49,14 @@ router.post("/", async (req, res) => {
       nome,
       discord,
       whatsapp,
-      valorPago,
+
+      valorPago: Number(valorPago || 0),
+      valorMensal: Number(valorMensal || 0),
+
       renovacao,
 
-      bots: bots || [],
+      // suporta 1 ou vários bots
+      bots: bots || (botId ? [botId] : []),
 
       ativo: true,
 
@@ -60,6 +75,7 @@ router.post("/", async (req, res) => {
       id: doc.id,
       ...novoCliente,
     });
+
   } catch (err) {
     console.log(err);
 
@@ -69,24 +85,42 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+// =====================
+// EDITAR CLIENTE
+// =====================
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { nome, discord, whatsapp, valorPago, renovacao, bots } = req.body;
+    const {
+      nome,
+      discord,
+      whatsapp,
+      valorPago,
+      valorMensal,
+      renovacao,
+      bots,
+    } = req.body;
 
     await db.collection("clientes").doc(id).update({
       nome,
       discord,
       whatsapp,
-      valorPago,
+
+      valorPago: Number(valorPago || 0),
+      valorMensal: Number(valorMensal || 0),
+
       renovacao,
       bots,
     });
-    await registrarAtividade(`Cliente atualizado: ${nome}`);
-    res.json({
-      sucesso: true,
-    });
+
+    await registrarAtividade(
+      `Cliente atualizado: ${nome}`
+    );
+
+    res.json({ sucesso: true });
+
   } catch (err) {
     console.log(err);
 
@@ -96,17 +130,31 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
+// =====================
+// DELETAR CLIENTE
+// =====================
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    const doc = await db
+      .collection("clientes")
+      .doc(id)
+      .get();
+
+    const cliente = doc.data();
+
     await db.collection("clientes").doc(id).delete();
 
-    await registrarAtividade("Cliente excluído");
+    await registrarAtividade(
+      `Cliente excluído: ${cliente?.nome || id}`
+    );
 
     res.json({
       sucesso: true,
     });
+
   } catch (err) {
     console.log(err);
 
