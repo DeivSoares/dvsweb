@@ -10,24 +10,35 @@ const router = express.Router();
 // =====================
 // LISTAR CLIENTES
 // =====================
+router.get("/", async (req, res) => {
+  try {
+    const snapshot = await db.collection("clientes").get();
+
+    const clientes = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    res.json(clientes);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Erro interno" });
+  }
+});
+
+// =====================
+// CRIAR CLIENTE (COM UPLOAD)
+// =====================
 router.post("/", upload.single("comprovante"), async (req, res) => {
   try {
-    const {
-      nome,
-      discord,
-      whatsapp,
-      valorPago,
-      valorMensal,
-      renovacao,
-      botId,
-      bots,
-    } = req.body;
+    const { nome, discord, whatsapp, valorPago, valorMensal, renovacao, bots } =
+      req.body;
 
     let comprovanteUrl = "";
 
     if (req.file) {
       const file = bucket.file(
-        `comprovantes/${Date.now()}_${req.file.originalname}`
+        `comprovantes/${Date.now()}_${req.file.originalname}`,
       );
 
       await file.save(req.file.buffer, {
@@ -36,8 +47,16 @@ router.post("/", upload.single("comprovante"), async (req, res) => {
 
       await file.makePublic();
 
-      comprovanteUrl =
-        `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+      comprovanteUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+    }
+
+    // 🔥 FIX PRINCIPAL: parse do JSON vindo do FormData
+    let botsParsed = [];
+
+    try {
+      botsParsed = JSON.parse(bots || "[]");
+    } catch {
+      botsParsed = [];
     }
 
     const novoCliente = {
@@ -47,7 +66,7 @@ router.post("/", upload.single("comprovante"), async (req, res) => {
       valorPago: Number(valorPago || 0),
       valorMensal: Number(valorMensal || 0),
       renovacao,
-      bots: bots || (botId ? [botId] : []),
+      bots: botsParsed,
       comprovanteUrl,
       ativo: true,
       criadoEm: Date.now(),
@@ -55,66 +74,12 @@ router.post("/", upload.single("comprovante"), async (req, res) => {
 
     const doc = await db.collection("clientes").add(novoCliente);
 
-    await registrarAtividade(
-      `Novo cliente cadastrado: ${nome}`
-    );
+    await registrarAtividade(`Novo cliente cadastrado: ${nome}`);
 
     res.json({ id: doc.id, ...novoCliente });
-
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Erro interno" });
-  }
-});
-
-// =====================
-// CRIAR CLIENTE
-// =====================
-router.post("/", async (req, res) => {
-  try {
-    const {
-      nome,
-      discord,
-      whatsapp,
-      valorPago,
-      valorMensal,
-      renovacao,
-      botId,
-      bots,
-    } = req.body;
-
-    const novoCliente = {
-      nome,
-      discord,
-      whatsapp,
-
-      valorPago: Number(valorPago || 0),
-      valorMensal: Number(valorMensal || 0),
-
-      renovacao,
-
-      // suporta 1 ou vários bots
-      bots: bots || (botId ? [botId] : []),
-
-      ativo: true,
-
-      criadoEm: Date.now(),
-    };
-
-    const doc = await db.collection("clientes").add(novoCliente);
-
-    await registrarAtividade(`Novo cliente cadastrado: ${nome}`);
-
-    res.json({
-      id: doc.id,
-      ...novoCliente,
-    });
-  } catch (err) {
-    console.log(err);
-
-    res.status(500).json({
-      error: "Erro interno",
-    });
   }
 });
 
@@ -135,12 +100,10 @@ router.put("/:id", async (req, res) => {
         nome,
         discord,
         whatsapp,
-
         valorPago: Number(valorPago || 0),
         valorMensal: Number(valorMensal || 0),
-
         renovacao,
-        bots,
+        bots: bots || [],
       });
 
     await registrarAtividade(`Cliente atualizado: ${nome}`);
@@ -148,10 +111,7 @@ router.put("/:id", async (req, res) => {
     res.json({ sucesso: true });
   } catch (err) {
     console.log(err);
-
-    res.status(500).json({
-      error: "Erro interno",
-    });
+    res.status(500).json({ error: "Erro interno" });
   }
 });
 
@@ -163,22 +123,16 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     const doc = await db.collection("clientes").doc(id).get();
-
     const cliente = doc.data();
 
     await db.collection("clientes").doc(id).delete();
 
     await registrarAtividade(`Cliente excluído: ${cliente?.nome || id}`);
 
-    res.json({
-      sucesso: true,
-    });
+    res.json({ sucesso: true });
   } catch (err) {
     console.log(err);
-
-    res.status(500).json({
-      error: "Erro interno",
-    });
+    res.status(500).json({ error: "Erro interno" });
   }
 });
 

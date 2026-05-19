@@ -37,9 +37,11 @@ export default function Clientes() {
     try {
       const res = await api.get("/clientes");
 
+      console.log("CLIENTES:", res.data);
+
       setClientes(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
-      console.log(err);
+      console.log("ERRO CLIENTES:", err);
       setClientes([]);
     }
   }
