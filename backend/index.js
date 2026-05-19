@@ -3,17 +3,16 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-const dashboardRoutes =
-  require("./routes/dashboard");
+const dashboardRoutes = require("./routes/dashboard");
 
-const clientesRoutes =
-  require("./routes/clientes");
+const clientesRoutes = require("./routes/clientes");
 
-const botsRoutes =
-  require("./routes/bots");
+const botsRoutes = require("./routes/bots");
 
-const atividadesRoutes =
-  require("./routes/atividades");
+const atividadesRoutes = require("./routes/atividades");
+
+const financeiroRoutes = require("./routes/financeiro");
+
 
 const app = express();
 
@@ -29,27 +28,16 @@ app.use(
       "Authorization",
       "ngrok-skip-browser-warning",
     ],
-  })
+  }),
 );
 
-app.options("*", cors());
-
 app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "*"
-  );
-
-  res.header(
-    "Access-Control-Allow-Headers",
-    "*"
-  );
-
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE"
-  );
-
+  res.header("Access-Control-Allow-Origin", "*");
+  
+  res.header("Access-Control-Allow-Headers", "*");
+  
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  
   next();
 });
 
@@ -74,9 +62,9 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/bots", botsRoutes);
 app.use("/atividades", atividadesRoutes);
+app.use("/financeiro", financeiroRoutes);
 
-const PORT =
-  process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("API ONLINE");
