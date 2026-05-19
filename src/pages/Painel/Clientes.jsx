@@ -34,13 +34,24 @@ export default function Clientes() {
   // LOAD
   // =====================
   async function carregarClientes() {
-    const res = await api.get("/clientes");
-    setClientes(res.data);
+    try {
+      const res = await api.get("/clientes");
+
+      setClientes(Array.isArray(res.data) ? res.data : []);
+    } catch (err) {
+      console.log(err);
+      setClientes([]);
+    }
   }
 
   async function carregarBots() {
-    const res = await api.get("/bots");
-    setBots(res.data);
+    try {
+      const res = await api.get("/bots");
+      setBots(res.data);
+    } catch (err) {
+      console.log(err);
+      setBots([]);
+    }
   }
 
   useEffect(() => {
@@ -215,7 +226,7 @@ export default function Clientes() {
             </thead>
 
             <tbody>
-              {clientes.map((c) => (
+              {clientes?.map((c) => (
                 <tr key={c.id}>
                   <td>{c.nome}</td>
                   <td>{c.discord}</td>

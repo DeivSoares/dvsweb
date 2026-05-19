@@ -519,3 +519,23 @@
 
   color: #ff5f8f;
 }
+
+.multi-bots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.multi-bot-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.multi-bot-btn.selected {
+  background: #6d5efc;
+  border-color: #6d5efc;
+}
