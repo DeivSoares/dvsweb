@@ -39,14 +39,6 @@ export default function Financeiro() {
         ) : (
           <>
             <div className="painel-box">
-              <p>Receita mensal: R$ {dados.receitaMensal}</p>
-              <p>Gasto mensal: R$ {dados.gastoMensal}</p>
-              <p>
-                Lucro: <strong>R$ {dados.lucro}</strong>
-              </p>
-            </div>
-
-            <div className="painel-box">
               <h3>Definir gasto mensal</h3>
 
               <input
@@ -58,6 +50,13 @@ export default function Financeiro() {
               <button className="primary-btn" onClick={salvarGasto}>
                 Salvar
               </button>
+            </div>
+            <div className="painel-box">
+              <p>Receita mensal: R$ {dados.receitaMensal}</p>
+              <p>Gasto mensal: R$ {dados.gastoMensal}</p>
+              <p>
+                Lucro: <strong>R$ {dados.lucro}</strong>
+              </p>
             </div>
           </>
         )}

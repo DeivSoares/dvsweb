@@ -4,7 +4,7 @@ const { db } = require("../firebase");
 const router = express.Router();
 
 // =====================
-// GET DASHBOARD + FINANCEIRO
+// DASHBOARD PRINCIPAL
 // =====================
 router.get("/", async (req, res) => {
   try {
@@ -15,39 +15,53 @@ router.get("/", async (req, res) => {
       ...doc.data(),
     }));
 
-    let totalMensal = 0;
-    let totalClientes = clientes.length;
+    const totalClientes = clientes.length;
+
     let totalBots = 0;
+    let totalMensal = 0;
 
     clientes.forEach((c) => {
-      totalMensal += Number(c.valorMensal || 0);
       totalBots += c.bots?.length || 0;
+      totalMensal += Number(c.valorMensal || 0);
     });
 
-    // pega gasto mensal salvo
-    const financeiroDoc = await db.collection("config").doc("financeiro").get();
+    // financeiro (gasto da empresa)
+    const financeiroDoc = await db
+      .collection("config")
+      .doc("financeiro")
+      .get();
 
-    const gastoMensal = financeiroDoc.exists
-      ? financeiroDoc.data().gastoMensal || 0
-      : 0;
+    const gastoMensal =
+      financeiroDoc.exists
+        ? Number(financeiroDoc.data().gastoMensal || 0)
+        : 0;
 
     const lucro = totalMensal - gastoMensal;
 
     res.json({
       clientes: totalClientes,
+
+      // 🔥 compatibilidade com seu sistema antigo
+      licencas: totalClientes,
+      servidores: totalClientes,
+
+      // novos dados
       bots: totalBots,
       receitaMensal: totalMensal,
       gastoMensal,
       lucro,
     });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Erro interno" });
+    console.log("Erro dashboard:", err);
+
+    res.status(500).json({
+      error: "Erro interno",
+    });
   }
 });
 
 // =====================
-// SET GASTO MENSAL
+// DEFINIR GASTO MENSAL
 // =====================
 router.put("/financeiro", async (req, res) => {
   try {
@@ -55,12 +69,18 @@ router.put("/financeiro", async (req, res) => {
 
     await db.collection("config").doc("financeiro").set({
       gastoMensal: Number(gastoMensal || 0),
+      atualizadoEm: Date.now(),
     });
 
-    res.json({ sucesso: true });
+    res.json({
+      sucesso: true,
+    });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Erro interno" });
+    console.log("Erro financeiro:", err);
+
+    res.status(500).json({
+      error: "Erro interno",
+    });
   }
 });
 
