@@ -244,7 +244,7 @@ export default function Clientes() {
                   <td>{c.bots?.length || 0}</td>
 
                   <td>
-                    <button className="primary-btn" onClick={() => abrirVisualizar(c)}>Visualizar</button>
+                    <button className="view-btn" onClick={() => abrirVisualizar(c)}>Visualizar</button>
 
                     <button className="edit-btn" onClick={() => abrirEditar(c)}>Editar</button>
 
@@ -274,7 +274,7 @@ export default function Clientes() {
             {clienteSelecionado.comprovanteUrl && (
               <img
                 src={clienteSelecionado.comprovanteUrl}
-                style={{ width: "100%", borderRadius: 8 }}
+                style={{ width: "40%", borderRadius: 8 }}
               />
             )}
 

@@ -185,6 +185,21 @@
   cursor: pointer;
 }
 
+.view-btn {
+  background: #8fb7ea1f;
+  border: 1px solid #8fb7ea4d;
+  border-radius: 10px;
+  color: #8fb7ea;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: 0.2s;
+}
+
+.view-btn:hover {
+  background: #8fb7ea33;
+  transform: translateY(-2px);
+}
+
 .edit-btn {
   background: rgba(143, 183, 234, 0.12);
 
