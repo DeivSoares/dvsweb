@@ -2,32 +2,70 @@ const express = require("express");
 
 const { db } = require("../firebase");
 const { registrarAtividade } = require("../utils/atividade");
+const upload = require("../middleware/upload");
+const { bucket } = require("../firebase");
 
 const router = express.Router();
-
 
 // =====================
 // LISTAR CLIENTES
 // =====================
-router.get("/", async (req, res) => {
+router.post("/", upload.single("comprovante"), async (req, res) => {
   try {
-    const snapshot = await db.collection("clientes").get();
+    const {
+      nome,
+      discord,
+      whatsapp,
+      valorPago,
+      valorMensal,
+      renovacao,
+      botId,
+      bots,
+    } = req.body;
 
-    const clientes = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    let comprovanteUrl = "";
 
-    res.json(clientes);
+    if (req.file) {
+      const file = bucket.file(
+        `comprovantes/${Date.now()}_${req.file.originalname}`
+      );
+
+      await file.save(req.file.buffer, {
+        contentType: req.file.mimetype,
+      });
+
+      await file.makePublic();
+
+      comprovanteUrl =
+        `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+    }
+
+    const novoCliente = {
+      nome,
+      discord,
+      whatsapp,
+      valorPago: Number(valorPago || 0),
+      valorMensal: Number(valorMensal || 0),
+      renovacao,
+      bots: bots || (botId ? [botId] : []),
+      comprovanteUrl,
+      ativo: true,
+      criadoEm: Date.now(),
+    };
+
+    const doc = await db.collection("clientes").add(novoCliente);
+
+    await registrarAtividade(
+      `Novo cliente cadastrado: ${nome}`
+    );
+
+    res.json({ id: doc.id, ...novoCliente });
+
   } catch (err) {
     console.log(err);
-
-    res.status(500).json({
-      error: "Erro interno",
-    });
+    res.status(500).json({ error: "Erro interno" });
   }
 });
-
 
 // =====================
 // CRIAR CLIENTE
@@ -63,19 +101,14 @@ router.post("/", async (req, res) => {
       criadoEm: Date.now(),
     };
 
-    const doc = await db
-      .collection("clientes")
-      .add(novoCliente);
+    const doc = await db.collection("clientes").add(novoCliente);
 
-    await registrarAtividade(
-      `Novo cliente cadastrado: ${nome}`
-    );
+    await registrarAtividade(`Novo cliente cadastrado: ${nome}`);
 
     res.json({
       id: doc.id,
       ...novoCliente,
     });
-
   } catch (err) {
     console.log(err);
 
@@ -84,7 +117,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
-
 
 // =====================
 // EDITAR CLIENTE
@@ -93,34 +125,27 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {
-      nome,
-      discord,
-      whatsapp,
-      valorPago,
-      valorMensal,
-      renovacao,
-      bots,
-    } = req.body;
+    const { nome, discord, whatsapp, valorPago, valorMensal, renovacao, bots } =
+      req.body;
 
-    await db.collection("clientes").doc(id).update({
-      nome,
-      discord,
-      whatsapp,
+    await db
+      .collection("clientes")
+      .doc(id)
+      .update({
+        nome,
+        discord,
+        whatsapp,
 
-      valorPago: Number(valorPago || 0),
-      valorMensal: Number(valorMensal || 0),
+        valorPago: Number(valorPago || 0),
+        valorMensal: Number(valorMensal || 0),
 
-      renovacao,
-      bots,
-    });
+        renovacao,
+        bots,
+      });
 
-    await registrarAtividade(
-      `Cliente atualizado: ${nome}`
-    );
+    await registrarAtividade(`Cliente atualizado: ${nome}`);
 
     res.json({ sucesso: true });
-
   } catch (err) {
     console.log(err);
 
@@ -130,7 +155,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-
 // =====================
 // DELETAR CLIENTE
 // =====================
@@ -138,23 +162,17 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const doc = await db
-      .collection("clientes")
-      .doc(id)
-      .get();
+    const doc = await db.collection("clientes").doc(id).get();
 
     const cliente = doc.data();
 
     await db.collection("clientes").doc(id).delete();
 
-    await registrarAtividade(
-      `Cliente excluído: ${cliente?.nome || id}`
-    );
+    await registrarAtividade(`Cliente excluído: ${cliente?.nome || id}`);
 
     res.json({
       sucesso: true,
     });
-
   } catch (err) {
     console.log(err);
 

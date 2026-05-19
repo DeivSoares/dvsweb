@@ -1,21 +1,17 @@
 const admin = require("firebase-admin");
 
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId:
-      process.env.FIREBASE_PROJECT_ID,
+const serviceAccount = require("./config/firebase.json");
 
-    clientEmail:
-      process.env.FIREBASE_CLIENT_EMAIL,
+// evita reinicialização em hot reload / deploy
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
 
-    privateKey:
-      process.env.FIREBASE_PRIVATE_KEY.replace(
-        /\\n/g,
-        "\n"
-      ),
-  }),
-});
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "dvs-painel.appspot.com",
+  });
+}
 
 const db = admin.firestore();
+const bucket = admin.storage().bucket();
 
-module.exports = { db };
+module.exports = { db, bucket };
