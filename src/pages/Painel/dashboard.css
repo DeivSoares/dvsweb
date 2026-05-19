@@ -502,7 +502,7 @@
   gap: 10px;
 }
 
-.multi-bot-btn {
+.multi-bots button {
   background: #131b2a;
   border: 1px solid #1f2b42;
   color: white;
@@ -512,11 +512,11 @@
   transition: 0.2s;
 }
 
-.multi-bot-btn:hover {
+.multi-bots button:hover {
   border-color: #8fb7ea;
 }
 
-.multi-bot-btn.selected {
+.multi-bots button.selected {
   background: linear-gradient(135deg, #6e9bd0, #8fb7ea);
   color: #05070d;
   border-color: transparent;
