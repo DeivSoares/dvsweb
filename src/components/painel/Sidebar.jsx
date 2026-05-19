@@ -28,9 +28,7 @@ export default function Sidebar() {
 
           <a href="#/painel/bots">Bots</a>
 
-          <li>
-            <a href="/#/financeiro">Financeiro</a>
-          </li>
+          <a href="#/painel/financeiro">Financeiro</a>
 
           {/* <a href="#/painel/logs">
             Logs
