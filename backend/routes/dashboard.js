@@ -3,9 +3,6 @@ const { db } = require("../firebase");
 
 const router = express.Router();
 
-// =====================
-// DASHBOARD PRINCIPAL
-// =====================
 router.get("/", async (req, res) => {
   try {
     const clientesSnapshot = await db.collection("clientes").get();
@@ -18,14 +15,22 @@ router.get("/", async (req, res) => {
     const totalClientes = clientes.length;
 
     let totalBots = 0;
-    let totalMensal = 0;
+
+    // 💰 RECEITAS
+    let receitaInstalacao = 0;
+    let receitaMensal = 0;
 
     clientes.forEach((c) => {
       totalBots += c.bots?.length || 0;
-      totalMensal += Number(c.valorMensal || 0);
+
+      // entrada (instalação + primeira mensalidade)
+      receitaInstalacao += Number(c.valorPago || 0);
+
+      // recorrência (mensalidade real)
+      receitaMensal += Number(c.valorMensal || 0);
     });
 
-    // financeiro (gasto da empresa)
+    // gasto mensal da empresa
     const financeiroDoc = await db
       .collection("config")
       .doc("financeiro")
@@ -36,27 +41,29 @@ router.get("/", async (req, res) => {
         ? Number(financeiroDoc.data().gastoMensal || 0)
         : 0;
 
-    const lucro = totalMensal - gastoMensal;
+    // lucro baseado no mensal recorrente
+    const lucro = receitaMensal - gastoMensal;
 
     res.json({
       clientes: totalClientes,
 
-      // 🔥 compatibilidade com seu sistema antigo
+      // compatibilidade antiga
       licencas: totalClientes,
       servidores: totalClientes,
 
-      // novos dados
       bots: totalBots,
-      receitaMensal: totalMensal,
+
+      // 🔥 NOVO MODELO FINANCEIRO
+      receitaInstalacao,
+      receitaMensal, // <-- ESSA é a importante (MRR)
+
       gastoMensal,
       lucro,
     });
   } catch (err) {
     console.log("Erro dashboard:", err);
 
-    res.status(500).json({
-      error: "Erro interno",
-    });
+    res.status(500).json({ error: "Erro interno" });
   }
 });
 
@@ -72,15 +79,11 @@ router.put("/financeiro", async (req, res) => {
       atualizadoEm: Date.now(),
     });
 
-    res.json({
-      sucesso: true,
-    });
+    res.json({ sucesso: true });
   } catch (err) {
     console.log("Erro financeiro:", err);
 
-    res.status(500).json({
-      error: "Erro interno",
-    });
+    res.status(500).json({ error: "Erro interno" });
   }
 });
 

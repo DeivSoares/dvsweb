@@ -9,13 +9,14 @@ export default function Financeiro() {
 
   async function carregar() {
     const res = await api.get("/dashboard");
+
     setDados(res.data);
     setGasto(res.data.gastoMensal || 0);
   }
 
   async function salvarGasto() {
     await api.put("/dashboard/financeiro", {
-      gastoMensal: gasto,
+      gastoMensal: Number(gasto),
     });
 
     carregar();
@@ -38,8 +39,9 @@ export default function Financeiro() {
           <p>Carregando...</p>
         ) : (
           <>
+            {/* ================= GASTO ================= */}
             <div className="painel-box">
-              <h3>Definir gasto mensal</h3>
+              <h3>Gasto mensal da empresa</h3>
 
               <input
                 value={gasto}
@@ -51,12 +53,37 @@ export default function Financeiro() {
                 Salvar
               </button>
             </div>
+
+            {/* ================= MÉTRICAS ================= */}
             <div className="painel-box">
-              <p>Receita mensal: R$ {dados.receitaMensal}</p>
-              <p>Gasto mensal: R$ {dados.gastoMensal}</p>
+              <h3>Métricas financeiras</h3>
+
               <p>
-                Lucro: <strong>R$ {dados.lucro}</strong>
+                💰 Receita instalação (entrada):{" "}
+                <strong>R$ {dados.receitaInstalacao}</strong>
               </p>
+
+              <p>
+                🔁 Receita mensal recorrente (MRR):{" "}
+                <strong>R$ {dados.receitaMensal}</strong>
+              </p>
+
+              <p>
+                💸 Gasto mensal: <strong>R$ {dados.gastoMensal}</strong>
+              </p>
+
+              <p>
+                📈 Lucro mensal:{" "}
+                <strong style={{ color: "#4cff9d" }}>R$ {dados.lucro}</strong>
+              </p>
+            </div>
+
+            {/* ================= RESUMO RÁPIDO ================= */}
+            <div className="painel-box">
+              <h3>Resumo</h3>
+
+              <p>Total de clientes: {dados.clientes}</p>
+              <p>Total de bots ativos: {dados.bots}</p>
             </div>
           </>
         )}
