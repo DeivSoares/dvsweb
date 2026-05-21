@@ -37,6 +37,9 @@ router.post("/", async (req, res) => {
       renovacao,
       bots,
       comprovanteUrl,
+      possuiSite,
+      site,
+      valorMensalSite,
     } = req.body;
 
     const novoCliente = {
@@ -50,6 +53,9 @@ router.post("/", async (req, res) => {
       comprovanteUrl: comprovanteUrl || "",
       ativo: true,
       criadoEm: Date.now(),
+      possuiSite: Boolean(possuiSite),
+      site: site || "",
+      valorMensalSite: Number(valorMensalSite || 0),
     };
 
     const doc = await db.collection("clientes").add(novoCliente);
@@ -81,16 +87,22 @@ router.put("/:id", async (req, res) => {
       comprovanteUrl,
     } = req.body;
 
-    await db.collection("clientes").doc(id).update({
-      nome,
-      discord,
-      whatsapp,
-      valorPago: Number(valorPago || 0),
-      valorMensal: Number(valorMensal || 0),
-      renovacao,
-      bots,
-      comprovanteUrl,
-    });
+    await db
+      .collection("clientes")
+      .doc(id)
+      .update({
+        nome,
+        discord,
+        whatsapp,
+        valorPago: Number(valorPago || 0),
+        valorMensal: Number(valorMensal || 0),
+        renovacao,
+        bots,
+        comprovanteUrl,
+        possuiSite: Boolean(possuiSite),
+        site: site || "",
+        valorMensalSite: Number(valorMensalSite || 0),
+      });
 
     await registrarAtividade(`Cliente atualizado: ${nome}`);
 

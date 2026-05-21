@@ -13,6 +13,7 @@ export default function Dashboard() {
     clientes: 0,
     licencas: 0,
     bots: 0,
+    sites: 0,
     servidores: 0,
   });
 
@@ -65,6 +66,8 @@ export default function Dashboard() {
           <Card title="Licenças" value={dados.licencas} />
 
           <Card title="Bots Vendidos" value={dados.bots} />
+
+          <Card title="Sites Online" value={dados.sites} />
 
           <Card title="Servidores" value={dados.servidores} />
         </section>

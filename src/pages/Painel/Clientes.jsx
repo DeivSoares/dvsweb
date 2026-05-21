@@ -10,24 +10,21 @@ import "./dashboard.css";
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [bots, setBots] = useState([]);
-
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(false);
-
   const [clienteSelecionado, setClienteSelecionado] = useState(null);
   const [modalView, setModalView] = useState(false);
-
   const [nome, setNome] = useState("");
   const [discord, setDiscord] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [valorPago, setValorPago] = useState("");
   const [valorMensal, setValorMensal] = useState("");
+  const [possuiSite, setPossuiSite] = useState(false);
+  const [site, setSite] = useState("");
+  const [valorMensalSite, setValorMensalSite] = useState("");
   const [renovacao, setRenovacao] = useState("");
-
   const [comprovanteUrl, setComprovanteUrl] = useState("");
-
   const [botSelecionado, setBotSelecionado] = useState([]);
-
   const [editId, setEditId] = useState(null);
 
   // =====================
@@ -104,6 +101,9 @@ export default function Clientes() {
       renovacao,
       bots: botSelecionado,
       comprovanteUrl,
+      possuiSite,
+      site,
+      valorMensalSite,
     });
 
     limpar();
@@ -244,11 +244,21 @@ export default function Clientes() {
                   <td>{c.bots?.length || 0}</td>
 
                   <td>
-                    <button className="view-btn" onClick={() => abrirVisualizar(c)}>Visualizar</button>
+                    <button
+                      className="view-btn"
+                      onClick={() => abrirVisualizar(c)}
+                    >
+                      Visualizar
+                    </button>
 
-                    <button className="edit-btn" onClick={() => abrirEditar(c)}>Editar</button>
+                    <button className="edit-btn" onClick={() => abrirEditar(c)}>
+                      Editar
+                    </button>
 
-                    <button className="delete-btn" onClick={() => excluirCliente(c.id)}>
+                    <button
+                      className="delete-btn"
+                      onClick={() => excluirCliente(c.id)}
+                    >
                       Excluir
                     </button>
                   </td>
@@ -317,6 +327,25 @@ export default function Clientes() {
               placeholder="Mensal"
             />
             <input
+              type="checkbox"
+              checked={possuiSite}
+              onChange={(e) => setPossuiSite(e.target.checked)}
+            />
+            {possuiSite && (
+              <input
+                value={site}
+                onChange={(e) => setSite(e.target.value)}
+                placeholder="Site"
+              />
+            )}
+            {possuiSite && (
+              <input
+                value={valorMensalSite}
+                onChange={(e) => setValorMensalSite(e.target.value)}
+                placeholder="Valor Mensal do Site"
+              />
+            )}
+            <input
               type="date"
               value={renovacao}
               onChange={(e) => setRenovacao(e.target.value)}
@@ -347,7 +376,9 @@ export default function Clientes() {
               Salvar
             </button>
 
-            <button className="close-btn" onClick={() => setModal(false)}>Fechar</button>
+            <button className="close-btn" onClick={() => setModal(false)}>
+              Fechar
+            </button>
           </div>
         </div>
       )}
