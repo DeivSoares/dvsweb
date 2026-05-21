@@ -124,6 +124,8 @@ export default function Clientes() {
       renovacao,
       bots: botSelecionado,
       comprovanteUrl, // 🔥 FALTAVA ISSO
+      site,
+      valorMensalSite,
     });
 
     limpar();
@@ -159,6 +161,8 @@ export default function Clientes() {
     setValorMensal(cliente.valorMensal || "");
     setRenovacao(cliente.renovacao || "");
     setBotSelecionado(cliente.bots || []);
+    setSite(cliente.site || "");
+    setValorMensalSite(cliente.valorMensalSite || "");
   }
 
   // =====================
@@ -222,8 +226,10 @@ export default function Clientes() {
                 <th>WhatsApp</th>
                 <th>Pago</th>
                 <th>Mensal</th>
+                <th>Mensalidade do Site</th>
                 <th>Renovação</th>
                 <th>Bots</th>
+                <th>Sites</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -236,12 +242,10 @@ export default function Clientes() {
                   <td>{c.whatsapp}</td>
                   <td>R$ {c.valorPago}</td>
                   <td>R$ {c.valorMensal}</td>
-
-                  <td>
-                    <span>{calcularDiasRestantes(c.renovacao)}</span>
-                  </td>
-
+                  <td>R$ {c.valorMensalSite}</td>
+                  <td><span>{calcularDiasRestantes(c.renovacao)}</span></td>
                   <td>{c.bots?.length || 0}</td>
+                  <td>{c.sites?.length || 0}</td>
 
                   <td>
                     <button
@@ -326,11 +330,14 @@ export default function Clientes() {
               onChange={(e) => setValorMensal(e.target.value)}
               placeholder="Mensal"
             />
-            <input
-              type="checkbox"
-              checked={possuiSite}
-              onChange={(e) => setPossuiSite(e.target.checked)}
-            />
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={possuiSite}
+                onChange={(e) => setPossuiSite(e.target.checked)}
+              />
+              Cliente possui site
+            </label>
             {possuiSite && (
               <input
                 value={site}
