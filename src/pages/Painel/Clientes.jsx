@@ -25,6 +25,7 @@ export default function Clientes() {
   const [valorMensal, setValorMensal] = useState("");
 
   const [possuiSite, setPossuiSite] = useState(false);
+  const [possuiBot, setPossuiBot] = useState(true);
 
   const [site, setSite] = useState("");
   const [valorPagoSite, setValorPagoSite] = useState("");
@@ -102,6 +103,7 @@ export default function Clientes() {
     setValorMensal("");
 
     setPossuiSite(false);
+    setPossuiBot(true);
 
     setSite("");
     setValorPagoSite("");
@@ -123,6 +125,8 @@ export default function Clientes() {
   // =====================
   async function criarCliente() {
     try {
+      const tipoCliente = possuiSite && possuiBot ? "bot_site" : possuiSite ? "site" : "bot";
+
       await api.post("/clientes", {
         nome,
         discord,
@@ -135,7 +139,7 @@ export default function Clientes() {
 
         comprovanteUrl,
 
-        tipo,
+        tipo: tipoCliente,
 
         possuiSite,
 
@@ -144,7 +148,7 @@ export default function Clientes() {
         valorPagoSite: Number(valorPagoSite || 0),
         valorMensalSite: Number(valorMensalSite || 0),
 
-        bots: tipo === "bot" ? botSelecionado : [],
+        bots: possuiBot ? botSelecionado : [],
       });
 
       limpar();
@@ -163,6 +167,8 @@ export default function Clientes() {
   // =====================
   async function salvarEdicao() {
     try {
+      const tipoCliente = possuiSite && possuiBot ? "bot_site" : possuiSite ? "site" : "bot";
+
       await api.put(`/clientes/${editId}`, {
         nome,
         discord,
@@ -175,7 +181,7 @@ export default function Clientes() {
 
         comprovanteUrl,
 
-        tipo,
+        tipo: tipoCliente,
 
         possuiSite,
 
@@ -184,7 +190,7 @@ export default function Clientes() {
         valorPagoSite: Number(valorPagoSite || 0),
         valorMensalSite: Number(valorMensalSite || 0),
 
-        bots: tipo === "bot" ? botSelecionado : [],
+        bots: possuiBot ? botSelecionado : [],
       });
 
       limpar();
@@ -240,7 +246,8 @@ export default function Clientes() {
 
     setBotSelecionado(cliente.bots || []);
 
-    setTipo(cliente.tipo || "bot");
+    setTipo(cliente.tipo === "site" ? "site" : "bot");
+    setPossuiBot(cliente.bots?.length > 0 || cliente.tipo === "bot_site" || cliente.tipo === "bot");
 
     setSite(cliente.site || "");
 
@@ -332,7 +339,7 @@ export default function Clientes() {
                 <tr key={c.id}>
                   <td>{c.nome}</td>
 
-                  <td>{c.tipo === "site" ? "🌐 Site" : "🤖 Bot"}</td>
+                  <td>{c.tipo === "site" ? "🌐 Site" : c.tipo === "bot_site" ? "🤖 Bot + Site" : "🤖 Bot"}</td>
 
                   <td>{c.discord}</td>
 
@@ -400,32 +407,38 @@ export default function Clientes() {
             <p>Nome: {clienteSelecionado.nome}</p>
 
             <p>
-              Tipo: {clienteSelecionado.tipo === "site" ? "🌐 Site" : "🤖 Bot"}
+              Tipo: {clienteSelecionado.tipo === "site" ? "🌐 Site" : clienteSelecionado.tipo === "bot_site" ? "🤖 Bot + Site" : "🤖 Bot"}
             </p>
 
             <p>Discord: {clienteSelecionado.discord}</p>
 
             <p>WhatsApp: {clienteSelecionado.whatsapp}</p>
 
-            <p>Valor Pago: R$ {clienteSelecionado.valorPago}</p>
-
-            <p>Mensalidade Bot: R$ {clienteSelecionado.valorMensal}</p>
-
-            {clienteSelecionado.site && (
+            {(clienteSelecionado.tipo === "site" || clienteSelecionado.tipo === "bot_site") && (
               <>
-                <p>
-                  Site:{" "}
-                  <a
-                    href={clienteSelecionado.site}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {clienteSelecionado.site}
-                  </a>
-                </p>
-
+                <p>Valor Pago (Site): R$ {clienteSelecionado.valorPagoSite}</p>
                 <p>Mensalidade Site: R$ {clienteSelecionado.valorMensalSite}</p>
               </>
+            )}
+
+            {(clienteSelecionado.tipo === "bot" || clienteSelecionado.tipo === "bot_site") && (
+              <>
+                <p>Valor Pago (Bot): R$ {clienteSelecionado.valorPago}</p>
+                <p>Mensalidade Bot: R$ {clienteSelecionado.valorMensal}</p>
+              </>
+            )}
+
+            {clienteSelecionado.site && (
+              <p>
+                Site:{" "}
+                <a
+                  href={clienteSelecionado.site}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {clienteSelecionado.site}
+                </a>
+              </p>
             )}
 
             {clienteSelecionado.comprovanteUrl && (
@@ -452,16 +465,6 @@ export default function Clientes() {
           <div className="modal-box">
             <h2>{editando ? "Editar Cliente" : "Novo Cliente"}</h2>
 
-            <select
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-              className="modal-select"
-            >
-              <option value="bot">Bot Discord</option>
-
-              <option value="site">Site</option>
-            </select>
-
             <input
               value={nome}
               onChange={(e) => setNome(e.target.value)}
@@ -480,7 +483,37 @@ export default function Clientes() {
               placeholder="WhatsApp"
             />
 
-            {tipo === "bot" ? (
+            <label className="checkbox-label">
+              <input
+                type="radio"
+                name="tipo"
+                value="bot"
+                checked={tipo === "bot"}
+                onChange={(e) => {
+                  setTipo(e.target.value);
+                  setPossuiSite(false);
+                  setPossuiBot(true);
+                }}
+              />
+              Bot Discord
+            </label>
+
+            <label className="checkbox-label">
+              <input
+                type="radio"
+                name="tipo"
+                value="site"
+                checked={tipo === "site"}
+                onChange={(e) => {
+                  setTipo(e.target.value);
+                  setPossuiSite(true);
+                  setPossuiBot(false);
+                }}
+              />
+              Site
+            </label>
+
+            {(tipo === "bot" || possuiBot) && (
               <>
                 <input
                   value={valorPago}
@@ -496,28 +529,6 @@ export default function Clientes() {
                   type="number"
                 />
               </>
-            ) : (
-              <>
-                <input
-                  value={valorPagoSite}
-                  onChange={(e) => setValorPagoSite(e.target.value)}
-                  placeholder="Valor Pago (Site)"
-                  type="number"
-                />
-
-                <input
-                  value={valorMensalSite}
-                  onChange={(e) => setValorMensalSite(e.target.value)}
-                  placeholder="Mensalidade (Site)"
-                  type="number"
-                />
-
-                <input
-                  value={site}
-                  onChange={(e) => setSite(e.target.value)}
-                  placeholder="Link do site"
-                />
-              </>
             )}
 
             <label className="checkbox-label">
@@ -529,7 +540,18 @@ export default function Clientes() {
               Cliente possui site
             </label>
 
-            {possuiSite && tipo === "bot" && (
+            {tipo === "site" && (
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={possuiBot}
+                  onChange={(e) => setPossuiBot(e.target.checked)}
+                />
+                Cliente possui bot
+              </label>
+            )}
+
+            {possuiSite && (
               <>
                 <input
                   value={site}
@@ -547,7 +569,7 @@ export default function Clientes() {
                 <input
                   value={valorMensalSite}
                   onChange={(e) => setValorMensalSite(e.target.value)}
-                  placeholder="Mensalidade do site"
+                  placeholder="Mensalidade (Site)"
                   type="number"
                 />
               </>
@@ -565,7 +587,7 @@ export default function Clientes() {
               placeholder="Link do comprovante"
             />
 
-            {tipo === "bot" && (
+            {(tipo === "bot" || possuiBot) && (
               <div className="multi-bots">
                 {bots.map((b) => (
                   <button

@@ -204,7 +204,7 @@ export default function Financeiro() {
             {/* ================= SITES ================= */}
             <div
               className="painel-box"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 10 }}
             >
               <h3>Financeiro dos Sites</h3>
 
@@ -214,7 +214,7 @@ export default function Financeiro() {
                   gridTemplateColumns:
                     "repeat(auto-fit, minmax(250px, 1fr))",
                   gap: 20,
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
               >
                 <div className="cliente-box">

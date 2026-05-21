@@ -65,14 +65,21 @@ router.get("/", async (req, res) => {
 
     // Contar clientes com tipo BOT para licenças e servidores
     const totalLicencasServidores = clientesFiltrados.filter(
-      (c) => c.tipo === "bot" || c.tipo === "BOT"
+      (c) =>
+        c.tipo === "bot" ||
+        c.tipo === "BOT" ||
+        c.tipo === "bot_site"
     ).length;
 
     clientesFiltrados.forEach((c) => {
       // =====================
-      // BOTS (apenas para clientes tipo BOT)
+      // BOTS (apenas para clientes tipo BOT ou bot_site)
       // =====================
-      if (c.tipo === "bot" || c.tipo === "BOT") {
+      if (
+        c.tipo === "bot" ||
+        c.tipo === "BOT" ||
+        c.tipo === "bot_site"
+      ) {
         const quantidadeBots = c.bots?.length || 0;
 
         totalBots += quantidadeBots;
