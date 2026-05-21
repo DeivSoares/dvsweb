@@ -3,6 +3,9 @@ const { db } = require("../firebase");
 
 const router = express.Router();
 
+// =====================
+// DASHBOARD + FINANCEIRO
+// =====================
 router.get("/", async (req, res) => {
   try {
     const clientesSnapshot = await db.collection("clientes").get();
@@ -12,61 +15,132 @@ router.get("/", async (req, res) => {
       ...doc.data(),
     }));
 
+    // =====================
+    // TOTAIS
+    // =====================
     const totalClientes = clientes.length;
 
     let totalBots = 0;
     let totalSites = 0;
 
-    // 💰 RECEITAS
-    let receitaInstalacao = 0;
-    let receitaMensal = 0;
-    let receitaBots = 0;
-    let receitaSites = 0;
+    // =====================
+    // RECEITAS
+    // =====================
+
+    // Entrada inicial (instalação)
+    let receitaInstalacaoBots = 0;
+    let receitaInstalacaoSites = 0;
+
+    // Mensal recorrente
+    let receitaMensalBots = 0;
+    let receitaMensalSites = 0;
+
+    // Contar clientes com tipo BOT para licenças e servidores
+    const totalLicencasServidores = clientes.filter(
+      (c) => c.tipo === "bot" || c.tipo === "BOT"
+    ).length;
 
     clientes.forEach((c) => {
-      totalBots += c.bots?.length || 0;
-      totalSites += c.possuiSite ? 1 : 0;
-      // entrada (instalação + primeira mensalidade)
-      receitaInstalacao += Number(c.valorPago || 0);
+      // =====================
+      // BOTS (apenas para clientes tipo BOT)
+      // =====================
+      if (c.tipo === "bot" || c.tipo === "BOT") {
+        const quantidadeBots = c.bots?.length || 0;
 
-      // recorrência (mensalidade real)
-      receitaMensal += Number(c.valorMensal || 0);
+        totalBots += quantidadeBots;
+
+        // instalação + primeira mensalidade do BOT
+        receitaInstalacaoBots += Number(c.valorPago || 0);
+
+        // mensalidade recorrente do BOT
+        receitaMensalBots += Number(c.valorMensal || 0);
+      }
+
+      // =====================
+      // SITES
+      // =====================
+      if (c.possuiSite) {
+        totalSites += 1;
+
+        // instalação do site
+        receitaInstalacaoSites += Number(c.valorPagoSite || 0);
+
+        // hospedagem / mensalidade site
+        receitaMensalSites += Number(c.valorMensalSite || 0);
+      }
     });
 
-    // gasto mensal da empresa
-    const financeiroDoc = await db.collection("config").doc("financeiro").get();
+    // =====================
+    // TOTAIS GERAIS
+    // =====================
+    const receitaInstalacaoTotal =
+      receitaInstalacaoBots + receitaInstalacaoSites;
+
+    const receitaMensalTotal =
+      receitaMensalBots + receitaMensalSites;
+
+    // =====================
+    // GASTO MENSAL
+    // =====================
+    const financeiroDoc = await db
+      .collection("config")
+      .doc("financeiro")
+      .get();
 
     const gastoMensal = financeiroDoc.exists
       ? Number(financeiroDoc.data().gastoMensal || 0)
       : 0;
 
-    // lucro baseado no mensal recorrente
-    const lucro = receitaMensal - gastoMensal;
+    // =====================
+    // LUCRO
+    // =====================
+    const lucro = receitaMensalTotal - gastoMensal;
 
+    // =====================
+    // RESPONSE
+    // =====================
     res.json({
+      // gerais
       clientes: totalClientes,
 
-      // compatibilidade antiga
-      licencas: totalClientes,
-      servidores: totalClientes,
+      // dashboard antigo
+      licencas: totalLicencasServidores,
+      servidores: totalLicencasServidores,
+
+      // quantidades
+      bots: totalBots,
       sites: totalSites,
 
-      bots: totalBots,
+      // =====================
+      // BOTS
+      // =====================
+      receitaInstalacaoBots,
+      receitaMensalBots,
 
-      // 🔥 NOVO MODELO FINANCEIRO
-      receitaInstalacao,
-      receitaMensal, // <-- ESSA é a importante (MRR)
+      // =====================
+      // SITES
+      // =====================
+      receitaInstalacaoSites,
+      receitaMensalSites,
 
+      // =====================
+      // TOTAIS
+      // =====================
+      receitaInstalacaoTotal,
+      receitaMensalTotal,
+
+      // =====================
+      // EMPRESA
+      // =====================
       gastoMensal,
       lucro,
-
-      receitaBots,
-      receitaSites,
     });
   } catch (err) {
     console.log("Erro dashboard:", err);
 
-    res.status(500).json({ error: "Erro interno" });
+    res.status(500).json({
+      error: "Erro interno",
+    });
   }
 });
 
@@ -85,11 +159,15 @@ router.put("/financeiro", async (req, res) => {
         atualizadoEm: Date.now(),
       });
 
-    res.json({ sucesso: true });
+    res.json({
+      sucesso: true,
+    });
   } catch (err) {
     console.log("Erro financeiro:", err);
 
-    res.status(500).json({ error: "Erro interno" });
+    res.status(500).json({
+      error: "Erro interno",
+    });
   }
 });
 

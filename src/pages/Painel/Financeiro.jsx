@@ -1,30 +1,57 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
+
 import Sidebar from "../../components/painel/Sidebar";
 import Header from "../../components/painel/Header";
+
+import "./dashboard.css";
 
 export default function Financeiro() {
   const [dados, setDados] = useState(null);
   const [gasto, setGasto] = useState("");
 
+  // =====================
+  // LOAD
+  // =====================
   async function carregar() {
-    const res = await api.get("/dashboard");
+    try {
+      const res = await api.get("/dashboard");
 
-    setDados(res.data);
-    setGasto(res.data.gastoMensal || 0);
+      setDados(res.data);
+      setGasto(res.data.gastoMensal || 0);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
+  // =====================
+  // SALVAR GASTO
+  // =====================
   async function salvarGasto() {
-    await api.put("/dashboard/financeiro", {
-      gastoMensal: Number(gasto),
-    });
+    try {
+      await api.put("/dashboard/financeiro", {
+        gastoMensal: Number(gasto),
+      });
 
-    carregar();
+      carregar();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
     carregar();
   }, []);
+
+  // =====================
+  // FORMATAR
+  // =====================
+  function money(value) {
+    return Number(value || 0).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
 
   return (
     <div className="dashboard-container">
@@ -33,57 +60,245 @@ export default function Financeiro() {
       <main className="dashboard-main">
         <Header />
 
-        <h2>Financeiro</h2>
+        <div className="page-top">
+          <h2>Financeiro</h2>
+        </div>
 
         {!dados ? (
           <p>Carregando...</p>
         ) : (
           <>
-            {/* ================= GASTO ================= */}
+            {/* ================= GASTO EMPRESA ================= */}
             <div className="painel-box">
               <h3>Gasto mensal da empresa</h3>
 
-              <input
-                value={gasto}
-                onChange={(e) => setGasto(e.target.value)}
-                placeholder="Ex: 2000"
-              />
+              <div
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  marginTop: 20,
+                }}
+              >
+                <input
+                  value={gasto}
+                  onChange={(e) => setGasto(e.target.value)}
+                  placeholder="Ex: 2000"
+                  style={{
+                    flex: 1,
+                    background: "#111827",
+                    border: "1px solid #1f2b42",
+                    borderRadius: 12,
+                    padding: 14,
+                    color: "white",
+                  }}
+                />
 
-              <button className="primary-btn" onClick={salvarGasto}>
-                Salvar
-              </button>
+                <button
+                  className="primary-btn"
+                  onClick={salvarGasto}
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
 
-            {/* ================= MÉTRICAS ================= */}
-            <div className="painel-box">
-              <h3>Métricas financeiras</h3>
+            {/* ================= BOTS ================= */}
+            <div
+              className="painel-box"
+              style={{ marginTop: 20 }}
+            >
+              <h3>Financeiro dos Bots</h3>
 
-              <p>
-                💰 Receita instalação (entrada):{" "}
-                <strong>R$ {dados.receitaInstalacao}</strong>
-              </p>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(250px, 1fr))",
+                  gap: 20,
+                  marginTop: 20,
+                }}
+              >
+                <div className="cliente-box">
+                  <h4>💰 Entrada Inicial</h4>
 
-              <p>
-                🔁 Receita mensal recorrente (MRR):{" "}
-                <strong>R$ {dados.receitaMensal}</strong>
-              </p>
+                  <p>
+                    {money(dados.receitaInstalacaoBots)}
+                  </p>
 
-              <p>
-                💸 Gasto mensal: <strong>R$ {dados.gastoMensal}</strong>
-              </p>
+                  <small>
+                    Instalação + primeira mensalidade
+                  </small>
+                </div>
 
-              <p>
-                📈 Lucro mensal:{" "}
-                <strong style={{ color: "#4cff9d" }}>R$ {dados.lucro}</strong>
-              </p>
+                <div className="cliente-box">
+                  <h4>🔁 Receita Mensal</h4>
+
+                  <p>
+                    {money(dados.receitaMensalBots)}
+                  </p>
+
+                  <small>
+                    Mensalidades recorrentes dos bots
+                  </small>
+                </div>
+              </div>
             </div>
 
-            {/* ================= RESUMO RÁPIDO ================= */}
-            <div className="painel-box">
-              <h3>Resumo</h3>
+            {/* ================= SITES ================= */}
+            <div
+              className="painel-box"
+              style={{ marginTop: 20 }}
+            >
+              <h3>Financeiro dos Sites</h3>
 
-              <p>Total de clientes: {dados.clientes}</p>
-              <p>Total de bots ativos: {dados.bots}</p>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(250px, 1fr))",
+                  gap: 20,
+                  marginTop: 20,
+                }}
+              >
+                <div className="cliente-box">
+                  <h4>🌐 Entrada Inicial</h4>
+
+                  <p>
+                    {money(dados.receitaInstalacaoSites)}
+                  </p>
+
+                  <small>
+                    Desenvolvimento / instalação dos sites
+                  </small>
+                </div>
+
+                <div className="cliente-box">
+                  <h4>🖥️ Receita Mensal</h4>
+
+                  <p>
+                    {money(dados.receitaMensalSites)}
+                  </p>
+
+                  <small>
+                    Hospedagem e manutenção mensal
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            {/* ================= TOTAL EMPRESA ================= */}
+            <div
+              className="painel-box"
+              style={{ marginTop: 20 }}
+            >
+              <h3>Resumo Geral da Empresa</h3>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(250px, 1fr))",
+                  gap: 20,
+                  marginTop: 20,
+                }}
+              >
+                <div className="cliente-box">
+                  <h4>💸 Entrada Total</h4>
+
+                  <p>
+                    {money(dados.receitaInstalacaoTotal)}
+                  </p>
+
+                  <small>
+                    Bots + Sites
+                  </small>
+                </div>
+
+                <div className="cliente-box">
+                  <h4>📈 Receita Recorrente</h4>
+
+                  <p>
+                    {money(dados.receitaMensalTotal)}
+                  </p>
+
+                  <small>
+                    Mensalidades totais da empresa
+                  </small>
+                </div>
+
+                <div className="cliente-box">
+                  <h4>🏢 Gasto Mensal</h4>
+
+                  <p>
+                    {money(dados.gastoMensal)}
+                  </p>
+
+                  <small>
+                    Custos fixos da DvS
+                  </small>
+                </div>
+
+                <div className="cliente-box">
+                  <h4>✅ Lucro Mensal</h4>
+
+                  <p
+                    style={{
+                      color:
+                        dados.lucro >= 0
+                          ? "#4cff9d"
+                          : "#ff5f8f",
+                    }}
+                  >
+                    {money(dados.lucro)}
+                  </p>
+
+                  <small>
+                    Receita mensal - gastos
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            {/* ================= RESUMO ================= */}
+            <div
+              className="painel-box"
+              style={{ marginTop: 20 }}
+            >
+              <h3>Resumo Operacional</h3>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  marginTop: 16,
+                }}
+              >
+                <p>
+                  👥 Clientes cadastrados:{" "}
+                  <strong>{dados.clientes}</strong>
+                </p>
+
+                <p>
+                  🤖 Bots ativos:{" "}
+                  <strong>{dados.bots}</strong>
+                </p>
+
+                <p>
+                  🌐 Sites online:{" "}
+                  <strong>{dados.sites}</strong>
+                </p>
+
+                <p>
+                  📄 Licenças:{" "}
+                  <strong>{dados.licencas}</strong>
+                </p>
+
+                <p>
+                  🖥️ Servidores:{" "}
+                  <strong>{dados.servidores}</strong>
+                </p>
+              </div>
             </div>
           </>
         )}

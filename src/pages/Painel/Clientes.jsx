@@ -10,21 +10,33 @@ import "./dashboard.css";
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [bots, setBots] = useState([]);
+
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(false);
+
   const [clienteSelecionado, setClienteSelecionado] = useState(null);
   const [modalView, setModalView] = useState(false);
+
   const [nome, setNome] = useState("");
   const [discord, setDiscord] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+
   const [valorPago, setValorPago] = useState("");
   const [valorMensal, setValorMensal] = useState("");
+
   const [possuiSite, setPossuiSite] = useState(false);
+
   const [site, setSite] = useState("");
   const [valorMensalSite, setValorMensalSite] = useState("");
+
   const [renovacao, setRenovacao] = useState("");
+
   const [comprovanteUrl, setComprovanteUrl] = useState("");
+
   const [botSelecionado, setBotSelecionado] = useState([]);
+
+  const [tipo, setTipo] = useState("bot");
+
   const [editId, setEditId] = useState(null);
 
   // =====================
@@ -33,8 +45,6 @@ export default function Clientes() {
   async function carregarClientes() {
     try {
       const res = await api.get("/clientes");
-
-      console.log("CLIENTES:", res.data);
 
       if (!Array.isArray(res.data)) {
         console.log("Resposta inválida:", res.data);
@@ -52,6 +62,12 @@ export default function Clientes() {
   async function carregarBots() {
     try {
       const res = await api.get("/bots");
+
+      if (!Array.isArray(res.data)) {
+        setBots([]);
+        return;
+      }
+
       setBots(res.data);
     } catch (err) {
       console.log(err);
@@ -80,11 +96,23 @@ export default function Clientes() {
     setNome("");
     setDiscord("");
     setWhatsapp("");
+
     setValorPago("");
     setValorMensal("");
+
+    setPossuiSite(false);
+
+    setSite("");
+    setValorMensalSite("");
+
     setRenovacao("");
-    setBotSelecionado([]);
+
     setComprovanteUrl("");
+
+    setBotSelecionado([]);
+
+    setTipo("bot");
+
     setEditId(null);
   }
 
@@ -92,46 +120,80 @@ export default function Clientes() {
   // CREATE
   // =====================
   async function criarCliente() {
-    await api.post("/clientes", {
-      nome,
-      discord,
-      whatsapp,
-      valorPago,
-      valorMensal,
-      renovacao,
-      bots: botSelecionado,
-      comprovanteUrl,
-      possuiSite,
-      site,
-      valorMensalSite,
-    });
+    try {
+      await api.post("/clientes", {
+        nome,
+        discord,
+        whatsapp,
 
-    limpar();
-    setModal(false);
-    carregarClientes();
+        valorPago: Number(valorPago || 0),
+        valorMensal: Number(valorMensal || 0),
+
+        renovacao,
+
+        comprovanteUrl,
+
+        tipo,
+
+        possuiSite,
+
+        site,
+
+        valorMensalSite: Number(valorMensalSite || 0),
+
+        bots: tipo === "bot" ? botSelecionado : [],
+      });
+
+      limpar();
+
+      setModal(false);
+
+      carregarClientes();
+    } catch (err) {
+      console.log(err);
+      alert("Erro ao criar cliente");
+    }
   }
 
   // =====================
   // EDIT
   // =====================
   async function salvarEdicao() {
-    await api.put(`/clientes/${editId}`, {
-      nome,
-      discord,
-      whatsapp,
-      valorPago,
-      valorMensal,
-      renovacao,
-      bots: botSelecionado,
-      comprovanteUrl, // 🔥 FALTAVA ISSO
-      site,
-      valorMensalSite,
-    });
+    try {
+      await api.put(`/clientes/${editId}`, {
+        nome,
+        discord,
+        whatsapp,
 
-    limpar();
-    setModal(false);
-    setEditando(false);
-    carregarClientes();
+        valorPago: Number(valorPago || 0),
+        valorMensal: Number(valorMensal || 0),
+
+        renovacao,
+
+        comprovanteUrl,
+
+        tipo,
+
+        possuiSite,
+
+        site,
+
+        valorMensalSite: Number(valorMensalSite || 0),
+
+        bots: tipo === "bot" ? botSelecionado : [],
+      });
+
+      limpar();
+
+      setModal(false);
+
+      setEditando(false);
+
+      carregarClientes();
+    } catch (err) {
+      console.log(err);
+      alert("Erro ao editar cliente");
+    }
   }
 
   // =====================
@@ -142,8 +204,13 @@ export default function Clientes() {
 
     if (!confirmar) return;
 
-    await api.delete(`/clientes/${id}`);
-    carregarClientes();
+    try {
+      await api.delete(`/clientes/${id}`);
+
+      carregarClientes();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   // =====================
@@ -151,18 +218,31 @@ export default function Clientes() {
   // =====================
   function abrirEditar(cliente) {
     setEditando(true);
+
     setModal(true);
+
     setEditId(cliente.id);
 
     setNome(cliente.nome || "");
     setDiscord(cliente.discord || "");
     setWhatsapp(cliente.whatsapp || "");
+
     setValorPago(cliente.valorPago || "");
     setValorMensal(cliente.valorMensal || "");
+
     setRenovacao(cliente.renovacao || "");
+
+    setComprovanteUrl(cliente.comprovanteUrl || "");
+
     setBotSelecionado(cliente.bots || []);
+
+    setTipo(cliente.tipo || "bot");
+
     setSite(cliente.site || "");
+
     setValorMensalSite(cliente.valorMensalSite || "");
+
+    setPossuiSite(!!cliente.site);
   }
 
   // =====================
@@ -170,6 +250,7 @@ export default function Clientes() {
   // =====================
   function abrirVisualizar(cliente) {
     setClienteSelecionado(cliente);
+
     setModalView(true);
   }
 
@@ -180,13 +261,17 @@ export default function Clientes() {
     if (!data) return "-";
 
     const hoje = new Date();
-    const renovacao = new Date(data);
 
-    const diff = renovacao - hoje;
+    const renovacaoDate = new Date(data);
+
+    const diff = renovacaoDate - hoje;
+
     const dias = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
     if (dias < 0) return "Expirado";
+
     if (dias === 0) return "Hoje";
+
     if (dias === 1) return "1 dia";
 
     return `${dias} dias`;
@@ -209,7 +294,9 @@ export default function Clientes() {
             className="primary-btn"
             onClick={() => {
               limpar();
+
               setEditando(false);
+
               setModal(true);
             }}
           >
@@ -222,14 +309,15 @@ export default function Clientes() {
             <thead>
               <tr>
                 <th>Cliente</th>
+                <th>Tipo</th>
                 <th>Discord</th>
                 <th>WhatsApp</th>
                 <th>Pago</th>
                 <th>Mensal</th>
-                <th>Mensalidade do Site</th>
+                <th>Site</th>
+                <th>Mensalidade Site</th>
                 <th>Renovação</th>
                 <th>Bots</th>
-                <th>Sites</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -238,33 +326,58 @@ export default function Clientes() {
               {clientes?.map((c) => (
                 <tr key={c.id}>
                   <td>{c.nome}</td>
+
+                  <td>{c.tipo === "site" ? "🌐 Site" : "🤖 Bot"}</td>
+
                   <td>{c.discord}</td>
+
                   <td>{c.whatsapp}</td>
-                  <td>R$ {c.valorPago}</td>
-                  <td>R$ {c.valorMensal}</td>
-                  <td>R$ {c.valorMensalSite}</td>
-                  <td><span>{calcularDiasRestantes(c.renovacao)}</span></td>
-                  <td>{c.bots?.length || 0}</td>
-                  <td>{c.sites?.length || 0}</td>
+
+                  <td>R$ {c.valorPago || 0}</td>
+
+                  <td>R$ {c.valorMensal || 0}</td>
 
                   <td>
-                    <button
-                      className="view-btn"
-                      onClick={() => abrirVisualizar(c)}
-                    >
-                      Visualizar
-                    </button>
+                    {c.site ? (
+                      <a href={c.site} target="_blank" rel="noreferrer">
+                        Abrir
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
 
-                    <button className="edit-btn" onClick={() => abrirEditar(c)}>
-                      Editar
-                    </button>
+                  <td>R$ {c.valorMensalSite || 0}</td>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() => excluirCliente(c.id)}
-                    >
-                      Excluir
-                    </button>
+                  <td>
+                    <span>{calcularDiasRestantes(c.renovacao)}</span>
+                  </td>
+
+                  <td>{c.bots?.length || 0}</td>
+
+                  <td>
+                    <div className="table-actions">
+                      <button
+                        className="view-btn"
+                        onClick={() => abrirVisualizar(c)}
+                      >
+                        Visualizar
+                      </button>
+
+                      <button
+                        className="edit-btn"
+                        onClick={() => abrirEditar(c)}
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        className="delete-btn"
+                        onClick={() => excluirCliente(c.id)}
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -280,15 +393,44 @@ export default function Clientes() {
             <h2>Cliente</h2>
 
             <p>Nome: {clienteSelecionado.nome}</p>
+
+            <p>
+              Tipo: {clienteSelecionado.tipo === "site" ? "🌐 Site" : "🤖 Bot"}
+            </p>
+
             <p>Discord: {clienteSelecionado.discord}</p>
+
             <p>WhatsApp: {clienteSelecionado.whatsapp}</p>
-            <p>Pago: R$ {clienteSelecionado.valorPago}</p>
-            <p>Mensal: R$ {clienteSelecionado.valorMensal}</p>
+
+            <p>Valor Pago: R$ {clienteSelecionado.valorPago}</p>
+
+            <p>Mensalidade Bot: R$ {clienteSelecionado.valorMensal}</p>
+
+            {clienteSelecionado.site && (
+              <>
+                <p>
+                  Site:{" "}
+                  <a
+                    href={clienteSelecionado.site}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {clienteSelecionado.site}
+                  </a>
+                </p>
+
+                <p>Mensalidade Site: R$ {clienteSelecionado.valorMensalSite}</p>
+              </>
+            )}
 
             {clienteSelecionado.comprovanteUrl && (
               <img
                 src={clienteSelecionado.comprovanteUrl}
-                style={{ width: "40%", borderRadius: 8 }}
+                alt="Comprovante"
+                style={{
+                  width: "40%",
+                  borderRadius: 8,
+                }}
               />
             )}
 
@@ -305,31 +447,46 @@ export default function Clientes() {
           <div className="modal-box">
             <h2>{editando ? "Editar Cliente" : "Novo Cliente"}</h2>
 
+            <select
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value)}
+              className="modal-select"
+            >
+              <option value="bot">Bot Discord</option>
+
+              <option value="site">Site</option>
+            </select>
+
             <input
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               placeholder="Nome"
             />
+
             <input
               value={discord}
               onChange={(e) => setDiscord(e.target.value)}
               placeholder="Discord"
             />
+
             <input
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
               placeholder="WhatsApp"
             />
+
             <input
               value={valorPago}
               onChange={(e) => setValorPago(e.target.value)}
               placeholder="Valor Pago"
             />
+
             <input
               value={valorMensal}
               onChange={(e) => setValorMensal(e.target.value)}
-              placeholder="Mensal"
+              placeholder="Mensalidade Bot"
             />
+
             <label className="checkbox-label">
               <input
                 type="checkbox"
@@ -338,20 +495,23 @@ export default function Clientes() {
               />
               Cliente possui site
             </label>
+
             {possuiSite && (
-              <input
-                value={site}
-                onChange={(e) => setSite(e.target.value)}
-                placeholder="Site"
-              />
+              <>
+                <input
+                  value={site}
+                  onChange={(e) => setSite(e.target.value)}
+                  placeholder="Link do site"
+                />
+
+                <input
+                  value={valorMensalSite}
+                  onChange={(e) => setValorMensalSite(e.target.value)}
+                  placeholder="Mensalidade do site"
+                />
+              </>
             )}
-            {possuiSite && (
-              <input
-                value={valorMensalSite}
-                onChange={(e) => setValorMensalSite(e.target.value)}
-                placeholder="Valor Mensal do Site"
-              />
-            )}
+
             <input
               type="date"
               value={renovacao}
@@ -361,31 +521,38 @@ export default function Clientes() {
             <input
               value={comprovanteUrl}
               onChange={(e) => setComprovanteUrl(e.target.value)}
-              placeholder="Link do comprovante (imagem)"
+              placeholder="Link do comprovante"
             />
 
-            <div className="multi-bots">
-              {bots.map((b) => (
-                <button
-                  key={b.id}
-                  onClick={() => toggleBot(b.id)}
-                  className={botSelecionado.includes(b.id) ? "selected" : ""}
-                >
-                  {b.nome}
-                </button>
-              ))}
+            {tipo === "bot" && (
+              <div className="multi-bots">
+                {bots.map((b) => (
+                  <button
+                    type="button"
+                    key={b.id}
+                    onClick={() => toggleBot(b.id)}
+                    className={`multi-bot-btn ${
+                      botSelecionado.includes(b.id) ? "selected" : ""
+                    }`}
+                  >
+                    {b.nome}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="modal-actions">
+              <button
+                onClick={editando ? salvarEdicao : criarCliente}
+                className="primary-btn"
+              >
+                Salvar
+              </button>
+
+              <button className="close-btn" onClick={() => setModal(false)}>
+                Fechar
+              </button>
             </div>
-
-            <button
-              onClick={editando ? salvarEdicao : criarCliente}
-              className="primary-btn"
-            >
-              Salvar
-            </button>
-
-            <button className="close-btn" onClick={() => setModal(false)}>
-              Fechar
-            </button>
           </div>
         </div>
       )}
