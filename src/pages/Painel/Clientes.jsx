@@ -338,9 +338,9 @@ export default function Clientes() {
 
                   <td>{c.whatsapp}</td>
 
-                  <td>R$ {c.valorPago || 0}</td>
+                  <td>R$ {c.tipo === "site" ? c.valorPagoSite || 0 : c.valorPago || 0}</td>
 
-                  <td>R$ {c.valorMensal || 0}</td>
+                  <td>R$ {c.tipo === "site" ? c.valorMensalSite || 0 : c.valorMensal || 0}</td>
 
                   <td>
                     {c.site ? (
