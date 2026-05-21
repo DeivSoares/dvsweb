@@ -8,6 +8,8 @@ const router = express.Router();
 // =====================
 router.get("/", async (req, res) => {
   try {
+    const { mes } = req.query; // Formato: YYYY-MM
+
     const clientesSnapshot = await db.collection("clientes").get();
 
     const clientes = clientesSnapshot.docs.map((doc) => ({
@@ -16,9 +18,35 @@ router.get("/", async (req, res) => {
     }));
 
     // =====================
+    // FILTRAR CLIENTES POR MÊS (se aplicável)
+    // =====================
+    let clientesFiltrados = clientes;
+
+    if (mes) {
+      const mesAtual = new Date();
+      const mesAtualFormatado = `${mesAtual.getFullYear()}-${String(mesAtual.getMonth() + 1).padStart(2, "0")}`;
+      const ehMesAtual = mes === mesAtualFormatado;
+
+      clientesFiltrados = clientes.filter((c) => {
+        if (!c.criadoEm) return false;
+
+        const dataCriacao = new Date(c.criadoEm);
+        const mesCriacao = `${dataCriacao.getFullYear()}-${String(dataCriacao.getMonth() + 1).padStart(2, "0")}`;
+
+        if (ehMesAtual) {
+          // Se é mês atual, pega clientes criados em meses anteriores
+          return mesCriacao < mes;
+        } else {
+          // Se é mês passado, pega clientes criados naquele mês
+          return mesCriacao === mes;
+        }
+      });
+    }
+
+    // =====================
     // TOTAIS
     // =====================
-    const totalClientes = clientes.length;
+    const totalClientes = clientesFiltrados.length;
 
     let totalBots = 0;
     let totalSites = 0;
@@ -36,11 +64,11 @@ router.get("/", async (req, res) => {
     let receitaMensalSites = 0;
 
     // Contar clientes com tipo BOT para licenças e servidores
-    const totalLicencasServidores = clientes.filter(
+    const totalLicencasServidores = clientesFiltrados.filter(
       (c) => c.tipo === "bot" || c.tipo === "BOT"
     ).length;
 
-    clientes.forEach((c) => {
+    clientesFiltrados.forEach((c) => {
       // =====================
       // BOTS (apenas para clientes tipo BOT)
       // =====================
@@ -100,8 +128,9 @@ router.get("/", async (req, res) => {
     // DEBUG
     // =====================
     console.log("=== DASHBOARD DEBUG ===");
-    console.log("Total Clientes:", totalClientes);
-    console.log("Clientes BOT:", clientes.filter(c => c.tipo === "bot" || c.tipo === "BOT").length);
+    console.log("Mês selecionado:", mes || "Todos os clientes");
+    console.log("Total Clientes (filtrado):", totalClientes);
+    console.log("Clientes BOT:", totalLicencasServidores);
     console.log("Clientes com Site:", clientes.filter(c => c.possuiSite).length);
     console.log("Receita Instalação Bots:", receitaInstalacaoBots);
     console.log("Receita Mensal Bots:", receitaMensalBots);
@@ -115,6 +144,7 @@ router.get("/", async (req, res) => {
     res.json({
       // gerais
       clientes: totalClientes,
+      mesSelecionado: mes || null,
 
       // dashboard antigo
       licencas: totalLicencasServidores,
@@ -139,14 +169,14 @@ router.get("/", async (req, res) => {
       // =====================
       // TOTAIS
       // =====================
-      receitaInstalacaoTotal,
-      receitaMensalTotal,
+      receitaInstalacaoTotal: receitaInstalacaoBots + receitaInstalacaoSites,
+      receitaMensalTotal: receitaMensalBots + receitaMensalSites,
 
       // =====================
       // EMPRESA
       // =====================
       gastoMensal,
-      lucro,
+      lucro: (receitaMensalBots + receitaMensalSites) - gastoMensal,
     });
   } catch (err) {
     console.log("Erro dashboard:", err);

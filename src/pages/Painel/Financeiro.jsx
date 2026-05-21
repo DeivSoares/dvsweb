@@ -9,19 +9,55 @@ import "./dashboard.css";
 export default function Financeiro() {
   const [dados, setDados] = useState(null);
   const [gasto, setGasto] = useState("");
+  const [mesSelecionado, setMesSelecionado] = useState("");
+
+  // =====================
+  // GET MÊS ATUAL (YYYY-MM)
+  // =====================
+  function getMesAtual() {
+    const hoje = new Date();
+    return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, "0")}`;
+  }
+
+  // =====================
+  // GERAR ÚLTIMOS 12 MESES
+  // =====================
+  function gerarMeses() {
+    const meses = [];
+    const hoje = new Date();
+
+    for (let i = 11; i >= 0; i--) {
+      const data = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1);
+      const mes = `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, "0")}`;
+      const label = data.toLocaleString("pt-BR", { month: "long", year: "numeric" });
+      meses.push({ value: mes, label: label.charAt(0).toUpperCase() + label.slice(1) });
+    }
+
+    return meses;
+  }
 
   // =====================
   // LOAD
   // =====================
-  async function carregar() {
+  async function carregar(mes = "") {
     try {
-      const res = await api.get("/dashboard");
+      const url = mes ? `/dashboard?mes=${mes}` : "/dashboard";
+      const res = await api.get(url);
 
       setDados(res.data);
       setGasto(res.data.gastoMensal || 0);
     } catch (err) {
       console.log(err);
     }
+  }
+
+  // =====================
+  // HANDLE MÊS CHANGE
+  // =====================
+  function handleMesChange(e) {
+    const mes = e.target.value;
+    setMesSelecionado(mes);
+    carregar(mes);
   }
 
   // =====================
@@ -62,6 +98,27 @@ export default function Financeiro() {
 
         <div className="page-top">
           <h2>Financeiro</h2>
+
+          <select
+            value={mesSelecionado}
+            onChange={handleMesChange}
+            style={{
+              background: "#111827",
+              border: "1px solid #1f2b42",
+              borderRadius: 8,
+              padding: "10px 14px",
+              color: "white",
+              cursor: "pointer",
+              fontSize: 14,
+            }}
+          >
+            <option value="">Todos os clientes</option>
+            {gerarMeses().map((mes) => (
+              <option key={mes.value} value={mes.value}>
+                {mes.label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {!dados ? (
@@ -222,7 +279,13 @@ export default function Financeiro() {
                   </p>
 
                   <small>
-                    Mensalidades totais da empresa
+                    {mesSelecionado ? (
+                      mesSelecionado === `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}`
+                        ? "Clientes cadastrados em meses anteriores"
+                        : "Clientes cadastrados neste mês"
+                    ) : (
+                      "Mensalidades totais da empresa"
+                    )}
                   </small>
                 </div>
 
