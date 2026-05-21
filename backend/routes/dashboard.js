@@ -97,6 +97,19 @@ router.get("/", async (req, res) => {
     const lucro = receitaMensalTotal - gastoMensal;
 
     // =====================
+    // DEBUG
+    // =====================
+    console.log("=== DASHBOARD DEBUG ===");
+    console.log("Total Clientes:", totalClientes);
+    console.log("Clientes BOT:", clientes.filter(c => c.tipo === "bot" || c.tipo === "BOT").length);
+    console.log("Clientes com Site:", clientes.filter(c => c.possuiSite).length);
+    console.log("Receita Instalação Bots:", receitaInstalacaoBots);
+    console.log("Receita Mensal Bots:", receitaMensalBots);
+    console.log("Receita Instalação Sites:", receitaInstalacaoSites);
+    console.log("Receita Mensal Sites:", receitaMensalSites);
+    console.log("=======================");
+
+    // =====================
     // RESPONSE
     // =====================
     res.json({

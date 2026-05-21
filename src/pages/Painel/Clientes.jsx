@@ -27,6 +27,7 @@ export default function Clientes() {
   const [possuiSite, setPossuiSite] = useState(false);
 
   const [site, setSite] = useState("");
+  const [valorPagoSite, setValorPagoSite] = useState("");
   const [valorMensalSite, setValorMensalSite] = useState("");
 
   const [renovacao, setRenovacao] = useState("");
@@ -103,6 +104,7 @@ export default function Clientes() {
     setPossuiSite(false);
 
     setSite("");
+    setValorPagoSite("");
     setValorMensalSite("");
 
     setRenovacao("");
@@ -139,6 +141,7 @@ export default function Clientes() {
 
         site,
 
+        valorPagoSite: Number(valorPagoSite || 0),
         valorMensalSite: Number(valorMensalSite || 0),
 
         bots: tipo === "bot" ? botSelecionado : [],
@@ -178,6 +181,7 @@ export default function Clientes() {
 
         site,
 
+        valorPagoSite: Number(valorPagoSite || 0),
         valorMensalSite: Number(valorMensalSite || 0),
 
         bots: tipo === "bot" ? botSelecionado : [],
@@ -240,6 +244,7 @@ export default function Clientes() {
 
     setSite(cliente.site || "");
 
+    setValorPagoSite(cliente.valorPagoSite || "");
     setValorMensalSite(cliente.valorMensalSite || "");
 
     setPossuiSite(!!cliente.site);
@@ -475,17 +480,45 @@ export default function Clientes() {
               placeholder="WhatsApp"
             />
 
-            <input
-              value={valorPago}
-              onChange={(e) => setValorPago(e.target.value)}
-              placeholder="Valor Pago"
-            />
+            {tipo === "bot" ? (
+              <>
+                <input
+                  value={valorPago}
+                  onChange={(e) => setValorPago(e.target.value)}
+                  placeholder="Valor Pago (Bot)"
+                  type="number"
+                />
 
-            <input
-              value={valorMensal}
-              onChange={(e) => setValorMensal(e.target.value)}
-              placeholder="Mensalidade Bot"
-            />
+                <input
+                  value={valorMensal}
+                  onChange={(e) => setValorMensal(e.target.value)}
+                  placeholder="Mensalidade (Bot)"
+                  type="number"
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  value={valorPagoSite}
+                  onChange={(e) => setValorPagoSite(e.target.value)}
+                  placeholder="Valor Pago (Site)"
+                  type="number"
+                />
+
+                <input
+                  value={valorMensalSite}
+                  onChange={(e) => setValorMensalSite(e.target.value)}
+                  placeholder="Mensalidade (Site)"
+                  type="number"
+                />
+
+                <input
+                  value={site}
+                  onChange={(e) => setSite(e.target.value)}
+                  placeholder="Link do site"
+                />
+              </>
+            )}
 
             <label className="checkbox-label">
               <input
@@ -496,7 +529,7 @@ export default function Clientes() {
               Cliente possui site
             </label>
 
-            {possuiSite && (
+            {possuiSite && tipo === "bot" && (
               <>
                 <input
                   value={site}
@@ -505,9 +538,17 @@ export default function Clientes() {
                 />
 
                 <input
+                  value={valorPagoSite}
+                  onChange={(e) => setValorPagoSite(e.target.value)}
+                  placeholder="Valor Pago (Site)"
+                  type="number"
+                />
+
+                <input
                   value={valorMensalSite}
                   onChange={(e) => setValorMensalSite(e.target.value)}
                   placeholder="Mensalidade do site"
+                  type="number"
                 />
               </>
             )}
