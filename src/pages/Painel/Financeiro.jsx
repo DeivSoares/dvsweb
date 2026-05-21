@@ -327,12 +327,13 @@ export default function Financeiro() {
               className="painel-box"
               style={{ marginTop: 10 }}
             >
-              <h3>Resumo Operacional</h3>
+              <h3 style={{textAlign: "center"}}>Resumo Operacional</h3>
 
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  justifyContent: "center",
                   gap: 12,
                   marginTop: 16,
                 }}
