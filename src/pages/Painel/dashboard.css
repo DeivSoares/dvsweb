@@ -28,7 +28,7 @@
   background: #0d111c;
   border: 1px solid #1f2b42;
   border-radius: 16px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 0 20px rgba(120, 160, 220, 0.08);
 }
 
@@ -377,7 +377,7 @@
 
   padding: 24px;
 
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   display: flex;
   flex-direction: column;
