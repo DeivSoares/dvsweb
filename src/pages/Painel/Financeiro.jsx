@@ -133,7 +133,7 @@ export default function Financeiro() {
                 style={{
                   display: "flex",
                   gap: 12,
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
               >
                 <input
@@ -162,7 +162,7 @@ export default function Financeiro() {
             {/* ================= BOTS ================= */}
             <div
               className="painel-box"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 10 }}
             >
               <h3>Financeiro dos Bots</h3>
 
@@ -172,7 +172,7 @@ export default function Financeiro() {
                   gridTemplateColumns:
                     "repeat(auto-fit, minmax(250px, 1fr))",
                   gap: 20,
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
               >
                 <div className="cliente-box">
@@ -246,7 +246,7 @@ export default function Financeiro() {
             {/* ================= TOTAL EMPRESA ================= */}
             <div
               className="painel-box"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 10 }}
             >
               <h3>Resumo Geral da Empresa</h3>
 
@@ -256,7 +256,7 @@ export default function Financeiro() {
                   gridTemplateColumns:
                     "repeat(auto-fit, minmax(250px, 1fr))",
                   gap: 20,
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
               >
                 <div className="cliente-box">
@@ -325,7 +325,7 @@ export default function Financeiro() {
             {/* ================= RESUMO ================= */}
             <div
               className="painel-box"
-              style={{ marginTop: 20 }}
+              style={{ marginTop: 10 }}
             >
               <h3>Resumo Operacional</h3>
 
