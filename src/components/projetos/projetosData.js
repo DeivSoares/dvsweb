@@ -3,6 +3,7 @@ import psicoterapia from '../../assets/icons/psicoterapia2.png';
 import elementalpt from '../../assets/icons/elementalpt.png';
 import playpt from '../../assets/icons/playpt.png';
 import furiosapeds from '../../assets/icons/FuriosaPeds.png';
+import minapeds from '../../assets/icons/MinaPeds.png';
 
 const ProjetosData = [
     {
@@ -33,6 +34,12 @@ const ProjetosData = [
         title: "Furiosa Peds",
         description: "Projeto desenvolvido para uso interno; O Sistema de Ticket Discord é uma aplicação que integra com a API do Discord para criar um sistema de suporte ao cliente. Ele permite que os usuários abram tickets de suporte diretamente no Discord, facilitando a comunicação entre clientes e equipe de suporte. Ideal para web lojas, cidades de RP de FiveM, RedM, guildas e entre outros.",
         image: furiosapeds,
+        link: "https://discord.gg/7Bax8Dpw4w",
+    },
+    {
+        title: "Mina Peds",
+        description: "Projeto desenvolvido para uso interno; O Sistema de Ticket Discord é uma aplicação que integra com a API do Discord para criar um sistema de suporte ao cliente. Ele permite que os usuários abram tickets de suporte diretamente no Discord, facilitando a comunicação entre clientes e equipe de suporte. Ideal para web lojas, cidades de RP de FiveM, RedM, guildas e entre outros.",
+        image: minapeds,
         link: "https://discord.gg/7Bax8Dpw4w",
     },
 ]
