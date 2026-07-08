@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e7da15c7.css",
-    "main.js": "/static/js/main.bf51e22b.js",
+    "main.js": "/static/js/main.846caa89.js",
     "static/js/453.8ba4dbe5.chunk.js": "/static/js/453.8ba4dbe5.chunk.js",
     "static/media/playpt.png": "/static/media/playpt.3bbec10411569f39cd7c.png",
     "static/media/elementalpt.png": "/static/media/elementalpt.f8deec4593240548cd5d.png",
@@ -11,6 +11,7 @@
     "static/media/perfil2.png": "/static/media/perfil2.67f59372c7fae7f5a6b9.png",
     "static/media/FuriosaPeds.png": "/static/media/FuriosaPeds.cff2be587a408c2494cb.png",
     "static/media/perfil.png": "/static/media/perfil.539174ba931caa175fb7.png",
+    "static/media/MinaPeds.png": "/static/media/MinaPeds.868b2488f268ae3ad3cd.png",
     "static/media/NodeJS.png": "/static/media/NodeJS.d980d9636ace07ad3dde.png",
     "static/media/Git.png": "/static/media/Git.0466507c4b9f6644df88.png",
     "static/media/React.png": "/static/media/React.9869f03e994d2863bf55.png",
@@ -23,11 +24,11 @@
     "static/media/GitHub.png": "/static/media/GitHub.eccaac2d375580ce9b41.png",
     "index.html": "/index.html",
     "main.e7da15c7.css.map": "/static/css/main.e7da15c7.css.map",
-    "main.bf51e22b.js.map": "/static/js/main.bf51e22b.js.map",
+    "main.846caa89.js.map": "/static/js/main.846caa89.js.map",
     "453.8ba4dbe5.chunk.js.map": "/static/js/453.8ba4dbe5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e7da15c7.css",
-    "static/js/main.bf51e22b.js"
+    "static/js/main.846caa89.js"
   ]
 }
