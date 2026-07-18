@@ -123,7 +123,7 @@ function ContactForm() {
         noValidate
       >
         <input type="hidden" name="apiKey" value="sf_0b05ba9c192a223f40bd2b31" />
-        <input type="hidden" name="redirectTo" value="http://localhost:3000/" />
+        <input type="hidden" name="redirectTo" value="https://dvsweb.com.br/" />
         <input type="hidden" name="replyTo" value={formData.email} />
 
         <div className="form-group">
