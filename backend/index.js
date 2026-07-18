@@ -13,7 +13,6 @@ const atividadesRoutes = require("./routes/atividades");
 
 const financeiroRoutes = require("./routes/financeiro");
 
-
 const app = express();
 
 app.use(express.json());

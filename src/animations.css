@@ -1,0 +1,93 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.fade-in {
+  opacity: 0;
+  transform: none;
+}
+
+.reveal.fade-in.visible {
+  opacity: 1;
+}
+
+.reveal.fade-in-up {
+  transform: translateY(32px);
+}
+
+.reveal.fade-in-up.visible {
+  transform: translateY(0);
+}
+
+.reveal.fade-in-left {
+  transform: translateX(-32px);
+}
+
+.reveal.fade-in-right {
+  transform: translateX(32px);
+}
+
+.reveal.fade-in-left.visible,
+.reveal.fade-in-right.visible {
+  transform: translateX(0);
+}
+
+.reveal.scale-in {
+  transform: scale(0.94);
+}
+
+.reveal.scale-in.visible {
+  transform: scale(1);
+}
+
+.transition-smooth,
+a,
+button,
+.stack-item,
+.social-link,
+.intro-image img,
+.projects,
+.contact,
+footer {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease, filter 0.35s ease, background-color 0.35s ease, color 0.35s ease;
+}
+
+.transition-smooth:hover,
+a:hover,
+button:hover,
+.stack-item:hover,
+.social-link:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.visible,
+  .transition-smooth,
+  .transition-smooth:hover,
+  a,
+  button,
+  .stack-item,
+  .social-link,
+  .intro-image img,
+  .projects,
+  .contact,
+  footer {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

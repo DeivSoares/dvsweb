@@ -1,11 +1,11 @@
 import "./style.css";
 import Logo from "../../assets/icons/DvsLogo.png";
 import Perfil from "../../assets/icons/perfil.png";
-import Social from '../social';
-import Button from '../button';
-import ProjetosData from '../projetos/projetosData';
+import Social from "../social";
+import Button from "../button";
+import ProjetosData from "../projetos/projetosData";
 import Carousel from "../carousel";
-
+import ContactForm from "../contactform/contactform";
 function Main() {
   // Carrega automaticamente os ícones da pasta src/assets/icons
   const loadIcon = (iconName) => {
@@ -42,55 +42,74 @@ function Main() {
     <main>
       <section className="intro-section">
         <div className="intro-background"></div>
-        <div className="intro-content">
-          <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem" }}>
+        <div className="intro-content reveal fade-in-up">
+          <h1
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1rem",
+            }}
+          >
             <img src={Logo} alt="" style={{ width: "5rem" }} />
             DVS WEB
           </h1>
 
           <h2>Transformando ideias em experiências digitais</h2>
           <p>
-            A DVS Web é um projeto especializado no desenvolvimento de sites modernos, funcionais e personalizados, com foco em transformar ideias em uma presença digital de qualidade.
+            A DVS Web é um projeto especializado no desenvolvimento de sites
+            modernos, funcionais e personalizados, com foco em transformar
+            ideias em uma presença digital de qualidade.
             <br></br>
-            Mais do que criar páginas, buscamos oferecer soluções digitais alinhadas com a visão de cada cliente, prezando pela clareza, eficiência e qualidade em cada entrega.
+            Mais do que criar páginas, buscamos oferecer soluções digitais
+            alinhadas com a visão de cada cliente, prezando pela clareza,
+            eficiência e qualidade em cada entrega.
           </p>
         </div>
 
-        <div className="intro-image">
+        <div className="intro-image reveal fade-in-right">
           <img src={Perfil} alt="Imagem de Perfil Deivison Soares" />
           <Social />
           <Button />
         </div>
 
-
-        <section className="stacks-section">
+        <section className="stacks-section reveal fade-in-up">
           <h3>Minhas Stacks</h3>
           <div className="stacks-grid">
             {stacks.map((stack, index) => (
               <div key={index} className="stack-item">
                 <div className="stack-icon">
-                  {typeof stack.icon === "string" && stack.icon.startsWith("/") ? (<img src={stack.icon} alt={`${stack.name} icon`} />) : (<span>{stack.icon}</span>)}
+                  {typeof stack.icon === "string" &&
+                  stack.icon.startsWith("/") ? (
+                    <img src={stack.icon} alt={`${stack.name} icon`} />
+                  ) : (
+                    <span>{stack.icon}</span>
+                  )}
                 </div>
                 <span className="stack-name">{stack.name}</span>
               </div>
             ))}
           </div>
         </section>
-
-
       </section>
 
-
-      <section className="projects">
+      <section className="projects reveal fade-in-up">
         <h3>Empresas que confiaram na DVS WEB</h3>
         <Carousel />
       </section>
 
-      <section className="contact">
+      <section className="contact reveal fade-in-up">
         <h2>Contato</h2>
-        <h3>Vamos <span>Desenvolver</span> Seu Projeto?</h3>
-        <p>Se você tem uma ideia rodando aí na cabeça, chegou a hora de fazer acontecer. Me chama, conta o que você quer construir e vamos juntos transformar isso em algo real, funcional e que dá resultado.</p>
+        <h3>
+          Vamos <span>Desenvolver</span> Seu Projeto?
+        </h3>
+        <p>
+          Se você tem uma ideia rodando aí na cabeça, chegou a hora de fazer
+          acontecer. Me chama, conta o que você quer construir e vamos juntos
+          transformar isso em algo real, funcional e que dá resultado.
+        </p>
         <Social />
+        <ContactForm />
       </section>
 
       <footer>

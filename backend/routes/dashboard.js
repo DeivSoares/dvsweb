@@ -134,6 +134,7 @@ router.get("/", async (req, res) => {
     // =====================
     // DEBUG
     // =====================
+    
     console.log("=== DASHBOARD DEBUG ===");
     console.log("Mês selecionado:", mes || "Todos os clientes");
     console.log("Total Clientes (filtrado):", totalClientes);
