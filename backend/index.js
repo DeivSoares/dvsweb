@@ -28,11 +28,7 @@ app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "ngrok-skip-browser-warning",
-    ],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -99,7 +95,7 @@ app.use((err, req, res, next) => {
 // SERVIDOR
 // ================================
 
-const PORT = process.env.PORT || 8080;
+const PORT = Number(process.env.PORT) || 8080;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("=================================");

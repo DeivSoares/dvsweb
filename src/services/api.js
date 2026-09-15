@@ -1,13 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL:
-    "https://subheader-clock-shadily.ngrok-free.dev",
-
-  headers: {
-    "ngrok-skip-browser-warning":
-      "true",
-  },
+  baseURL: process.env.REACT_APP_API_URL || "https://dvsweb.discloud.app",
 });
-
-// ngrok http 3001
