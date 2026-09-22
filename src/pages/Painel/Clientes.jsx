@@ -234,6 +234,22 @@ export default function Clientes() {
     }
   }
 
+  async function renovarCliente(cliente) {
+    const confirmar = window.confirm(
+      `Renovar o cliente ${cliente.nome || "sem nome"} por mais um mês?`,
+    );
+
+    if (!confirmar) return;
+
+    try {
+      await api.patch(`/clientes/${cliente.id}/renovar`);
+      await carregarClientes();
+    } catch (err) {
+      console.log(err);
+      alert("Erro ao renovar cliente");
+    }
+  }
+
   // =====================
   // EDIT OPEN
   // =====================
@@ -401,6 +417,13 @@ export default function Clientes() {
                         onClick={() => abrirEditar(c)}
                       >
                         Editar
+                      </button>
+
+                      <button
+                        className="view-btn"
+                        onClick={() => renovarCliente(c)}
+                      >
+                        Renovar
                       </button>
 
                       <button

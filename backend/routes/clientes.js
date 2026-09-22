@@ -222,6 +222,67 @@ router.put("/:id", async (req, res) => {
 });
 
 // =====================
+// RENOVAR CLIENTE
+// =====================
+router.patch("/:id/renovar", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const clienteRef = db.collection("clientes").doc(id);
+    const clienteDoc = await clienteRef.get();
+
+    if (!clienteDoc.exists) {
+      return res.status(404).json({
+        error: "Cliente não encontrado",
+      });
+    }
+
+    const cliente = clienteDoc.data();
+    const dataAtual = cliente.renovacao ? new Date(`${cliente.renovacao}T00:00:00`) : new Date();
+
+    if (Number.isNaN(dataAtual.getTime())) {
+      return res.status(400).json({
+        error: "Data de renovação inválida",
+      });
+    }
+
+    const dia = dataAtual.getDate();
+    const proximoMes = dataAtual.getMonth() + 1;
+    const novaData = new Date(dataAtual.getFullYear(), proximoMes, 1);
+    const ultimoDiaDoMes = new Date(
+      novaData.getFullYear(),
+      novaData.getMonth() + 1,
+      0,
+    ).getDate();
+
+    novaData.setDate(Math.min(dia, ultimoDiaDoMes));
+
+    const renovacao = [
+      novaData.getFullYear(),
+      String(novaData.getMonth() + 1).padStart(2, "0"),
+      String(novaData.getDate()).padStart(2, "0"),
+    ].join("-");
+
+    await clienteRef.update({
+      renovacao,
+      atualizadoEm: Date.now(),
+    });
+
+    await registrarAtividade(`Cliente renovado: ${cliente.nome || id}`);
+
+    res.json({
+      sucesso: true,
+      renovacao,
+    });
+  } catch (err) {
+    console.log("Erro renovar cliente:", err);
+
+    res.status(500).json({
+      error: "Erro interno",
+    });
+  }
+});
+
+// =====================
 // DELETAR CLIENTE
 // =====================
 router.delete("/:id", async (req, res) => {

@@ -172,10 +172,11 @@ export default function Bots() {
                 Mensalidade: R$ {Number(bot.valorMensal ?? bot.valor ?? 0).toFixed(2)}
               </strong>
               <br></br>
-
-              <small>
-                Versão: {bot.versao}
-              </small>
+              <p>
+                <small>
+                  Versão: {bot.versao}
+                </small>
+              </p>
             </div>
           ))}
         </div>
