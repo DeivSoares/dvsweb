@@ -5,6 +5,17 @@ const { registrarAtividade } = require("../utils/atividade");
 
 const router = express.Router();
 
+async function calcularValorBots(bots) {
+  if (!Array.isArray(bots) || bots.length === 0) return 0;
+
+  const snapshot = await db.collection("bots").get();
+  const valoresPorId = new Map(
+    snapshot.docs.map((doc) => [doc.id, Number(doc.data().valor || 0)]),
+  );
+
+  return bots.reduce((total, botId) => total + (valoresPorId.get(botId) || 0), 0);
+}
+
 // =====================
 // LISTAR CLIENTES
 // =====================
@@ -54,6 +65,8 @@ router.post("/", async (req, res) => {
       tipo,
     } = req.body;
 
+    const valorMensalBots = await calcularValorBots(bots);
+
     const novoCliente = {
       nome: nome || "",
 
@@ -66,7 +79,7 @@ router.post("/", async (req, res) => {
       // =====================
       valorPago: Number(valorPago || 0),
 
-      valorMensal: Number(valorMensal || 0),
+      valorMensal: valorMensalBots,
 
       bots: Array.isArray(bots) ? bots : [],
 
@@ -145,6 +158,8 @@ router.put("/:id", async (req, res) => {
       tipo,
     } = req.body;
 
+    const valorMensalBots = await calcularValorBots(bots);
+
     await db
       .collection("clientes")
       .doc(id)
@@ -160,7 +175,7 @@ router.put("/:id", async (req, res) => {
         // =====================
         valorPago: Number(valorPago || 0),
 
-        valorMensal: Number(valorMensal || 0),
+        valorMensal: valorMensalBots,
 
         bots: Array.isArray(bots) ? bots : [],
 

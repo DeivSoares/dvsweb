@@ -86,9 +86,20 @@ export default function Clientes() {
   // BOTS MULTI SELECT
   // =====================
   function toggleBot(id) {
-    setBotSelecionado((prev) =>
-      prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id],
-    );
+    setBotSelecionado((prev) => {
+      const novosBots = prev.includes(id)
+        ? prev.filter((botId) => botId !== id)
+        : [...prev, id];
+
+      const valorDosBots = novosBots.reduce((total, botId) => {
+        const bot = bots.find((item) => item.id === botId);
+        return total + Number(bot?.valor || 0);
+      }, 0);
+
+      setValorMensal(valorDosBots.toFixed(2));
+
+      return novosBots;
+    });
   }
 
   // =====================
@@ -245,6 +256,15 @@ export default function Clientes() {
     setComprovanteUrl(cliente.comprovanteUrl || "");
 
     setBotSelecionado(cliente.bots || []);
+
+    const valorDosBots = (cliente.bots || []).reduce((total, botId) => {
+      const bot = bots.find((item) => item.id === botId);
+      return total + Number(bot?.valor || 0);
+    }, 0);
+
+    setValorMensal(
+      valorDosBots > 0 ? valorDosBots.toFixed(2) : cliente.valorMensal || "",
+    );
 
     setTipo(cliente.tipo === "site" ? "site" : "bot");
     setPossuiBot(cliente.bots?.length > 0 || cliente.tipo === "bot_site" || cliente.tipo === "bot");
@@ -527,6 +547,7 @@ export default function Clientes() {
                   onChange={(e) => setValorMensal(e.target.value)}
                   placeholder="Mensalidade (Bot)"
                   type="number"
+                  readOnly={botSelecionado.length > 0}
                 />
               </>
             )}
@@ -598,7 +619,7 @@ export default function Clientes() {
                       botSelecionado.includes(b.id) ? "selected" : ""
                     }`}
                   >
-                    {b.nome}
+                    {b.nome} - R$ {Number(b.valor || 0).toFixed(2)}
                   </button>
                 ))}
               </div>

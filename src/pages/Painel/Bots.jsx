@@ -12,6 +12,7 @@ export default function Bots() {
 
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [valor, setValor] = useState("");
 
   const [modal, setModal] = useState(false);
 
@@ -24,6 +25,7 @@ export default function Bots() {
 
   const [editVersao, setEditVersao] =
     useState("");
+  const [editValor, setEditValor] = useState("");
 
   async function carregarBots() {
     try {
@@ -42,10 +44,12 @@ export default function Bots() {
       await api.post("/bots", {
         nome,
         descricao,
+        valor: Number(valor || 0),
       });
 
       setNome("");
       setDescricao("");
+      setValor("");
 
       carregarBots();
     } catch (err) {
@@ -62,6 +66,8 @@ export default function Bots() {
 
     setEditVersao(bot.versao);
 
+    setEditValor(bot.valor || "");
+
     setModal(true);
   }
 
@@ -71,6 +77,7 @@ export default function Bots() {
         nome: editNome,
         descricao: editDescricao,
         versao: editVersao,
+        valor: Number(editValor || 0),
       });
 
       setModal(false);
@@ -129,6 +136,15 @@ export default function Bots() {
             }
           />
 
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="Valor mensal"
+            value={valor}
+            onChange={(e) => setValor(e.target.value)}
+          />
+
           <button onClick={criarBot}>
             Criar Bot
           </button>
@@ -151,6 +167,8 @@ export default function Bots() {
               </div>
 
               <p>{bot.descricao}</p>
+
+              <strong>Mensalidade: R$ {Number(bot.valor || 0).toFixed(2)}</strong>
 
               <small>
                 Versão: {bot.versao}
@@ -191,6 +209,15 @@ export default function Bots() {
                   e.target.value
                 )
               }
+            />
+
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={editValor}
+              onChange={(e) => setEditValor(e.target.value)}
+              placeholder="Valor mensal"
             />
 
             <div className="modal-actions">
