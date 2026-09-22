@@ -60,7 +60,7 @@ export default function Dashboard() {
       <main className="dashboard-main">
         <Header />
 
-        <section className="dashboard-cards">
+        <section className="dashboard-cards dcmobile">
           <Card title="Clientes" value={dados.clientes} />
 
           <Card title="Licenças" value={dados.licencas} />
