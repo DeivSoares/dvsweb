@@ -10,7 +10,10 @@ async function calcularValorBots(bots) {
 
   const snapshot = await db.collection("bots").get();
   const valoresPorId = new Map(
-    snapshot.docs.map((doc) => [doc.id, Number(doc.data().valor || 0)]),
+    snapshot.docs.map((doc) => {
+      const dados = doc.data();
+      return [doc.id, Number(dados.valorMensal ?? dados.valor ?? 0)];
+    }),
   );
 
   return bots.reduce((total, botId) => total + (valoresPorId.get(botId) || 0), 0);

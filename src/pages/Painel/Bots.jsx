@@ -44,7 +44,7 @@ export default function Bots() {
       await api.post("/bots", {
         nome,
         descricao,
-        valor: Number(valor || 0),
+        valorMensal: Number(valor || 0),
       });
 
       setNome("");
@@ -66,7 +66,7 @@ export default function Bots() {
 
     setEditVersao(bot.versao);
 
-    setEditValor(bot.valor || "");
+    setEditValor(bot.valorMensal ?? bot.valor ?? "");
 
     setModal(true);
   }
@@ -77,7 +77,7 @@ export default function Bots() {
         nome: editNome,
         descricao: editDescricao,
         versao: editVersao,
-        valor: Number(editValor || 0),
+        valorMensal: Number(editValor || 0),
       });
 
       setModal(false);
@@ -168,7 +168,9 @@ export default function Bots() {
 
               <p>{bot.descricao}</p>
 
-              <strong>Mensalidade: R$ {Number(bot.valor || 0).toFixed(2)}</strong>
+              <strong>
+                Mensalidade: R$ {Number(bot.valorMensal ?? bot.valor ?? 0).toFixed(2)}
+              </strong>
 
               <small>
                 Versão: {bot.versao}

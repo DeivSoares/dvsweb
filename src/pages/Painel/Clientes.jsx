@@ -93,7 +93,7 @@ export default function Clientes() {
 
       const valorDosBots = novosBots.reduce((total, botId) => {
         const bot = bots.find((item) => item.id === botId);
-        return total + Number(bot?.valor || 0);
+        return total + Number(bot?.valorMensal ?? bot?.valor ?? 0);
       }, 0);
 
       setValorMensal(valorDosBots.toFixed(2));
@@ -259,7 +259,7 @@ export default function Clientes() {
 
     const valorDosBots = (cliente.bots || []).reduce((total, botId) => {
       const bot = bots.find((item) => item.id === botId);
-      return total + Number(bot?.valor || 0);
+      return total + Number(bot?.valorMensal ?? bot?.valor ?? 0);
     }, 0);
 
     setValorMensal(
@@ -619,7 +619,7 @@ export default function Clientes() {
                       botSelecionado.includes(b.id) ? "selected" : ""
                     }`}
                   >
-                    {b.nome} - R$ {Number(b.valor || 0).toFixed(2)}
+                    {b.nome} - R$ {Number(b.valorMensal ?? b.valor ?? 0).toFixed(2)}
                   </button>
                 ))}
               </div>

@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { nome, descricao, versao, valor } = req.body;
+    const { nome, descricao, versao, valorMensal, valor } = req.body;
 
     if (!nome) {
       return res.status(400).json({
@@ -32,11 +32,14 @@ router.post("/", async (req, res) => {
       });
     }
 
+    const valorDoBot = Number(valorMensal ?? valor ?? 0);
+
     const novoBot = {
       nome,
       descricao: descricao || "",
       versao: versao || "1.0.0",
-      valor: Number(valor || 0),
+      valorMensal: valorDoBot,
+      valor: valorDoBot,
       ativo: true,
       criadoEm: Date.now(),
     };
@@ -59,13 +62,16 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { nome, descricao, versao, valor } = req.body;
+    const { nome, descricao, versao, valorMensal, valor } = req.body;
+
+    const valorDoBot = Number(valorMensal ?? valor ?? 0);
 
     await db.collection("bots").doc(id).update({
       nome,
       descricao,
       versao,
-      valor: Number(valor || 0),
+      valorMensal: valorDoBot,
+      valor: valorDoBot,
     });
     await registrarAtividade(`Bot atualizado: ${nome}`);
     res.json({
