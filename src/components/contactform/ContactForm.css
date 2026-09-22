@@ -17,7 +17,7 @@
 }
 
 .contact-form {
-    width: 60rem;
+  width: 60rem;
   background: #fff;
   padding: 30px;
   border-radius: 8px;
@@ -54,7 +54,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #4A90E2;
+  border-color: #4a90e2;
 }
 
 .form-group textarea {
@@ -72,7 +72,9 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .submit-button:hover:not(:disabled) {
@@ -118,7 +120,13 @@
 
 @media (max-width: 768px) {
   .contact-form {
-    padding: 20px;
+    width: 30rem;
+    padding: 0.8rem;
+    margin: auto;
+  }
+
+  .contact-form-container {
+    padding: 20px 10px;
   }
 
   .contact-form-container h2 {
