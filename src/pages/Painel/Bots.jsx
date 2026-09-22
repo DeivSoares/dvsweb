@@ -167,11 +167,11 @@ export default function Bots() {
               </div>
 
               <p>{bot.descricao}</p>
-              <br></br>
 
               <strong>
                 Mensalidade: R$ {Number(bot.valorMensal ?? bot.valor ?? 0).toFixed(2)}
               </strong>
+              <br></br>
 
               <small>
                 Versão: {bot.versao}
