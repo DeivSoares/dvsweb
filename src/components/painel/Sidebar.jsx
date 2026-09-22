@@ -1,53 +1,104 @@
+import { useEffect, useState } from "react";
+
 import "./painel.css";
 import Perfil from "../../assets/icons/perfil.png";
 
 import logo from "../../assets/icons/DvsLogo.png";
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    function handleEscape(event) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("sidebar-open", isOpen);
+
+    return () => document.body.classList.remove("sidebar-open");
+  }, [isOpen]);
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar-top">
-        <div className="sidebar-logo">
-          <img src={logo} alt="DvS Logo" />
+    <>
+      <button
+        className="sidebar-toggle"
+        type="button"
+        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span className="sidebar-toggle-icon" aria-hidden="true">
+          {isOpen ? "x" : "="}
+        </span>
+      </button>
 
-          <h1>DvS</h1>
+      {isOpen && (
+        <button
+          className="sidebar-overlay"
+          type="button"
+          aria-label="Fechar menu"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
-          <span>PAINEL ADMINISTRATIVO</span>
-        </div>
+      <aside className={`sidebar${isOpen ? " is-open" : ""}`}>
+        <div className="sidebar-top">
+          <div className="sidebar-logo">
+            <img src={logo} alt="DvS Logo" />
 
-        <nav className="sidebar-nav">
-          <a href="#/painel" className="active">
-            Dashboard
-          </a>
+            <h1>DvS</h1>
 
-          <a href="#/painel/clientes">Clientes</a>
+            <span>PAINEL ADMINISTRATIVO</span>
+          </div>
 
-          {/* <a href="#/painel/licencas">
+          <nav className="sidebar-nav">
+            <a href="#/painel" className="active" onClick={() => setIsOpen(false)}>
+              Dashboard
+            </a>
+
+            <a href="#/painel/clientes" onClick={() => setIsOpen(false)}>
+              Clientes
+            </a>
+
+            {/* <a href="#/painel/licencas">
             Licenças
           </a> */}
 
-          <a href="#/painel/bots">Bots</a>
+            <a href="#/painel/bots" onClick={() => setIsOpen(false)}>
+              Bots
+            </a>
 
-          <a href="#/painel/financeiro">Financeiro</a>
+            <a href="#/painel/financeiro" onClick={() => setIsOpen(false)}>
+              Financeiro
+            </a>
 
-          {/* <a href="#/painel/logs">
+            {/* <a href="#/painel/logs">
             Logs
           </a> */}
-        </nav>
-      </div>
+          </nav>
+        </div>
 
-      <div className="sidebar-footer">
-        <div className="sidebar-user">
-          <div className="sidebar-avatar">
-            <img src={Perfil} alt="Perfil" />
-          </div>
+        <div className="sidebar-footer">
+          <div className="sidebar-user">
+            <div className="sidebar-avatar">
+              <img src={Perfil} alt="Perfil" />
+            </div>
 
-          <div>
-            <strong>Dev</strong>
-            <p>Administrador</p>
+            <div>
+              <strong>Dev</strong>
+              <p>Administrador</p>
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
