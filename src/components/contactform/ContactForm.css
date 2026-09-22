@@ -120,13 +120,13 @@
 
 @media (max-width: 768px) {
   .contact-form {
-    width: 30rem;
+    width: 35rem;
     padding: 0.8rem;
     margin: auto;
   }
 
   .contact-form-container {
-    padding: 20px 10px;
+    padding: 10px;
   }
 
   .contact-form-container h2 {
