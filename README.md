@@ -49,6 +49,18 @@ Meu foco é transformar ideias em experiências digitais fluidas e funcionais, e
 🔗 **LinkedIn:** [linkedin.com/in/deivsoares](https://www.linkedin.com/in/deivsoares-dev/)  
 🐙 **GitHub:** [github.com/DeivSoares](https://github.com/DeivSoares)  
 
+## 🔐 Painel administrativo
+
+Configure as variáveis do Firebase Authentication a partir de `.env.example` em um arquivo `.env.local` e ative o provedor **E-mail/senha** no Firebase Console.
+
+Para criar um usuário do painel, dentro da pasta `backend`, execute:
+
+```bash
+npm run user:create -- usuario@exemplo.com "uma-senha-segura" "Nome do usuário"
+```
+
+O comando usa `backend/config/firebase.json`, que deve conter a conta de serviço do projeto Firebase.
+
 ---
 
 ## 🎯 Objetivo  

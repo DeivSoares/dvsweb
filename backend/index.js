@@ -8,6 +8,7 @@ const clientesRoutes = require("./routes/clientes");
 const botsRoutes = require("./routes/bots");
 const atividadesRoutes = require("./routes/atividades");
 const financeiroRoutes = require("./routes/financeiro");
+const authenticate = require("./middleware/auth");
 
 const app = express();
 
@@ -61,6 +62,8 @@ app.get("/dashboard/test", (req, res) => {
 // ================================
 // API
 // ================================
+
+app.use(authenticate);
 
 app.use("/dashboard", dashboardRoutes);
 app.use("/clientes", clientesRoutes);
