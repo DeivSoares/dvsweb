@@ -78,7 +78,7 @@
 .settings-form {
   display: grid;
   gap: 12px;
-  width: 50%;
+  width: 80%;
   margin: auto;
 }
 
@@ -140,11 +140,18 @@
 
 .settings-users {
   min-width: 0;
+  width: 90%;
+  margin: auto;
 }
 
 .settings-users .danger-btn,
 .settings-users .edit-btn {
   margin: 3px;
+}
+
+.settings-actions-cell {
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 900px) {

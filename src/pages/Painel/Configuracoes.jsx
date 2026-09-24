@@ -91,7 +91,7 @@ export default function Configuracoes() {
             <div className="settings-actions"><button type="submit">{editando ? "Salvar alterações" : "Cadastrar usuário"}</button>{editando && <button type="button" className="view-btn" onClick={limpar}>Cancelar</button>}</div>
             {mensagem && <p className="settings-message" role="status">{mensagem}</p>}
           </form>
-          <div className="painel-box settings-users"><h2>Usuários cadastrados</h2><div className="table-container"><table className="painel-table"><thead><tr><th>Usuário</th><th>Nome</th><th>Nível</th><th>Ações</th></tr></thead><tbody>{usuarios.map((usuario) => <tr key={usuario.uid}><td>{usuario.username}</td><td>{usuario.displayName}</td><td>{usuario.nivelAcesso}</td><td><button className="edit-btn" type="button" onClick={() => editar(usuario)}>Editar</button>{!usuario.disabled && <button className="danger-btn" type="button" onClick={() => excluir(usuario)}>Excluir</button>}</td></tr>)}</tbody></table></div></div>
+          <div className="painel-box settings-users"><h2>Usuários cadastrados</h2><div className="table-container"><table className="painel-table"><thead><tr><th>Usuário</th><th>Nome</th><th>Nível</th><th>Ações</th></tr></thead><tbody>{usuarios.map((usuario) => <tr key={usuario.uid}><td>{usuario.username}</td><td>{usuario.displayName}</td><td>{usuario.nivelAcesso}</td><td className="settings-actions-cell"><button className="edit-btn" type="button" onClick={() => editar(usuario)}>Editar</button>{!usuario.disabled && <button className="danger-btn" type="button" onClick={() => excluir(usuario)}>Excluir</button>}</td></tr>)}</tbody></table></div></div>
         </section>
       </main>
     </div>
