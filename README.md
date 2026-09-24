@@ -56,7 +56,7 @@ Configure as variáveis do Firebase Authentication a partir de `.env.example` em
 Para criar um usuário do painel, dentro da pasta `backend`, execute:
 
 ```bash
-npm run user:create -- usuario@exemplo.com "uma-senha-segura" "Nome do usuário"
+npm run user:create -- "usuario" "uma-senha-segura" "Nome do usuário" "Administrador"
 ```
 
 O comando usa `backend/config/firebase.json`, que deve conter a conta de serviço do projeto Firebase.

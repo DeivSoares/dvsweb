@@ -7,17 +7,27 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [claims, setClaims] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    return onAuthStateChanged(auth, (currentUser) => {
+    return onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        const token = await currentUser.getIdTokenResult(true);
+        setClaims(token.claims);
+      } else {
+        setClaims({});
+      }
+
       setLoading(false);
     });
   }, []);
 
   const value = {
     user,
+    claims,
     loading,
     logout: () => signOut(auth),
   };

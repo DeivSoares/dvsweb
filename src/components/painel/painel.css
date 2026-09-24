@@ -128,6 +128,25 @@
   font-size: 13px;
 }
 
+.sidebar-logout {
+  width: 100%;
+  margin-top: 18px;
+  padding: 10px 14px;
+  border: 1px solid #2b3955;
+  border-radius: 10px;
+  background: transparent;
+  color: #d6e2ff;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  border-color: #8fb7ea;
+  background: #182338;
+}
+
 .sidebar-logo {
   margin-bottom: 45px;
 

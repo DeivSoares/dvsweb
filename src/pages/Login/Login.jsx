@@ -5,12 +5,13 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/icons/DvsLogo.png";
 import { useAuth } from "../../services/AuthContext";
 import { auth } from "../../services/firebase";
+import { usernameToAuthEmail } from "../../services/username";
 
 import "./login.css";
 
 function getLoginError(error) {
   if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-    return "E-mail ou senha incorretos.";
+    return "Nome de usuário ou senha incorretos.";
   }
 
   if (error.code === "auth/too-many-requests") {
@@ -24,7 +25,7 @@ export default function Login() {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -39,7 +40,7 @@ export default function Login() {
     setSubmitting(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email.trim(), password);
+      await signInWithEmailAndPassword(auth, usernameToAuthEmail(username), password);
       const destination = location.state?.from?.pathname || "/painel";
       navigate(destination, { replace: true });
     } catch (loginError) {
@@ -64,14 +65,15 @@ export default function Login() {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="email">E-mail</label>
+          <label htmlFor="username">Nome de usuário</label>
           <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="voce@exemplo.com"
+            id="username"
+            type="text"
+            autoComplete="username"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+            placeholder="seu.usuario"
+            pattern="[A-Za-z0-9._-]+"
             required
           />
 

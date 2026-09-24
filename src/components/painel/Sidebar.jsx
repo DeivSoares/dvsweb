@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 import "./painel.css";
 import Perfil from "../../assets/icons/perfil.png";
+import { useAuth } from "../../services/AuthContext";
 
 import logo from "../../assets/icons/DvsLogo.png";
 
 export default function Sidebar() {
+  const { user, claims, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -93,10 +95,14 @@ export default function Sidebar() {
             </div>
 
             <div>
-              <strong>Dev</strong>
-              <p>Administrador</p>
+              <strong>{user?.displayName || claims.username || "Usuário"}</strong>
+              <p>{claims.nivelAcesso || "Usuário"}</p>
             </div>
           </div>
+
+          <button className="sidebar-logout" type="button" onClick={logout}>
+            Sair
+          </button>
         </div>
       </aside>
     </>
