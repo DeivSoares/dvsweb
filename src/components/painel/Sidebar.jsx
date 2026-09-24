@@ -8,6 +8,7 @@ import logo from "../../assets/icons/DvsLogo.png";
 
 export default function Sidebar() {
   const { user, claims, logout } = useAuth();
+  const canManage = ["CEO", "Administrador"].includes(claims.nivelAcesso);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -78,9 +79,17 @@ export default function Sidebar() {
               Bots
             </a>
 
-            <a href="#/painel/financeiro" onClick={() => setIsOpen(false)}>
-              Financeiro
-            </a>
+            {canManage && (
+              <a href="#/painel/financeiro" onClick={() => setIsOpen(false)}>
+                Financeiro
+              </a>
+            )}
+
+            {canManage && (
+              <a href="#/painel/configuracoes" onClick={() => setIsOpen(false)}>
+                Configurações
+              </a>
+            )}
 
             {/* <a href="#/painel/logs">
             Logs

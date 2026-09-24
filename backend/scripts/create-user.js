@@ -33,12 +33,12 @@ auth
   .then(async (user) => {
     await auth.setCustomUserClaims(user.uid, {
       username: normalizedUsername,
-      nivelAcesso: nivelAcesso || "Usuário",
+      nivelAcesso: nivelAcesso || "Vendedor",
     });
 
     console.log(`Usuário criado com sucesso: ${user.uid}`);
     console.log(`Login: ${normalizedUsername}`);
-    console.log(`Nível de acesso: ${nivelAcesso || "Usuário"}`);
+    console.log(`Nível de acesso: ${nivelAcesso || "Vendedor"}`);
   })
   .catch((error) => {
     console.error(`Não foi possível criar o usuário: ${error.message}`);

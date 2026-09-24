@@ -8,7 +8,9 @@ const clientesRoutes = require("./routes/clientes");
 const botsRoutes = require("./routes/bots");
 const atividadesRoutes = require("./routes/atividades");
 const financeiroRoutes = require("./routes/financeiro");
+const usuariosRoutes = require("./routes/usuarios");
 const authenticate = require("./middleware/auth");
+const requireManagementAccess = require("./middleware/requireManagementAccess");
 
 const app = express();
 
@@ -70,6 +72,7 @@ app.use("/clientes", clientesRoutes);
 app.use("/bots", botsRoutes);
 app.use("/atividades", atividadesRoutes);
 app.use("/financeiro", financeiroRoutes);
+app.use("/usuarios", requireManagementAccess, usuariosRoutes);
 
 // ================================
 // TRATAMENTO DE ERROS

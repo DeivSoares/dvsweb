@@ -5,6 +5,16 @@ import { auth } from "./firebase";
 
 const AuthContext = createContext(null);
 
+function normalizeClaims(claims) {
+  const nivelAcesso = claims.nivelAcesso === "Usuário"
+    ? "Vendedor"
+    : claims.nivelAcesso === "Gerente"
+      ? "Desenvolvedor"
+      : claims.nivelAcesso || "Vendedor";
+
+  return { ...claims, nivelAcesso };
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [claims, setClaims] = useState({});
@@ -16,7 +26,7 @@ export function AuthProvider({ children }) {
 
       if (currentUser) {
         const token = await currentUser.getIdTokenResult(true);
-        setClaims(token.claims);
+        setClaims(normalizeClaims(token.claims));
       } else {
         setClaims({});
       }

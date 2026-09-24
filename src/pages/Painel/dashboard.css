@@ -70,6 +70,71 @@
   border: 1px solid rgba(255, 180, 0, 0.3);
 }
 
+.settings-content {
+  align-items: start;
+}
+
+.settings-form {
+  display: grid;
+  gap: 12px;
+}
+
+.settings-form h2,
+.settings-users h2 {
+  margin-top: 0;
+}
+
+.settings-form label {
+  display: grid;
+  gap: 7px;
+  color: #d6e2ff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-form input,
+.settings-form select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #1f2b42;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  font: inherit;
+}
+
+.settings-form button {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #8fb7ea;
+  color: #05070d;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.settings-message {
+  margin: 4px 0 0;
+  color: #8fb7ea;
+}
+
+.settings-users {
+  min-width: 0;
+}
+
+.settings-users .danger-btn,
+.settings-users .edit-btn {
+  margin: 3px;
+}
+
 @media (max-width: 900px) {
   .dashboard-content {
     grid-template-columns: 1fr;
