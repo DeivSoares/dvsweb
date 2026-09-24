@@ -100,7 +100,7 @@ export default function Sidebar() {
         <div className="sidebar-footer">
           <div className="sidebar-user">
             <div className="sidebar-avatar">
-              <img src={Perfil} alt="Perfil" />
+              <img src={user?.photoURL || Perfil} alt="Perfil" />
             </div>
 
             <div>

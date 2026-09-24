@@ -13,11 +13,28 @@ function getEmail(username) {
   return `${normalizeUsername(username)}@${USER_EMAIL_DOMAIN}`;
 }
 
+function normalizePhotoURL(photoURL) {
+  const value = String(photoURL || "").trim();
+
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    const isDiscordHost = url.hostname === "discord.com" || url.hostname.endsWith(".discord.com") || url.hostname === "discordapp.com" || url.hostname.endsWith(".discordapp.com") || url.hostname === "discordapp.net" || url.hostname.endsWith(".discordapp.net");
+
+    if (url.protocol !== "https:" || !isDiscordHost) return undefined;
+    return value;
+  } catch {
+    return undefined;
+  }
+}
+
 function serializeUser(user) {
   return {
     uid: user.uid,
     username: user.customClaims?.username || user.email?.split("@")[0] || "",
     displayName: user.displayName || "",
+    photoURL: user.photoURL || "",
     nivelAcesso: user.customClaims?.nivelAcesso === "Usuário"
       ? "Vendedor"
       : user.customClaims?.nivelAcesso === "Gerente"
@@ -55,13 +72,15 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const username = normalizeUsername(req.body.username);
   const { password, displayName, nivelAcesso } = req.body;
+  const photoURL = normalizePhotoURL(req.body.photoURL);
 
   if (!USERNAME_PATTERN.test(username)) return res.status(400).json({ message: "Nome de usuário inválido." });
   if (!password || password.length < 6) return res.status(400).json({ message: "A senha precisa ter pelo menos 6 caracteres." });
   if (!displayName?.trim() || !nivelAcesso?.trim()) return res.status(400).json({ message: "Nome e nível de acesso são obrigatórios." });
+  if (photoURL === undefined) return res.status(400).json({ message: "Informe uma URL HTTPS válida do Discord." });
 
   try {
-    const user = await auth.createUser({ email: getEmail(username), password, displayName: displayName.trim() });
+    const user = await auth.createUser({ email: getEmail(username), password, displayName: displayName.trim(), photoURL });
     await auth.setCustomUserClaims(user.uid, { username, nivelAcesso: nivelAcesso.trim() });
     res.status(201).json(serializeUser(await auth.getUser(user.uid)));
   } catch (error) {
@@ -80,6 +99,11 @@ router.patch("/:uid", async (req, res) => {
     updates.email = getEmail(username);
   }
   if (req.body.displayName !== undefined) updates.displayName = req.body.displayName.trim();
+  if (req.body.photoURL !== undefined) {
+    const photoURL = normalizePhotoURL(req.body.photoURL);
+    if (photoURL === undefined) return res.status(400).json({ message: "Informe uma URL HTTPS válida do Discord." });
+    updates.photoURL = photoURL;
+  }
   if (req.body.password) {
     if (req.body.password.length < 6) return res.status(400).json({ message: "A senha precisa ter pelo menos 6 caracteres." });
     updates.password = req.body.password;

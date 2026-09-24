@@ -40,6 +40,11 @@ export function AuthProvider({ children }) {
     claims,
     loading,
     logout: () => signOut(auth),
+    reloadUser: async () => {
+      if (!auth.currentUser) return;
+      await auth.currentUser.reload();
+      setUser(auth.currentUser);
+    },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

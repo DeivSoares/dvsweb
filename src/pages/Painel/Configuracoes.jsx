@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 
 import Sidebar from "../../components/painel/Sidebar";
 import Header from "../../components/painel/Header";
+import { useAuth } from "../../services/AuthContext";
 import { api } from "../../services/api";
 
 import "./dashboard.css";
 
-const initialForm = { username: "", password: "", displayName: "", nivelAcesso: "Vendedor" };
+const initialForm = { username: "", password: "", displayName: "", nivelAcesso: "Vendedor", photoURL: "" };
 
 export default function Configuracoes() {
+  const { user, reloadUser } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
   const [form, setForm] = useState(initialForm);
   const [editando, setEditando] = useState(null);
@@ -43,6 +45,7 @@ export default function Configuracoes() {
         const payload = { ...form };
         if (!payload.password) delete payload.password;
         await api.patch(`/usuarios/${editando}`, payload);
+        if (editando === user?.uid) await reloadUser();
       } else {
         await api.post("/usuarios", form);
       }
@@ -56,7 +59,7 @@ export default function Configuracoes() {
 
   function editar(usuario) {
     setEditando(usuario.uid);
-    setForm({ username: usuario.username, password: "", displayName: usuario.displayName, nivelAcesso: usuario.nivelAcesso });
+    setForm({ username: usuario.username, password: "", displayName: usuario.displayName, nivelAcesso: usuario.nivelAcesso, photoURL: usuario.photoURL || "" });
   }
 
   async function excluir(usuario) {
@@ -81,6 +84,8 @@ export default function Configuracoes() {
             <h2>{editando ? "Editar usuário" : "Cadastrar usuário"}</h2>
             <label>Nome de usuário<input name="username" value={form.username} onChange={atualizarCampo} pattern="[A-Za-z0-9._-]+" disabled={Boolean(editando)} required /></label>
             <label>Nome completo<input name="displayName" value={form.displayName} onChange={atualizarCampo} required /></label>
+            <label>URL da imagem do Discord<input name="photoURL" type="url" value={form.photoURL} onChange={atualizarCampo} placeholder="https://media.discordapp.net/..." /></label>
+            {form.photoURL && <img className="settings-avatar-preview" src={form.photoURL} alt="Prévia do avatar" />}
             <label>{editando ? "Nova senha (opcional)" : "Senha"}<input name="password" type="password" minLength={6} value={form.password} onChange={atualizarCampo} required={!editando} /></label>
             <label>Nível de acesso<select name="nivelAcesso" value={form.nivelAcesso} onChange={atualizarCampo}><option>Vendedor</option><option>Desenvolvedor</option><option>Administrador</option><option>CEO</option></select></label>
             <div className="settings-actions"><button type="submit">{editando ? "Salvar alterações" : "Cadastrar usuário"}</button>{editando && <button type="button" className="view-btn" onClick={limpar}>Cancelar</button>}</div>
