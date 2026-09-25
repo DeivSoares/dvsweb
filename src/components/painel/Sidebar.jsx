@@ -9,6 +9,7 @@ import logo from "../../assets/icons/DvsLogo.png";
 export default function Sidebar() {
   const { user, claims, logout } = useAuth();
   const canManage = ["CEO", "Administrador"].includes(claims.nivelAcesso);
+  const canAccessBots = ["Desenvolvedor", "Administrador", "CEO"].includes(claims.nivelAcesso);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -75,9 +76,11 @@ export default function Sidebar() {
             Licenças
           </a> */}
 
-            <a href="#/painel/bots" onClick={() => setIsOpen(false)}>
-              Bots
-            </a>
+            {canAccessBots && (
+              <a href="#/painel/bots" onClick={() => setIsOpen(false)}>
+                Bots
+              </a>
+            )}
 
             {canManage && (
               <a href="#/painel/financeiro" onClick={() => setIsOpen(false)}>

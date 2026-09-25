@@ -1,6 +1,7 @@
 const express = require("express");
 const { db } = require("../firebase");
 const { registrarAtividade } = require("../utils/atividade");
+const requireDeveloperAccess = require("../middleware/requireDeveloperAccess");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -22,7 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", requireDeveloperAccess, async (req, res) => {
   try {
     const { nome, descricao, versao, valorMensal, valor } = req.body;
 
@@ -58,7 +59,7 @@ router.post("/", async (req, res) => {
     });
   }
 });
-router.put("/:id", async (req, res) => {
+router.put("/:id", requireDeveloperAccess, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -86,7 +87,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", requireDeveloperAccess, async (req, res) => {
   try {
     const { id } = req.params;
 
