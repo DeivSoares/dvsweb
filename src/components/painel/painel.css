@@ -77,16 +77,6 @@
   transform: translateX(4px);
 }
 
-.sidebar-nav a {
-  background: linear-gradient(135deg, #6e9bd0, #8fb7ea);
-
-  color: #05070d;
-
-  font-weight: 700;
-
-  box-shadow: 0 0 20px rgba(143, 183, 234, 0.25);
-}
-
 .sidebar-footer {
   padding-top: 25px;
 
