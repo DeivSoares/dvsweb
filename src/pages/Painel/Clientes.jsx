@@ -409,28 +409,28 @@ export default function Clientes() {
                         className="view-btn"
                         onClick={() => abrirVisualizar(c)}
                       >
-                        Visualizar
+                        📑 Visualizar
                       </button>
 
                       <button
                         className="edit-btn"
                         onClick={() => abrirEditar(c)}
                       >
-                        Editar
+                        📝 Editar
                       </button>
 
                       <button
                         className="view-btn"
                         onClick={() => renovarCliente(c)}
                       >
-                        Renovar
+                        🕒 Renovar
                       </button>
 
                       <button
                         className="delete-btn"
                         onClick={() => excluirCliente(c.id)}
                       >
-                        Excluir
+                        🗑️ Excluir
                       </button>
                     </div>
                   </td>
