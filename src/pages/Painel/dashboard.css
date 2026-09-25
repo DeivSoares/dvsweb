@@ -8,7 +8,7 @@
 .dashboard-main {
   flex: 1;
   min-width: 0;
-  padding: 30px;
+  padding: 15px;
 }
 
 .dashboard-cards {
@@ -201,12 +201,12 @@
 
 .painel-table th {
   text-align: center;
-  padding: 18px;
+  padding: 5px;
   color: #8fb7ea;
 }
 
 .painel-table td {
-  padding: 18px;
+  padding: 5px;
   border-top: 1px solid #1f2b42;
 }
 
