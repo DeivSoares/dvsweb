@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import "./painel.css";
-import Perfil from "../../assets/icons/perfil.png";
 import { useAuth } from "../../services/AuthContext";
 
 import logo from "../../assets/icons/DvsLogo.png";
@@ -103,7 +102,7 @@ export default function Sidebar() {
         <div className="sidebar-footer">
           <div className="sidebar-user">
             <div className="sidebar-avatar">
-              <img src={user?.photoURL || Perfil} alt="Perfil" />
+              <img src={user?.photoURL || logo} alt="Perfil" />
             </div>
 
             <div>

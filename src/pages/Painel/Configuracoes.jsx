@@ -4,6 +4,7 @@ import Sidebar from "../../components/painel/Sidebar";
 import Header from "../../components/painel/Header";
 import { useAuth } from "../../services/AuthContext";
 import { api } from "../../services/api";
+import logo from "../../assets/icons/DvsLogo.png";
 
 import "./dashboard.css";
 
@@ -85,8 +86,8 @@ export default function Configuracoes() {
             <label>Nome de usuário<input name="username" value={form.username} onChange={atualizarCampo} pattern="[A-Za-z0-9._-]+" disabled={Boolean(editando)} required /></label>
             <label>Nome completo<input name="displayName" value={form.displayName} onChange={atualizarCampo} required /></label>
             <label>URL da imagem do Discord<input name="photoURL" type="url" value={form.photoURL} onChange={atualizarCampo} placeholder="https://media.discordapp.net/..." /></label>
-            {form.photoURL && <img className="settings-avatar-preview" src={form.photoURL} alt="Prévia do avatar" />}
-            <label>{editando ? "Nova senha (opcional)" : "Senha"}<input name="password" type="password" minLength={6} value={form.password} onChange={atualizarCampo} required={!editando} /></label>
+            <img className="settings-avatar-preview" src={form.photoURL || logo} alt="Prévia do avatar" />
+            <label>{editando ? "Nova senha (opcional)" : "Senha"}<input name="password" type="password" minLength={5} value={form.password} onChange={atualizarCampo} required={!editando} /></label>
             <label>Nível de acesso<select name="nivelAcesso" value={form.nivelAcesso} onChange={atualizarCampo}><option>Vendedor</option><option>Desenvolvedor</option><option>Administrador</option><option>CEO</option></select></label>
             <div className="settings-actions"><button type="submit">{editando ? "Salvar alterações" : "Cadastrar usuário"}</button>{editando && <button type="button" className="view-btn" onClick={limpar}>Cancelar</button>}</div>
             {mensagem && <p className="settings-message" role="status">{mensagem}</p>}
