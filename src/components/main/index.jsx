@@ -51,7 +51,7 @@ function Main() {
               gap: "1rem",
             }}
           >
-            <img src={Logo} alt="" style={{ width: "5rem" }} />
+            <a href="https://dvsweb.com.br/#/painel/"><img src={Logo} alt="" style={{ width: "5rem" }} /></a>
             DVS WEB
           </h1>
 
