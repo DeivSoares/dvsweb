@@ -45,6 +45,39 @@ function Main() {
     { name: "Discord API", icon: loadIcon("Discord") },
   ];
 
+  const services = [
+    {
+      icon: "</>",
+      title: "Desenvolvimento Web",
+      description: "Sites modernos e responsivos, criados para apresentar sua marca e atender às necessidades do seu negócio.",
+    },
+    {
+      icon: "↻",
+      title: "Manutenção de Sites",
+      description: "Correções, atualizações e melhorias para manter seu site seguro, atualizado e funcionando bem.",
+    },
+    {
+      icon: "⚙",
+      title: "Manutenção de Sistemas",
+      description: "Correção de erros, atualização e aprimoramento de funcionalidades em sistemas web para manter processos confiáveis e eficientes.",
+    },
+    {
+      icon: "▦",
+      title: "Desenvolvimento de Sistemas de Gestão",
+      description: "Painéis administrativos personalizados para reunir clientes, financeiro, usuários e operações em um só lugar, com estrutura inspirada em ERPs.",
+    },
+    {
+      icon: "✦",
+      title: "Consultoria Web",
+      description: "Orientação para definir estratégias, tecnologias e próximos passos no desenvolvimento de sites e sistemas alinhados aos objetivos do seu negócio.",
+    },
+    {
+      icon: "🤖",
+      title: "Bots Personalizados para Discord",
+      description: "Bots sob medida para automatizar tarefas, organizar sua comunidade e criar experiências exclusivas no Discord.",
+    },
+  ];
+
   return (
     <main>
       <section className="intro-section">
@@ -98,6 +131,30 @@ function Main() {
             ))}
           </div>
         </section>
+      </section>
+
+      <section className="services-section reveal fade-in-up" aria-labelledby="services-title">
+        <h3 id="services-title">Serviços</h3>
+        <div className="services-grid">
+          {services.map((service) => (
+            <article className="service-card" key={service.title}>
+              <span className="service-icon" aria-hidden="true">{service.icon}</span>
+              <h4>{service.title}</h4>
+              <p>{service.description}</p>
+              <a
+                className="service-contact"
+                href={`https://wa.me/5522992326527?text=${encodeURIComponent(
+                  `Olá! Tenho interesse no serviço de ${service.title} da DvS Web. Gostaria de receber mais informações.`,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Tenho interesse em ${service.title} pelo WhatsApp`}
+              >
+                Tenho interesse <span aria-hidden="true">↗</span>
+              </a>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="projects reveal fade-in-up">
