@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import Main from './components/main';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('reveals homepage content when mounted without IntersectionObserver', () => {
+  const originalIntersectionObserver = global.IntersectionObserver;
+  global.IntersectionObserver = undefined;
+
+  render(<Main />);
+
+  expect(screen.getByRole('heading', { name: 'Minhas Stacks' }).closest('.reveal'))
+    .toHaveClass('visible');
+
+  global.IntersectionObserver = originalIntersectionObserver;
 });

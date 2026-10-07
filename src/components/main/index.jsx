@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./style.css";
 import Logo from "../../assets/icons/DvsLogo.png";
 import Perfil from "../../assets/icons/perfil.png";
@@ -6,7 +7,13 @@ import Button from "../button";
 import ProjetosData from "../projetos/projetosData";
 import Carousel from "../carousel";
 import ContactForm from "../contactform/contactform";
+import { initRevealAnimations } from "../../reveal";
+
 function Main() {
+  useEffect(() => {
+    initRevealAnimations();
+  }, []);
+
   // Carrega automaticamente os ícones da pasta src/assets/icons
   const loadIcon = (iconName) => {
     try {
