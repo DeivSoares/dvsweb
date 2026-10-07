@@ -45,14 +45,39 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   width: 100vw;
   height: 100vh;
   background: var(--fundo);
   font-size: 1.6rem;
   overflow-x: hidden;
-  background-image: url(https://static.vecteezy.com/ti/vetor-gratis/p2/2173088-textura-abstrato-escuro-azul-fundo-e-arranhado-vetor.jpg);
-  background-color: #0000009e;
+  background-color: #00000080;
   background-blend-mode: darken;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -8rem;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.78;
+  transform: translate3d(0, var(--tech-parallax-y, 0px), 0);
+  will-change: transform;
+  background-image:
+    radial-gradient(circle at 16% 22%, rgba(102, 194, 255, 0.62) 0 1px, transparent 2px),
+    radial-gradient(circle at 76% 31%, rgba(102, 194, 255, 0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 74%, rgba(102, 194, 255, 0.44) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 82%, rgba(102, 194, 255, 0.5) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 18% 24%, rgba(0, 114, 210, 0.13), transparent 30%),
+    radial-gradient(ellipse at 82% 70%, rgba(0, 114, 210, 0.1), transparent 27%),
+    repeating-linear-gradient(0deg, transparent 0 95px, rgba(111, 184, 239, 0.035) 96px 97px),
+    repeating-linear-gradient(90deg, transparent 0 95px, rgba(111, 184, 239, 0.035) 96px 97px),
+    url("./assets/bg.png");
+  background-size: auto, auto, auto, auto, auto, auto, auto, auto, cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 body::after {
@@ -64,4 +89,26 @@ body::after {
   left: 0;
   background: linear-gradient(90deg, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0.05926120448179273) 50%, rgba(0, 0, 0, 1) 90%);
   z-index: -1;
+}
+
+@supports (animation-timeline: scroll()) {
+  body::before {
+    animation: tech-background-parallax linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 2500px;
+  }
+}
+
+@keyframes tech-background-parallax {
+  to {
+    transform: translate3d(0, -80px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
 }

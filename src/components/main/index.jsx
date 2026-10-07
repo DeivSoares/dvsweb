@@ -12,6 +12,28 @@ import { initRevealAnimations } from "../../reveal";
 function Main() {
   useEffect(() => {
     initRevealAnimations();
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let animationFrame = 0;
+    const updateParallax = () => {
+      if (animationFrame) return;
+
+      animationFrame = window.requestAnimationFrame(() => {
+        const offset = Math.max(-80, -window.scrollY * 0.035);
+        document.documentElement.style.setProperty("--tech-parallax-y", `${offset}px`);
+        animationFrame = 0;
+      });
+    };
+
+    window.addEventListener("scroll", updateParallax, { passive: true });
+    updateParallax();
+
+    return () => {
+      window.removeEventListener("scroll", updateParallax);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      document.documentElement.style.removeProperty("--tech-parallax-y");
+    };
   }, []);
 
   // Carrega automaticamente os ícones da pasta src/assets/icons
@@ -154,6 +176,76 @@ function Main() {
               </a>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="management-showcase reveal fade-in-up" aria-labelledby="management-title">
+        <div className="management-showcase-inner">
+          <div className="management-copy">
+            <p className="management-kicker">SISTEMA DE GESTÃO DVS</p>
+            <h2 id="management-title">Conheça o <span>Nexo</span></h2>
+            <p className="management-description">
+              Um sistema de gestão desenvolvido pela DvS para conectar as áreas da operação.
+              Clientes, financeiro, serviços e equipe em uma solução adaptada à rotina do seu negócio.
+            </p>
+            <ul className="management-features">
+              <li><span aria-hidden="true">✓</span> Clientes e contratos</li>
+              <li><span aria-hidden="true">✓</span> Financeiro da operação</li>
+              <li><span aria-hidden="true">✓</span> Gestão de bots e sites</li>
+              <li><span aria-hidden="true">✓</span> Equipe e níveis de acesso</li>
+            </ul>
+            <a
+              className="management-cta"
+              href={`https://wa.me/5522992326527?text=${encodeURIComponent(
+                "Olá! Tenho interesse em um sistema de gestão personalizado como o Nexo da DvS Web. Gostaria de conversar sobre as necessidades do meu negócio.",
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Quero um sistema como o Nexo <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div className="management-preview" aria-label="Prévia conceitual dos módulos do Nexo">
+            <div className="management-preview-topbar">
+              <div className="management-brand">
+                <span className="management-brand-mark" aria-hidden="true">N</span>
+                <span><strong>Nexo</strong><small>GESTÃO</small></span>
+              </div>
+              <span className="management-preview-label">PAINEL DE GESTÃO</span>
+            </div>
+            <div className="management-preview-heading">
+              <span>VISÃO GERAL</span>
+              <h3>Operação conectada</h3>
+              <p>Módulos organizados para a rotina do negócio.</p>
+            </div>
+            <div className="management-modules">
+              <div className="management-module">
+                <span className="management-module-icon" aria-hidden="true">◎</span>
+                <span><strong>Clientes</strong><small>Cadastros e contratos</small></span>
+                <span className="management-module-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div className="management-module">
+                <span className="management-module-icon" aria-hidden="true">R$</span>
+                <span><strong>Financeiro</strong><small>Receitas e despesas</small></span>
+                <span className="management-module-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div className="management-module">
+                <span className="management-module-icon" aria-hidden="true">⌘</span>
+                <span><strong>Bots e sites</strong><small>Serviços acompanhados</small></span>
+                <span className="management-module-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div className="management-module">
+                <span className="management-module-icon" aria-hidden="true">⋯</span>
+                <span><strong>Equipe</strong><small>Usuários e permissões</small></span>
+                <span className="management-module-arrow" aria-hidden="true">↗</span>
+              </div>
+            </div>
+            <div className="management-preview-footer">
+              <span>DV<span className="management-footer-accent">S</span> WEB</span>
+              <span>SOB MEDIDA PARA SUA OPERAÇÃO</span>
+            </div>
+          </div>
         </div>
       </section>
 
