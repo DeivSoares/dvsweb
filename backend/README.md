@@ -69,7 +69,18 @@ O Socket.IO compartilha o servidor HTTP da API. O painel conecta enviando
 recusados. Eventos emitidos após persistência:
 
 - `ticket:message`: mensagem nova ou atualização de estado de entrega;
-- `ticket:updated`: ticket fechado ou reaberto.
+- `ticket:updated`: ticket fechado, reaberto ou com solicitação de fechamento
+  pendente do Discord.
+
+O painel fecha tickets com `PATCH /tickets/:ticketId/close`, que cria uma ação
+durável na outbox. O bot gera o transcript no canal de logs configurado e salva
+a URL na outbox confirmando em `POST /bot/tickets/outbox/:id/ack` com
+`{ "action": "transcript_ready", "claim_token": "...", "transcript_url": "..." }`.
+Em seguida, o bot apaga o canal Discord e confirma com
+`{ "action": "channel_deleted", "claim_token": "...", "transcript_url": "..." }`.
+Só depois da confirmação da exclusão a API marca o ticket como fechado. Se o
+bot desconectar após apagar o canal, a URL salva permite finalizar a confirmação
+ao reconectar sem gerar um novo transcript.
 
 O bot também pode conectar enviando `auth: { apiKey: BOT_API_KEY }`. Essa
 credencial é validada no handshake e nunca deve ser usada no frontend. A API

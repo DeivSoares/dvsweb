@@ -247,23 +247,85 @@ async function updateTicketStatus(req, res, status) {
   try {
     const ticketRef = db.collection(TICKETS).doc(req.params.ticketId);
     const now = new Date().toISOString();
-    const closedAt = status === "closed" ? now : null;
+    if (status === "closed") {
+      const outboxRef = db.collection(OUTBOX).doc();
+      const updated = await db.runTransaction(async (transaction) => {
+        const snapshot = await transaction.get(ticketRef);
+        if (!snapshot.exists) throw new Error("TICKET_NOT_FOUND");
+
+        const ticket = snapshot.data();
+        if (ticket.status === "closed") {
+          return { id: snapshot.id, ...ticket };
+        }
+        if (ticket.close_requested) {
+          return { id: snapshot.id, ...ticket };
+        }
+
+        const closeRequest = {
+          id: outboxRef.id,
+          type: "close_ticket",
+          ticket_id: snapshot.id,
+          discord_channel_id: ticket.discord_channel_id || snapshot.id,
+          discord_guild_id: ticket.discord_guild_id,
+          requested_by: req.user.uid,
+          requested_by_name:
+            req.user.name || req.user.username || "Atendente",
+          created_at: now,
+          status: "pending",
+          claim_token: null,
+        };
+        transaction.set(outboxRef, closeRequest);
+        transaction.update(ticketRef, {
+          close_requested: true,
+          close_requested_at: now,
+          updated_at: now,
+        });
+        return {
+          id: snapshot.id,
+          ...ticket,
+          close_requested: true,
+          close_requested_at: now,
+          updated_at: now,
+        };
+      });
+
+      if (updated.status === "closed") return res.json(updated);
+      emit(req.app.get("io"), "ticket:updated", updated);
+      return res.status(202).json({
+        ...updated,
+        delivery: "pending",
+      });
+    }
+
+    const closedAt = null;
     const updated = await db.runTransaction(async (transaction) => {
       const snapshot = await transaction.get(ticketRef);
       if (!snapshot.exists) {
         throw new Error("TICKET_NOT_FOUND");
       }
+      const ticketOutbox = await transaction.get(
+        db.collection(OUTBOX).where("ticket_id", "==", snapshot.id),
+      );
 
       transaction.update(ticketRef, {
         status,
         closed_at: closedAt,
+        close_requested: false,
         updated_at: now,
       });
+      ticketOutbox.docs
+        .filter(
+          (doc) =>
+            doc.data().type === "close_ticket" &&
+            doc.data().status === "pending",
+        )
+        .forEach((doc) => transaction.update(doc.ref, { status: "cancelled" }));
       return {
         id: snapshot.id,
         ...snapshot.data(),
         status,
         closed_at: closedAt,
+        close_requested: false,
         updated_at: now,
       };
     });

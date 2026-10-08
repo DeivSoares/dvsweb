@@ -81,6 +81,7 @@ router.patch("/:ticketId", async (req, res) => {
     const updates = {
       status: "closed",
       closed_at: closedAt,
+      close_requested: false,
       updated_at: now,
     };
     await ticketRef.update(updates);
@@ -409,6 +410,7 @@ router.get("/outbox", async (req, res) => {
           Date.parse(doc.data().claim_expires_at || "") <= now,
       ),
     ]
+      .filter((doc) => doc.data().status !== "cancelled")
       .sort((a, b) =>
         (a.data().created_at || "").localeCompare(b.data().created_at || ""),
       )
@@ -447,13 +449,22 @@ router.get("/outbox", async (req, res) => {
 
 router.post("/outbox/:outboxId/ack", async (req, res) => {
   const { outboxId } = req.params;
-  const { claim_token: claimToken, discord_message_id: discordMessageId } =
-    req.body || {};
+  const {
+    claim_token: claimToken,
+    discord_message_id: discordMessageId,
+    action,
+    transcript_url: transcriptUrl,
+  } = req.body || {};
   if (
     !isDocumentId(outboxId) ||
     typeof claimToken !== "string" ||
     claimToken.length > 100 ||
-    !isSnowflake(discordMessageId)
+    (action === "transcript_ready"
+      ? typeof transcriptUrl !== "string" || !isHttpsUrl(transcriptUrl)
+      : action === "channel_deleted" || action === "close_ticket"
+        ? transcriptUrl !== undefined &&
+          (typeof transcriptUrl !== "string" || !isHttpsUrl(transcriptUrl))
+      : !isSnowflake(discordMessageId))
   ) {
     return res.status(400).json({ error: "Confirmação de entrega inválida." });
   }
@@ -468,7 +479,9 @@ router.post("/outbox/:outboxId/ack", async (req, res) => {
     const outboxItem = snapshot.data();
     if (
       outboxItem.status === "sent" &&
-      outboxItem.discord_message_id === discordMessageId
+      (["channel_deleted", "close_ticket"].includes(action)
+        ? outboxItem.type === "close_ticket"
+        : outboxItem.discord_message_id === discordMessageId)
     ) {
       return res.json({ success: true, duplicate: true });
     }
@@ -480,6 +493,91 @@ router.post("/outbox/:outboxId/ack", async (req, res) => {
     }
 
     const ticketRef = db.collection(TICKETS).doc(outboxItem.ticket_id);
+    if (
+      outboxItem.type === "close_ticket" &&
+      action === "transcript_ready"
+    ) {
+      await db.runTransaction(async (transaction) => {
+        const current = await transaction.get(outboxRef);
+        if (!current.exists) {
+          const error = new Error("CLOSE_ACTION_NOT_FOUND");
+          throw error;
+        }
+        const currentAction = current.data();
+        if (
+          currentAction.status !== "processing" ||
+          currentAction.claim_token !== claimToken
+        ) {
+          const error = new Error("OUTBOX_CLAIM_EXPIRED");
+          throw error;
+        }
+        transaction.update(outboxRef, { transcript_url: transcriptUrl });
+      });
+      return res.json({ success: true, stage: "transcript_ready" });
+    }
+
+    if (
+      outboxItem.type === "close_ticket" &&
+      ["channel_deleted", "close_ticket"].includes(action)
+    ) {
+      const savedTranscriptUrl = outboxItem.transcript_url || transcriptUrl;
+      if (!savedTranscriptUrl || !isHttpsUrl(savedTranscriptUrl)) {
+        return res.status(409).json({ error: "O transcript precisa ser salvo antes de apagar o canal." });
+      }
+      const now = new Date().toISOString();
+      const updatedTicket = await db.runTransaction(async (transaction) => {
+        const [currentOutbox, currentTicket] = await Promise.all([
+          transaction.get(outboxRef),
+          transaction.get(ticketRef),
+        ]);
+        if (!currentOutbox.exists || !currentTicket.exists) {
+          const error = new Error("CLOSE_ACTION_NOT_FOUND");
+          throw error;
+        }
+        const currentAction = currentOutbox.data();
+        if (
+          currentAction.status !== "processing" ||
+          currentAction.claim_token !== claimToken
+        ) {
+          const error = new Error("OUTBOX_CLAIM_EXPIRED");
+          throw error;
+        }
+
+        transaction.update(outboxRef, {
+          status: "sent",
+          sent_at: now,
+          claim_token: null,
+          claim_expires_at: FieldValue.delete(),
+          transcript_url: savedTranscriptUrl,
+        });
+        transaction.update(ticketRef, {
+          status: "closed",
+          closed_at: now,
+          close_requested: false,
+          updated_at: now,
+          transcript_url: savedTranscriptUrl,
+        });
+        return {
+          id: currentTicket.id,
+          ...currentTicket.data(),
+          status: "closed",
+          closed_at: now,
+          close_requested: false,
+          updated_at: now,
+          transcript_url: savedTranscriptUrl,
+        };
+      });
+      emit(req.app.get("io"), "ticket:updated", updatedTicket);
+      return res.json({ success: true, ticket: updatedTicket });
+    }
+
+    if (
+      outboxItem.type === "close_ticket" ||
+      ["transcript_ready", "channel_deleted", "close_ticket"].includes(action)
+    ) {
+      return res.status(409).json({ error: "Ação de fechamento incompatível." });
+    }
+
     const messageRef = ticketRef.collection("messages").doc(outboxItem.message_id);
     const sentAt = new Date().toISOString();
     const message = await db.runTransaction(async (transaction) => {

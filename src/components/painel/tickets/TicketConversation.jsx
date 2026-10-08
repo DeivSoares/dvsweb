@@ -37,6 +37,7 @@ export default function TicketConversation({
   }
 
   const isOpen = ticket.status === "open";
+  const closePending = isOpen && ticket.close_requested;
   const latestFromCustomer =
     ticket.last_message?.author_type === "user" ||
     (ticket.last_message?.author_type === undefined &&
@@ -69,12 +70,23 @@ export default function TicketConversation({
         <button
           className="ticket-status-action"
           type="button"
-          disabled={updatingStatus}
+          disabled={updatingStatus || closePending}
           onClick={onChangeStatus}
         >
-          {updatingStatus ? "Atualizando..." : isOpen ? "Fechar ticket" : "Reabrir ticket"}
+          {updatingStatus
+            ? "Atualizando..."
+            : closePending
+              ? "Encerrando no Discord..."
+              : isOpen
+                ? "Fechar ticket"
+                : "Reabrir ticket"}
         </button>
       </header>
+      {closePending && (
+        <p className="ticket-close-pending" role="status">
+          Gerando transcript e encerrando o canal do ticket no Discord.
+        </p>
+      )}
 
       <div className="ticket-messages" aria-live="polite" aria-busy={loading}>
         {nextCursor && (
@@ -103,14 +115,14 @@ export default function TicketConversation({
           onChange={(event) => onDraftChange(event.target.value)}
           placeholder={isOpen ? "Escreva uma mensagem..." : "Reabra o ticket para responder."}
           maxLength={2000}
-          disabled={!isOpen || sending}
+          disabled={!isOpen || closePending || sending}
           rows={2}
         />
         <div>
           <small>{draft.length}/2000</small>
           <button
             type="submit"
-            disabled={!isOpen || !draft.trim() || sending}
+            disabled={!isOpen || closePending || !draft.trim() || sending}
           >
             {sending ? "Enviando..." : "Enviar"}
           </button>

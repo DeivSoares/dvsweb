@@ -100,3 +100,35 @@ test("disables sending for a closed ticket and renders available attachments", (
     "https://example.com/file.png",
   );
 });
+
+test("shows a pending close request while the bot closes the Discord ticket", () => {
+  render(
+    <TicketConversation
+      ticket={{
+        id: "ticket-1",
+        status: "open",
+        close_requested: true,
+        discord_channel_id: "123",
+      }}
+      messages={[]}
+      nextCursor={null}
+      loading={false}
+      loadingOlder={false}
+      draft=""
+      sending={false}
+      updatingStatus={false}
+      messagesEndRef={{ current: null }}
+      onLoadOlder={() => {}}
+      onDraftChange={() => {}}
+      onSend={(event) => event.preventDefault()}
+      onChangeStatus={() => {}}
+    />,
+  );
+
+  expect(
+    screen.getByRole("button", { name: "Encerrando no Discord..." }),
+  ).toBeDisabled();
+  expect(
+    screen.getByText("Gerando transcript e encerrando o canal do ticket no Discord."),
+  ).toBeInTheDocument();
+});
