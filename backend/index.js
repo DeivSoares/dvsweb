@@ -2,6 +2,10 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
+const crypto = require("crypto");
+const { Server } = require("socket.io");
+const { auth } = require("./firebase");
 
 const dashboardRoutes = require("./routes/dashboard");
 const clientesRoutes = require("./routes/clientes");
@@ -9,10 +13,51 @@ const botsRoutes = require("./routes/bots");
 const atividadesRoutes = require("./routes/atividades");
 const financeiroRoutes = require("./routes/financeiro");
 const usuariosRoutes = require("./routes/usuarios");
+const ticketsRoutes = require("./routes/tickets");
+const botTicketsRoutes = require("./routes/botTickets");
 const authenticate = require("./middleware/auth");
 const requireManagementAccess = require("./middleware/requireManagementAccess");
 
 const app = express();
+const server = http.createServer(app);
+const allowedOrigins = process.env.PANEL_ORIGIN
+  ? process.env.PANEL_ORIGIN.split(",").map((origin) => origin.trim())
+  : "*";
+const io = new Server(server, {
+  cors: { origin: allowedOrigins, methods: ["GET", "POST"] },
+});
+
+io.use(async (socket, next) => {
+  const apiKey = process.env.BOT_API_KEY?.trim();
+  const providedApiKey = socket.handshake.auth?.apiKey;
+  if (apiKey && typeof providedApiKey === "string") {
+    const expected = Buffer.from(apiKey);
+    const provided = Buffer.from(providedApiKey);
+    if (
+      expected.length === provided.length &&
+      crypto.timingSafeEqual(expected, provided)
+    ) {
+      socket.data.isBot = true;
+      return next();
+    }
+  }
+
+  const token = socket.handshake.auth?.token;
+  if (typeof token !== "string" || !token) {
+    return next(new Error("Não autenticado"));
+  }
+
+  try {
+    socket.data.user = await auth.verifyIdToken(token);
+    return next();
+  } catch (error) {
+    console.error("Token Socket.IO inválido:", error.code || error.message);
+    return next(new Error("Não autenticado"));
+  }
+});
+
+io.on("connection", (socket) => socket.join("tickets"));
+app.set("io", io);
 
 // ================================
 // CONFIGURAÇÕES
@@ -31,7 +76,7 @@ app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-API-Key"],
   })
 );
 
@@ -61,12 +106,15 @@ app.get("/dashboard/test", (req, res) => {
   });
 });
 
+app.use("/bot/tickets", botTicketsRoutes);
+
 // ================================
 // API
 // ================================
 
 app.use(authenticate);
 
+app.use("/tickets", ticketsRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/bots", botsRoutes);
@@ -103,7 +151,7 @@ app.use((err, req, res, next) => {
 
 const PORT = Number(process.env.PORT) || 8080;
 
-app.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log("=================================");
   console.log("        DvS API ONLINE");
   console.log("=================================");

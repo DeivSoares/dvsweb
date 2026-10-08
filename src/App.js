@@ -7,6 +7,7 @@ import Clientes from "./pages/Painel/Clientes";
 import Bots from "./pages/Painel/Bots";
 import Financeiro from "./pages/Painel/Financeiro";
 import Configuracoes from "./pages/Painel/Configuracoes";
+import Tickets from "./pages/Painel/Tickets";
 import Login from "./pages/Login/Login";
 import ProtectedRoute, { ManagementRoute, RoleRoute } from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./services/AuthContext";
@@ -27,6 +28,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/painel" element={<Dashboard />} />
           <Route path="/painel/clientes" element={<Clientes />} />
+          <Route path="/painel/tickets" element={<Tickets />} />
           <Route element={<RoleRoute allowedLevels={["Desenvolvedor", "Administrador", "CEO"]} />}>
             <Route path="/painel/bots" element={<Bots />} />
           </Route>

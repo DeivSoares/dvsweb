@@ -71,6 +71,10 @@ export default function Sidebar() {
               Clientes
             </a>
 
+            <a href="#/painel/tickets" onClick={() => setIsOpen(false)}>
+              Atendimento
+            </a>
+
             {/* <a href="#/painel/licencas">
             Licenças
           </a> */}
