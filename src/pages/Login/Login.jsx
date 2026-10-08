@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/icons/DvsLogo.png";
 import { useAuth } from "../../services/AuthContext";
@@ -53,10 +53,10 @@ export default function Login() {
   return (
     <main className="login-page">
       <section className="login-panel" aria-labelledby="login-title">
-        <div className="login-brand">
+        <Link to="/" className="login-brand" aria-label="Voltar para a página inicial">
           <img src={logo} alt="DvS" />
           <span>PAINEL ADMINISTRATIVO</span>
-        </div>
+        </Link>
 
         <div className="login-heading">
           <p className="login-eyebrow">Acesso restrito</p>
