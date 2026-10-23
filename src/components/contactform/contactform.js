@@ -9,6 +9,7 @@ function ContactForm() {
     whatsapp: "",
     subject: "",
     message: "",
+    consent: false,
   });
   const formRef = useRef(null);
 
@@ -67,15 +68,19 @@ function ContactForm() {
       newErrors.message = "A mensagem precisa ter pelo menos 10 caracteres";
     }
 
+    if (!formData.consent) {
+      newErrors.consent = "É necessário consentir para enviar o formulário";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     if (errors[name]) {
@@ -94,6 +99,14 @@ function ContactForm() {
     }
 
     setStatus({ submitting: true, submitted: true, error: false });
+  };
+
+  const openLegalDetails = (id) => {
+    const details = document.getElementById(id);
+    if (!details) return;
+
+    details.open = true;
+    details.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -216,6 +229,50 @@ function ContactForm() {
             required
           />
           {errors.message && <span className="error-message">{errors.message}</span>}
+        </div>
+
+        <div className="consent-group">
+          <input
+            type="checkbox"
+            id="contact-consent"
+            name="consent"
+            value="accepted"
+            checked={formData.consent}
+            onChange={handleChange}
+            aria-describedby={errors.consent ? "consent-error" : undefined}
+            required
+          />
+          <div className="consent-copy">
+            <label htmlFor="contact-consent">
+              Li e concordo com os Termos de Consentimento e estou ciente da
+              Política de Privacidade. Autorizo o uso dos dados informados para
+              responder ao meu contato.
+            </label>
+            <p>
+              Consulte os{" "}
+              <button
+                type="button"
+                className="inline-legal-link"
+                onClick={() => openLegalDetails("consent-terms")}
+              >
+                Termos de Consentimento
+              </button>{" "}
+              e a{" "}
+              <button
+                type="button"
+                className="inline-legal-link"
+                onClick={() => openLegalDetails("privacy-policy")}
+              >
+                Política de Privacidade
+              </button>
+              .
+            </p>
+          </div>
+          {errors.consent && (
+            <span id="consent-error" className="error-message">
+              {errors.consent}
+            </span>
+          )}
         </div>
 
         <button type="submit" disabled={status.submitting} className="submit-button">

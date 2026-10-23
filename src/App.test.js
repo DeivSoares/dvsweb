@@ -1,9 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Main from './components/main';
+import ContactForm from './components/contactform/contactform';
 
 test('reveals homepage content when mounted without IntersectionObserver', () => {
   const originalIntersectionObserver = global.IntersectionObserver;
+  const originalMatchMedia = window.matchMedia;
   global.IntersectionObserver = undefined;
+  window.matchMedia = jest.fn().mockReturnValue({ matches: true });
 
   render(<Main />);
 
@@ -18,6 +21,10 @@ test('reveals homepage content when mounted without IntersectionObserver', () =>
   expect(screen.getByRole('heading', { name: 'Conheça o Nexo' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /Quero um sistema como o Nexo/ }))
     .toHaveAttribute('href', expect.stringContaining('https://wa.me/5522992326527?text='));
+  expect(screen.getByText('Política de Privacidade', { selector: 'summary' })).toBeInTheDocument();
+  expect(screen.getByText('Direitos Autorais', { selector: 'summary' })).toBeInTheDocument();
+  expect(screen.getByText('Termos de Consentimento', { selector: 'summary' })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: /Li e concordo/ })).toBeRequired();
 
   const serviceHeadings = screen.getAllByRole('heading', { level: 4 }).map((heading) => heading.textContent);
   expect(serviceHeadings.indexOf('Manutenção de Sistemas')).toBe(
@@ -38,4 +45,14 @@ test('reveals homepage content when mounted without IntersectionObserver', () =>
   });
 
   global.IntersectionObserver = originalIntersectionObserver;
+  window.matchMedia = originalMatchMedia;
+});
+
+test('requires consent before submitting the contact form', () => {
+  render(<ContactForm />);
+
+  fireEvent.submit(screen.getByRole('button', { name: 'Enviar mensagem' }).closest('form'));
+
+  expect(screen.getByText('É necessário consentir para enviar o formulário')).toBeInTheDocument();
+  expect(screen.getByText(/Revise os campos obrigatórios antes de enviar/)).toBeInTheDocument();
 });

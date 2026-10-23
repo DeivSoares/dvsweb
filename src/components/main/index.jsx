@@ -268,6 +268,82 @@ function Main() {
         <ContactForm />
       </section>
 
+      <section className="legal-section" aria-labelledby="legal-title">
+        <h2 id="legal-title">Informações legais</h2>
+        <p className="legal-intro">
+          Saiba como as informações enviadas pelo site são tratadas e conheça
+          as condições de uso do conteúdo da DVS WEB.
+        </p>
+
+        <div className="legal-disclosures">
+          <details id="privacy-policy">
+            <summary>Política de Privacidade</summary>
+            <div className="legal-copy">
+              <p>
+                Os dados informados no formulário de contato — como nome,
+                e-mail, assunto e mensagem — são usados para receber e responder
+                à sua solicitação. Discord e WhatsApp são opcionais e só serão
+                utilizados se você os preencher.
+              </p>
+              <p>
+                O envio é realizado pelo StaticForms, que atua como provedor do
+                formulário e recebe os dados para encaminhar a mensagem. A DVS
+                WEB não vende seus dados nem os utiliza para enviar publicidade.
+                As informações são mantidas apenas pelo período necessário para
+                atender ao contato e cumprir obrigações aplicáveis.
+              </p>
+              <p>
+                Você pode solicitar acesso, correção ou exclusão dos dados, ou
+                retirar seu consentimento, entrando em contato pelo{" "}
+                <a
+                  href="https://wa.me/5522992326527"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp da DVS WEB
+                </a>
+                . A exclusão pode estar sujeita a obrigações legais de
+                conservação.
+              </p>
+            </div>
+          </details>
+
+          <details id="copyright-notice">
+            <summary>Direitos Autorais</summary>
+            <div className="legal-copy">
+              <p>
+                Salvo indicação em contrário, os textos, identidade visual,
+                layout e materiais próprios publicados neste site pertencem à
+                DVS WEB e são protegidos pela legislação de direitos autorais.
+              </p>
+              <p>
+                A reprodução, distribuição ou adaptação desses materiais
+                depende de autorização prévia. Marcas, nomes e conteúdos de
+                terceiros mencionados no site pertencem aos seus respectivos
+                titulares.
+              </p>
+            </div>
+          </details>
+
+          <details id="consent-terms">
+            <summary>Termos de Consentimento</summary>
+            <div className="legal-copy">
+              <p>
+                Ao marcar a opção de consentimento no formulário e enviá-lo,
+                você confirma que leu esta política e autoriza o uso dos dados
+                informados exclusivamente para receber e responder à sua
+                mensagem, inclusive por meio do provedor StaticForms.
+              </p>
+              <p>
+                O consentimento é opcional, mas necessário para enviar o
+                formulário. Você pode retirá-lo ou solicitar informações sobre
+                seus dados pelo canal de contato indicado nesta página.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
       <footer>
         <p>&copy; 2023-2026 DVS WEB. Todos os direitos reservados.</p>
       </footer>
