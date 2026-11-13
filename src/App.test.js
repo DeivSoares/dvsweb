@@ -18,8 +18,8 @@ test('reveals homepage content when mounted without IntersectionObserver', () =>
   expect(screen.getByRole('heading', { name: 'Manutenção de Sistemas' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Desenvolvimento de Sistemas de Gestão' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Consultoria Web' })).toBeInTheDocument();
-  expect(screen.getByRole('heading', { name: 'Conheça o Nexo' })).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /Quero um sistema como o Nexo/ }))
+  expect(screen.getByRole('heading', { name: 'Conheça o Ascend' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Quero conhecer o Ascend/ }))
     .toHaveAttribute('href', expect.stringContaining('https://wa.me/5522992326527?text='));
   expect(screen.getByText('Política de Privacidade', { selector: 'summary' })).toBeInTheDocument();
   expect(screen.getByText('Direitos Autorais', { selector: 'summary' })).toBeInTheDocument();

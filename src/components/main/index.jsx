@@ -182,11 +182,11 @@ function Main() {
       <section className="management-showcase reveal fade-in-up" aria-labelledby="management-title">
         <div className="management-showcase-inner">
           <div className="management-copy">
-            <p className="management-kicker">SISTEMA DE GESTÃO DVS</p>
-            <h2 id="management-title">Conheça o <span>Nexo</span></h2>
+            <p className="management-kicker">ASCEND · GESTÃO INTELIGENTE</p>
+            <h2 id="management-title">Conheça o <span>Ascend</span></h2>
             <p className="management-description">
-              Um sistema de gestão desenvolvido pela DvS para conectar as áreas da operação.
-              Clientes, financeiro, serviços e equipe em uma solução adaptada à rotina do seu negócio.
+              O sistema de gestão da DvS Web para conectar as áreas da operação.
+              Clientes, financeiro, serviços e equipe em um painel claro, feito para acompanhar o crescimento do seu negócio.
             </p>
             <ul className="management-features">
               <li><span aria-hidden="true">✓</span> Clientes e contratos</li>
@@ -197,20 +197,20 @@ function Main() {
             <a
               className="management-cta"
               href={`https://wa.me/5522992326527?text=${encodeURIComponent(
-                "Olá! Tenho interesse em um sistema de gestão personalizado como o Nexo da DvS Web. Gostaria de conversar sobre as necessidades do meu negócio.",
+                "Olá! Tenho interesse em conhecer o Ascend, sistema de gestão da DvS Web. Gostaria de conversar sobre as necessidades do meu negócio.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Quero um sistema como o Nexo <span aria-hidden="true">↗</span>
+              Quero conhecer o Ascend <span aria-hidden="true">↗</span>
             </a>
           </div>
 
-          <div className="management-preview" aria-label="Prévia conceitual dos módulos do Nexo">
+          <div className="management-preview" aria-label="Prévia conceitual dos módulos do Ascend">
             <div className="management-preview-topbar">
               <div className="management-brand">
-                <span className="management-brand-mark" aria-hidden="true">N</span>
-                <span><strong>Nexo</strong><small>GESTÃO</small></span>
+                <img className="management-brand-mark" src="/ascend-mark.svg" alt="" />
+                <span><strong>Ascend</strong><small>GESTÃO</small></span>
               </div>
               <span className="management-preview-label">PAINEL DE GESTÃO</span>
             </div>

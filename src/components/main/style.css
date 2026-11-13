@@ -447,9 +447,9 @@ section.intro-section div.intro-background {
   width: 100%;
   margin: 3rem 0;
   padding: 5rem 2rem;
-  border-top: 1px solid rgba(137, 179, 217, 0.2);
-  border-bottom: 1px solid rgba(137, 179, 217, 0.2);
-  background: linear-gradient(110deg, rgba(0, 34, 82, 0.72), rgba(0, 12, 37, 0.88));
+  border-top: 1px solid rgba(170, 180, 255, 0.2);
+  border-bottom: 1px solid rgba(170, 180, 255, 0.2);
+  background: radial-gradient(ellipse at 82% 18%, #7d6de426, transparent 34%), linear-gradient(110deg, #1a2042f2, #101426f7);
 }
 
 .management-showcase-inner {
@@ -463,7 +463,7 @@ section.intro-section div.intro-background {
 
 .management-kicker,
 .management-preview-heading > span {
-  color: #74c7ff;
+  color: #b7c0ff;
   font-size: 1.2rem;
   font-weight: bold;
   letter-spacing: 0.12rem;
@@ -472,13 +472,14 @@ section.intro-section div.intro-background {
 .management-copy h2 {
   margin: 1.2rem 0;
   color: #ffffff;
-  font-family: "Anta", sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   font-size: 4.4rem;
-  font-weight: 400;
+  font-weight: 700;
+  letter-spacing: -0.08em;
 }
 
 .management-copy h2 span {
-  color: #74c7ff;
+  color: #aab4ff;
 }
 
 .management-description {
@@ -516,7 +517,7 @@ section.intro-section div.intro-background {
   min-height: 4.8rem;
   padding: 1rem 1.8rem;
   border-radius: 0.8rem;
-  background: #2563eb;
+  background: linear-gradient(135deg, #7180f5, #596be8 58%, #7d6de4);
   color: #ffffff;
   font-size: 1.5rem;
   font-weight: bold;
@@ -525,7 +526,7 @@ section.intro-section div.intro-background {
 
 .management-cta:hover {
   transform: translateY(-2px);
-  background: #1684c7;
+  background: linear-gradient(135deg, #8490ff, #5365e1 60%, #7664dd);
 }
 
 .management-cta:focus-visible {
@@ -535,9 +536,9 @@ section.intro-section div.intro-background {
 
 .management-preview {
   padding: 2.4rem;
-  border: 1px solid rgba(116, 199, 255, 0.28);
+  border: 1px solid rgba(170, 180, 255, 0.24);
   border-radius: 1.2rem;
-  background: #07172e;
+  background: #171d37;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.24);
   color: #ffffff;
 }
@@ -556,15 +557,11 @@ section.intro-section div.intro-background {
 }
 
 .management-brand-mark {
-  display: grid;
+  display: block;
   width: 3.8rem;
   height: 3.8rem;
-  place-items: center;
-  border-radius: 0.8rem;
-  background: #164e87;
-  color: #8ed5ff;
-  font-family: "Anta", sans-serif;
-  font-size: 2rem;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 0.5rem 0.9rem #5368df35);
 }
 
 .management-brand strong,
@@ -574,16 +571,17 @@ section.intro-section div.intro-background {
 
 .management-brand strong {
   font-size: 1.5rem;
+  letter-spacing: -0.04em;
 }
 
 .management-brand small {
   margin-top: 0.2rem;
-  color: #83a2c2;
+  color: #aab3d0;
   font-size: 1rem;
 }
 
 .management-preview-label {
-  color: #83a2c2;
+  color: #aab3d0;
   font-size: 1rem;
 }
 
@@ -597,7 +595,7 @@ section.intro-section div.intro-background {
 }
 
 .management-preview-heading p {
-  color: #9bb1c9;
+  color: #aab3d0;
   font-size: 1.3rem;
 }
 
@@ -613,7 +611,7 @@ section.intro-section div.intro-background {
   gap: 1rem;
   min-width: 0;
   padding: 1.3rem;
-  border: 1px solid rgba(137, 179, 217, 0.16);
+  border: 1px solid rgba(170, 180, 255, 0.16);
   border-radius: 0.8rem;
   background: rgba(255, 255, 255, 0.035);
 }
@@ -625,8 +623,8 @@ section.intro-section div.intro-background {
   height: 3.6rem;
   place-items: center;
   border-radius: 0.8rem;
-  background: rgba(37, 99, 235, 0.2);
-  color: #8ed5ff;
+  background: #343b68;
+  color: #aab4ff;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -644,7 +642,7 @@ section.intro-section div.intro-background {
 
 .management-module small {
   overflow: hidden;
-  color: #9bb1c9;
+  color: #aab3d0;
   font-size: 1.1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -652,19 +650,19 @@ section.intro-section div.intro-background {
 
 .management-module-arrow {
   margin-left: auto;
-  color: #74c7ff;
+  color: #aab4ff;
 }
 
 .management-preview-footer {
   margin-top: 2rem;
   padding-top: 1.4rem;
-  border-top: 1px solid rgba(137, 179, 217, 0.18);
-  color: #83a2c2;
+  border-top: 1px solid rgba(170, 180, 255, 0.18);
+  color: #aab3d0;
   font-size: 1rem;
 }
 
 .management-footer-accent {
-  color: #74c7ff;
+  color: #aab4ff;
 }
 
 @media (max-width: 1024px) {
