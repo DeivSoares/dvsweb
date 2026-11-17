@@ -1,130 +1,67 @@
-# 💻 Deivison Soares — Transformo sua ideia em realidade  
+# DvS Web
 
-Bem-vindo ao meu portfólio!  
-Sou **Deivison Soares**, tenho 26 anos e sou apaixonado por tecnologia desde que me entendo por gente.  
-Sou formado em **Desenvolvimento de Sistemas** e especializado em **Desenvolvimento Web**, atuando na criação de interfaces intuitivas, modernas e totalmente responsivas.  
+![Logo da DvS Web](./public/og-image.png)
 
-Meu foco é transformar ideias em experiências digitais fluidas e funcionais, entregando **resultados reais** e **designs que encantam**.  
+> **Transformando ideias em experiências digitais.**
 
----
+A DvS Web desenvolve soluções digitais personalizadas, combinando tecnologia,
+criatividade e inovação para transformar ideias em projetos reais.
 
-## 🚀 Acesse meus links  
-👉 **[Clique aqui para visitar meu site](https://deivsoares.github.io/dvsweb/)**  
-👉 **[Clique aqui para visitar meu portfólio](https://deivsoares.github.io/Portfolio/)**  
+## Serviços
 
----
+- **Bots para Discord:** sistemas personalizados, automações e ferramentas para
+  otimizar a gestão de servidores.
+- **Desenvolvimento Web:** websites, landing pages e interfaces modernas para
+  fortalecer a presença digital.
 
-## 🧠 Sobre mim  
-- 💡 Desenvolvedor Front-End focado em performance, estética e experiência do usuário.  
-- 🧩 Apaixonado por transformar código em soluções criativas.  
-- 🔍 Sempre em busca de evoluir com novas tecnologias e boas práticas.  
+## Sobre este repositório
 
----
+Este repositório contém o site da DvS Web, desenvolvido com React. O projeto
+também inclui integrações e recursos de atendimento; consulte a
+[documentação do backend](./backend/README.md) para detalhes da API.
 
-## 🛠️ Minhas Stacks  
+Site: [dvsweb.com.br](https://dvsweb.com.br)
 
-| Tecnologia | Logo |
-|-------------|------|
-| **HTML5** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Logo HTML" width="32"/>|
-| **CSS3** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="Logo CSS" width="32"/>|
-| **JavaScript (ES6+)** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg" alt="Logo JS" width="32"/>|
-| **React.js** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="Logo React" width="32"/>|
-| **Node** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" alt="Logo Node" width="32"/>|
-| **C#** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="Logo CSharp" width="32"/>|
-| **Git & GitHub** | <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt="Logo Git" width="32"/> <img src="https://github.githubassets.com/favicons/favicon-dark.svg" alt="Logo GitHub" width="32"/>|
+## Executar localmente
 
----
+Requisitos: Node.js e npm.
 
-## 🌐 Tecnologias e Skills  
-✔️ Criação de sites modernos e responsivos  
-✔️ Desenvolvimento de SPAs com React  
-✔️ Versionamento com Git e GitHub  
+```bash
+npm install
+npm start
+```
 
+O servidor de desenvolvimento inicia em `http://localhost:3000`.
 
----
+Para gerar a versão de produção:
 
-## 📫 Entre em contato  
+```bash
+npm run build
+```
 
-📩 **E-mail:** *deivisonsoares1610@outlook.com*  
-🔗 **LinkedIn:** [linkedin.com/in/deivsoares](https://www.linkedin.com/in/deivsoares-dev/)  
-🐙 **GitHub:** [github.com/DeivSoares](https://github.com/DeivSoares)  
+## Configuração do painel
 
-## 🔐 Painel administrativo
+Configure as variáveis do Firebase Authentication usando `.env.example` como
+referência e habilite o provedor **E-mail/senha** no Firebase Console.
 
-Configure as variáveis do Firebase Authentication a partir de `.env.example` em um arquivo `.env.local` e ative o provedor **E-mail/senha** no Firebase Console.
-
-Para criar um usuário do painel, dentro da pasta `backend`, execute:
+Para criar um usuário do painel, na pasta `backend`, execute:
 
 ```bash
 npm run user:create -- "usuario" "uma-senha-segura" "Nome do usuário" "Administrador"
 ```
 
-O comando usa `backend/config/firebase.json`, que deve conter a conta de serviço do projeto Firebase.
+Configure a conta de serviço Firebase Admin em `backend/config/firebase.json`
+localmente. Não versione credenciais ou segredos no repositório.
 
----
+## Prévia ao compartilhar o site
 
-## 🎯 Objetivo  
-Construir experiências digitais excepcionais e transformar desafios em soluções práticas com código limpo, design refinado e propósito.  
+O título e a descrição da prévia são definidos pelas tags Open Graph em
+`public/index.html`. A imagem usada é `public/og-image.png`; para substituí-la,
+atualize também a URL `og:image` no mesmo arquivo. As plataformas sociais podem
+manter a prévia em cache após uma publicação.
 
----
+## Contato
 
-⭐ **Se curtiu meu trabalho, dá uma estrela no repositório!**  
-
-<!-- # 💻 Deivison Soares — Transformo sua ideia em realidade  
-
-Bem-vindo ao meu portfólio!  
-Sou **Deivison Soares**, tenho 26 anos e sou apaixonado por tecnologia desde que me entendo por gente.  
-Sou formado em **Desenvolvimento de Sistemas** e especializado em **Desenvolvimento Web**, atuando na criação de interfaces intuitivas, modernas e totalmente responsivas.  
-
-Meu foco é transformar ideias em experiências digitais fluidas e funcionais, entregando **resultados reais** e **designs que encantam**.  
-
----
-
-## 🚀 Acesse meus links  
-👉 **[Clique aqui para visitar meu site](https://deivsoares.github.io/dvsweb/)**  
-👉 **[Clique aqui para visitar meu portfólio](https://deivsoares.github.io/Portfolio/)**  
-
----
-
-## 🧠 Sobre mim  
-- 💡 Desenvolvedor Front-End focado em performance, estética e experiência do usuário.  
-- 🧩 Apaixonado por transformar código em soluções criativas.  
-- 🔍 Sempre em busca de evoluir com novas tecnologias e boas práticas.  
-
----
-
-## 🛠️ Minhas Stacks  
-
-| Tecnologia | Logo |
-|-------------|------|
-| **HTML5** | 🟧 |
-| **CSS3** | 🟦 |
-| **JavaScript (ES6+)** | 🟨 |
-| **React.js** | ⚛️ |
-| **C#** | 🟣 |
-| **Git & GitHub** | 🔴 ⚫ |
-
----
-
-## 🌐 Tecnologias e Skills  
-✔️ Criação de sites modernos e responsivos  
-✔️ Desenvolvimento de SPAs com React  
-✔️ Versionamento com Git e GitHub  
-
-
----
-
-## 📫 Entre em contato  
-
-📩 **E-mail:** *deivisonsoares1610@outlook.com*  
-🔗 **LinkedIn:** [linkedin.com/in/deivsoares](https://www.linkedin.com/in/deivsoares-dev/)  
-🐙 **GitHub:** [github.com/DeivSoares](https://github.com/DeivSoares)  
-
----
-
-## 🎯 Objetivo  
-Construir experiências digitais excepcionais e transformar desafios em soluções práticas com código limpo, design refinado e propósito.  
-
----
-
-⭐ **Se curtiu meu trabalho, dá uma estrela no repositório!**   -->
+- **E-mail:** [deivisonsoares1610@outlook.com](mailto:deivisonsoares1610@outlook.com)
+- **LinkedIn:** [Deivison Soares](https://www.linkedin.com/in/deivsoares-dev/)
+- **GitHub:** [DeivSoares](https://github.com/DeivSoares)
